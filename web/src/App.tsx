@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import "./App.css";
 import { PEAKS, type Peak } from "./data/peaks";
 import { TerrainCanvas } from "./components/TerrainCanvas";
+import { SnowField } from "./components/SnowField";
 import { PeakRing } from "./components/PeakRing";
 
 const FA_FROM = 1950;
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <div className="instrument">
       <TerrainCanvas className="instrument__terrain" />
+      <SnowField className="instrument__snow" />
       <div className="instrument__plane" aria-hidden="true" />
 
       <TopNav rank={rank} total={peaks.length} />

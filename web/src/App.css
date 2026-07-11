@@ -19,6 +19,16 @@
   z-index: 0;
 }
 
+/* 风雪粒子层：地形之上、切面/UI 之下 */
+.instrument__snow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* 8,000 米橙色切面：细线 + 柔和散射 */
 .instrument__plane {
   position: absolute;
@@ -29,8 +39,8 @@
   z-index: 2;
   border-top: 1.5px solid var(--archive-accent);
   box-shadow:
-    0 0 24px 2px var(--archive-accent-soft),
-    0 0 60px 8px var(--archive-accent-soft);
+    0 0 12px 1px var(--archive-accent-soft),
+    0 0 30px 3px var(--archive-accent-soft);
 }
 
 /* ── 顶部导航 ─────────────────────────────────────────────────── */
@@ -84,6 +94,8 @@
   font-size: var(--archive-fs-event);
   font-weight: 500;
   letter-spacing: 0.02em;
+  /* 标题压在雪峰上,加冰白晕保证在嶙峋亮部也读得清 */
+  text-shadow: 0 0 10px var(--archive-canvas), 0 0 4px var(--archive-canvas);
 }
 .topnav__divider {
   width: 1px;
@@ -94,6 +106,7 @@
 .topnav__sub {
   font-size: var(--archive-fs-label);
   color: var(--archive-ink-muted);
+  text-shadow: 0 0 8px var(--archive-canvas), 0 0 3px var(--archive-canvas);
 }
 .topnav__right {
   font-size: var(--archive-fs-label);
@@ -142,13 +155,17 @@
 .ruler__major {
   width: var(--archive-scale-major-tick);
   height: 1.5px;
-  background: var(--archive-ink);
+  /* 亮刻度 + 暗描边:压在暗岩(低海拔)与亮雪(高海拔)上都可见 */
+  background: var(--archive-canvas);
+  box-shadow: 0 0 0 0.5px rgb(17 19 18 / 45%);
 }
 .ruler__label {
   font-size: var(--archive-fs-tick);
-  color: var(--archive-ink);
+  color: var(--archive-canvas);
   white-space: nowrap;
-  text-shadow: 0 0 6px var(--archive-canvas);
+  text-shadow:
+    0 0 2px rgb(17 19 18 / 85%),
+    0 1px 2px rgb(17 19 18 / 50%);
 }
 .ruler__mark.is-accent .ruler__major {
   background: var(--archive-accent);
@@ -216,8 +233,11 @@
   position: absolute;
   left: calc(50% + 12px);
   font-size: var(--archive-fs-tick);
-  color: var(--archive-ink-muted);
-  text-shadow: 0 0 6px var(--archive-canvas);
+  /* 环跨越亮雪与暗岩两区,用亮字 + 暗描边,两种底色都清晰 */
+  color: var(--archive-canvas);
+  text-shadow:
+    0 0 2px rgb(17 19 18 / 88%),
+    0 1px 3px rgb(17 19 18 / 55%);
 }
 .node:hover .node__dot {
   transform: scale(1.15);
@@ -231,6 +251,9 @@
 }
 .node.is-active .node__num {
   color: var(--archive-accent);
+  text-shadow:
+    0 0 2px rgb(17 19 18 / 88%),
+    0 1px 3px rgb(17 19 18 / 55%);
 }
 
 /* ── 峰名标注（右上）─────────────────────────────────────────── */
@@ -373,5 +396,9 @@
   .ruler__mark:not(.is-accent):nth-child(3),
   .ruler__mark:not(.is-accent):nth-child(5) {
     display: none; /* 移动端只留 8000 与 8849 */
+  }
+  /* 窄屏 stage 拥挤,引线会撞上右上角标注 → 隐去装饰性引线 */
+  .ring__leader {
+    display: none;
   }
 }

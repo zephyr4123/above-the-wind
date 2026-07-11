@@ -13,3 +13,7 @@ __pycache__/
 
 # 采集的原始数据(可由 harvest/ 脚本复现,大体量不入库;curated 子集另议)
 data/
+
+# 浏览器验证的临时产物(Playwright MCP 截图/快照/控制台日志)
+.playwright-mcp/
+/atw-*.png
