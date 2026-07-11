@@ -12,8 +12,10 @@ __pycache__/
 *.pyc
 
 # 采集的原始数据(可由 harvest/ 脚本复现,大体量不入库;curated 子集另议)
-data/
+# 注意锚定根目录:只忽略根 data/,不能误伤 web/src/data/(peaks.ts / citations.ts 是源码)
+/data/
 
 # 浏览器验证的临时产物(Playwright MCP 截图/快照/控制台日志)
 .playwright-mcp/
 /atw-*.png
+/chron-*.png
