@@ -1,0 +1,105 @@
+/* ── 设计令牌:深色·敬畏感 alpine archive(见 DESIGN.md) ────────────── */
+:root {
+  --bg: oklch(0.16 0.014 220);
+  --surface: oklch(0.205 0.016 220);
+  --surface-2: oklch(0.245 0.018 220);
+  --line: oklch(0.32 0.014 220);
+  --ink: oklch(0.95 0.006 220);
+  --muted: oklch(0.71 0.012 220);
+  --primary: oklch(0.76 0.15 132); /* 苔绿 */
+  --accent: oklch(0.84 0.09 218); /* 冰川蓝 */
+  --brass: oklch(0.78 0.11 74); /* 探险黄铜 */
+  --snow: oklch(0.975 0.006 220);
+  --rock: oklch(0.3 0.02 245);
+
+  --font-display: "Archivo Variable", system-ui, sans-serif;
+  --font-ui: "Archivo Variable", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--line) transparent;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  line-height: 1.6;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+svg {
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+::selection {
+  background: color-mix(in oklch, var(--primary) 40%, transparent);
+  color: var(--snow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
