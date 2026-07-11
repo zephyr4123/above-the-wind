@@ -1,0 +1,2344 @@
+[
+  {
+    "domain": "Mountaineering / 8000ers — the 14 eight-thousander peaks (Everest, K2, Kangchenjunga, Lhotse, Makalu, Cho Oyu, Dhaulagiri I, Manaslu, Nanga Parbat, Annapurna I, Gasherbrum I, Broad Peak, Gasherbrum II, Shishapangma): elevations & coordinates, first ascents, summit/death statistics, and each peak's signature events.",
+    "sources": [
+      {
+        "name": "Wikidata",
+        "url": "https://www.wikidata.org/wiki/Q185552",
+        "kind": "structured-db",
+        "license": "CC0",
+        "access": "free",
+        "coverage": "All 14 peaks as individual items (Everest Q513, K2 Q41217, etc.) linked from the 'eight-thousander' class item Q185552. Properties: elevation (P2044), coordinates (P625), first-ascent date, mountain range (P4552), country (P17), prominence (P2660), plus sitelinks to every-language Wikipedia. CC0 = single safest bulk backbone: import coords/elevations/first-ascent dates/cross-language names/QIDs as stable join keys with zero attribution burden.",
+        "formats": "SPARQL (query.wikidata.org), REST/JSON (Special:EntityData/Q513.json), full RDF dumps (.ttl/.nt), CSV export from query UI",
+        "sample_records": "Q513 Mount Everest: elevation 8848.86 m, coord 27.988°N 86.925°E, first ascent 1953-05-29. | Q41217 K2: 8611 m, 35.8825°N 76.5133°E, range Karakoram. | Q185552 'eight-thousander' enumerates all 14 members in one SPARQL query."
+      },
+      {
+        "name": "Wikipedia — 'Eight-thousander' + per-peak articles + 'List of deaths on eight-thousanders'",
+        "url": "https://en.wikipedia.org/wiki/Eight-thousander",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA-4.0 (prose); infobox facts themselves not copyrightable",
+        "access": "free",
+        "coverage": "Master comparison table (elevation, prominence, range, country, first-ascent year+party, total ascents, total deaths), a long-form article per peak and per disaster, plus a curated fatality registry. Deepest narrative source for signature events. Reuse prose under CC-BY-SA (attribute + share-alike); extracted facts (heights, dates, names, counts) are free to restate in your own schema.",
+        "formats": "HTML, MediaWiki API (JSON), full XML dumps, per-article wikitext",
+        "sample_records": "Table row Annapurna I: 8091 m, 1st ascent 1950 (Herzog/Lachenal), ~30% historic fatality rate. | Manaslu 8163 m, 1956 (Imanishi/Gyalzen Norbu). | Deaths list: 340+ deaths on Everest through 2024."
+      },
+      {
+        "name": "The Himalayan Database (Elizabeth Hawley archive)",
+        "url": "https://www.himalayandatabase.com/",
+        "kind": "structured-db",
+        "license": "proprietary but free-to-use custom licence; underlying facts not copyrightable",
+        "access": "free",
+        "coverage": "Authoritative expedition-level archive for the NEPAL Himalaya (490 peaks, 11,500+ expeditions, 90,800+ members, 1905–2024). Covers 8 of the 14 that lie in/on Nepal: Everest, Kangchenjunga, Lhotse, Makalu, Cho Oyu, Dhaulagiri I, Manaslu, Annapurna I. Per expedition: dates, route, camps, O2 use, summit success/failure, deaths, and biographies incl. Sherpas. Does NOT cover Karakoram peaks (K2, Nanga Parbat, GI, GII, Broad Peak) nor Tibet-side Shishapangma. Free since 2017 but ships under its own terms — do NOT redistribute the raw file wholesale; extract facts and cite.",
+        "formats": "Downloadable full DB (Windows program + DBF data files), online search UI, supplementary PDFs ('Himalaya by the Numbers')",
+        "sample_records": "Everest 1953 Spring British expedition → summit success, Hillary & Tenzing. | Manaslu cumulative: 3,317 summits / 90 deaths (2024). | Everest cumulative: 12,884 summits / 340 deaths (Dec 2024)."
+      },
+      {
+        "name": "8000ers.com (Eberhard Jurgalski / Elevation Equality)",
+        "url": "https://www.8000ers.com/",
+        "kind": "structured-db",
+        "license": "proprietary; facts not copyrightable",
+        "access": "free",
+        "coverage": "Reference statistics site covering ALL 14 peaks — fills the Karakoram + Tibet gap the Himalayan Database leaves. Per-peak ascent chronologies and downloadable fatality lists, the authoritative 'summiters of all 14' verification list, and standardized elevation/coordinate data via Jurgalski's 'Elevation Equality'. Guinness-cited authority for 14x8000 claims and disputed/partial summits. No open licence — scrape facts and cite; go-to for the 6 non-Nepal peaks.",
+        "formats": "HTML pages + downloadable per-peak ascent/fatality files (via /cms/en/download.html)",
+        "sample_records": "K2 fatalities file (id=179), Broad Peak fatalities file (id=170). | Deadliest-mountain stats (1950–2012): Annapurna 31.9%, K2 26.5%, Nanga Parbat 20.3%, Dhaulagiri 15.4%, Kangchenjunga 14.1%. | Definitive verified 14x8000 completers list."
+      },
+      {
+        "name": "Internet Archive — pre-1929 official Everest expedition books (US public domain)",
+        "url": "https://archive.org/stream/in.ernet.dli.2015.170876/2015.170876.The-Fight-For-Everest-1924_djvu.txt",
+        "kind": "public-domain-text",
+        "license": "public-domain (published pre-1929)",
+        "access": "free",
+        "coverage": "Full primary-source narratives of the founding Everest expeditions, now US public domain and freely republishable verbatim: 'Mount Everest: The Reconnaissance' (1921), 'The Assault on Mount Everest 1922', 'The Fight for Everest 1924' (Norton, incl. Mallory's letters, the Mallory & Irvine disappearance, Norton's 8,572 m no-O2 record). The highest-value PD long-form text set in the domain. NB later canonical books (Herzog 'Annapurna' 1951, Buhl, Messner, Krakauer 1997) remain in copyright — index as references only.",
+        "formats": "plain txt (_djvu.txt), full-text HTML, DJVU, PDF, EPUB",
+        "sample_records": "1924 book: Norton reaches ~8,572 m without oxygen, 4 June 1924. | Mallory & Irvine vanish 8 June 1924 on the 3rd attempt. | 1922 book: first deaths on Everest (7 porters in an avalanche, June 1922)."
+      },
+      {
+        "name": "Maven Analytics — Himalayan Expeditions sample dataset",
+        "url": "https://mavenanalytics.io/data-playground/himalayan-expeditions",
+        "kind": "dataset",
+        "license": "free download; derived from Himalayan Database (credit HD as origin)",
+        "access": "free",
+        "coverage": "Ready-cleaned tabular extract of the Himalayan Database (peaks, expeditions, members tables) — a convenient CSV starting point that avoids parsing native DBF files. Same Nepal-Himalaya scope/limitations as the source DB. Facts freely usable; it is a redistribution of HD content so credit the Himalayan Database.",
+        "formats": "CSV / Excel",
+        "sample_records": "peaks.csv (peak id, name, height, first-ascent year); expeditions.csv (year, season, route, success, O2, deaths); members.csv (name, role, summited flag, oxygen)."
+      },
+      {
+        "name": "NASA Earth Observatory — 'The Eight-Thousanders'",
+        "url": "https://science.nasa.gov/earth/earth-observatory/the-eight-thousanders/",
+        "kind": "media",
+        "license": "public-domain (US federal government work)",
+        "access": "free",
+        "coverage": "Authoritative annotated satellite imagery locating and labeling all 14 peaks with concise elevation/geography summaries. Primary value: freely-reusable IMAGERY/maps for the archive's visual layer — one of the few sources whose pictures (not just facts) you can reuse. Confirms all 14 lie only in the Himalaya (Nepal/Tibet) and Karakoram (Pakistan).",
+        "formats": "HTML, high-res imagery (JPEG/PNG)",
+        "sample_records": "Labeled satellite map placing the 14 peaks across the two ranges. | Per-peak elevation callouts. | Ideal base map for peak-location graphics."
+      },
+      {
+        "name": "DBpedia",
+        "url": "https://dbpedia.org/page/Eight-thousander",
+        "kind": "structured-db",
+        "license": "CC-BY-SA-3.0",
+        "access": "free",
+        "coverage": "Machine-readable RDF projection of Wikipedia infoboxes for every peak and expedition — an alternative to Wikidata when you want Wikipedia's exact infobox values (elevation, first ascent, ascenders, range) via SPARQL rather than scraping HTML. Attribute + share-alike if reused as-is; prefer Wikidata (CC0) as the primary backbone and use DBpedia as cross-check.",
+        "formats": "SPARQL (dbpedia.org/sparql), RDF/JSON-LD/Turtle, HTML",
+        "sample_records": "dbo:elevation, dbo:firstAscentPerson, dbo:mountainRange triples per peak (e.g. dbr:K2 elevation 8611, range Karakoram). | Links each peak to its expeditions and disaster articles."
+      },
+      {
+        "name": "OpenStreetMap",
+        "url": "https://www.openstreetmap.org/",
+        "kind": "structured-db",
+        "license": "ODbL-1.0",
+        "access": "free",
+        "coverage": "Precise peak node coordinates and elevations (natural=peak, ele tag) plus surrounding features (glaciers, base camps, routes) for all 14 summits — an independent geometric cross-check against Wikidata coords. ODbL requires attribution + share-alike on derived databases; if you only need a few coordinates, Wikidata (CC0) avoids that obligation.",
+        "formats": "API (Overpass/JSON/XML), planet dumps (.pbf), CSV via Overpass",
+        "sample_records": "node natural=peak name=Mount Everest ele=8849. | node natural=peak name=K2 ele=8611. | Khumbu Icefall / base-camp nodes near Everest."
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Mount Everest (Sagarmatha / Chomolungma)",
+        "type": "peak",
+        "one_liner": "The highest mountain on Earth at 8,848.86 m, on the Nepal–Tibet border, first climbed in 1953.",
+        "notable_facts": "Elevation 8,848.86 m (2020 China–Nepal joint remeasurement); coord ~27.988°N, 86.925°E; first ascent 29 May 1953 by Edmund Hillary & Tenzing Norgay (British expedition); ~12,884 summits and ~340 deaths through Dec 2024; Wikidata Q513."
+      },
+      {
+        "name": "K2 (Chhogori)",
+        "type": "peak",
+        "one_liner": "The world's second-highest peak (8,611 m) and the hardest and second-deadliest of the 14, on the China–Pakistan Karakoram border.",
+        "notable_facts": "First ascent 31 July 1954 by Lino Lacedelli & Achille Compagnoni (Italian expedition, Ardito Desio leader); ~26.5% historic fatality rate; first winter ascent only Jan 2021 (all-Nepali Sherpa team); site of the 2008 disaster (11 dead); Wikidata Q41217."
+      },
+      {
+        "name": "Kangchenjunga",
+        "type": "peak",
+        "one_liner": "Third-highest peak (8,586 m) on the Nepal–India (Sikkim) border, first climbed in 1955.",
+        "notable_facts": "First ascent 25 May 1955 by George Band & Joe Brown (British), who stopped just short of the summit out of respect for local sacred belief — a tradition many later climbers honored; among the more dangerous 8000ers; Wikidata Q40197."
+      },
+      {
+        "name": "Lhotse",
+        "type": "peak",
+        "one_liner": "Fourth-highest (8,516 m), sharing the South Col and much of the route with Everest, first climbed in 1956.",
+        "notable_facts": "First ascent 18 May 1956 by Fritz Luchsinger & Ernst Reiss (Swiss); the unclimbed Lhotse South Face is one of the great Himalayan problems; connected to Everest via the South Col; Wikidata Q42211."
+      },
+      {
+        "name": "Makalu",
+        "type": "peak",
+        "one_liner": "Fifth-highest (8,485 m), an isolated four-sided pyramid on the Nepal–Tibet border, first climbed in 1955.",
+        "notable_facts": "First ascent 15 May 1955 by Lionel Terray & Jean Couzy (French expedition led by Jean Franco), noted for putting the whole team on the summit over successive days; steep and technical; Wikidata Q46934."
+      },
+      {
+        "name": "Cho Oyu",
+        "type": "peak",
+        "one_liner": "Sixth-highest (8,188 m) and considered the most accessible 8000er, on the Nepal–Tibet border, first climbed in 1954.",
+        "notable_facts": "First ascent 19 October 1954 by Herbert Tichy, Joseph Jöchler & Pasang Dawa Lama (Austrian) with a small, lightweight team; the most-summited 8000er after Everest; popular first-8000er objective; Wikidata Q46158."
+      },
+      {
+        "name": "Dhaulagiri I",
+        "type": "peak",
+        "one_liner": "Seventh-highest (8,167 m) in central Nepal, first climbed in 1960 and one of the last of the 14 to fall.",
+        "notable_facts": "First ascent 13 May 1960 by a Swiss/Austrian expedition (incl. Kurt Diemberger, Peter Diener, Ernst Forrer, Albin Schelbert, Nyima Dorje, Nawang Dorje) — first 8000er ascent supported by a fixed-wing aircraft; name means 'White Mountain'; Wikidata Q206828."
+      },
+      {
+        "name": "Manaslu",
+        "type": "peak",
+        "one_liner": "Eighth-highest (8,163 m) in Nepal's Gorkha region, first climbed by a Japanese team in 1956.",
+        "notable_facts": "First ascent 9 May 1956 by Toshio Imanishi & Gyalzen Norbu (Japanese) — 'the Japanese mountain'; ~3,317 summits / ~90 deaths through 2024; avalanche-prone; increasingly a commercial trade-route peak; Wikidata Q160538."
+      },
+      {
+        "name": "Nanga Parbat",
+        "type": "peak",
+        "one_liner": "Ninth-highest (8,126 m), the westernmost 8000er in Pakistan, nicknamed 'Killer Mountain', first climbed solo in 1953.",
+        "notable_facts": "First ascent 3 July 1953 by Hermann Buhl (Austro-German), alone and without oxygen in a legendary final push; ~31 deaths in the 1930s German attempts; huge Rupal Face; first winter ascent 2016; Wikidata Q106463."
+      },
+      {
+        "name": "Annapurna I",
+        "type": "peak",
+        "one_liner": "Tenth-highest (8,091 m) but the very first 8000er ever climbed (1950), and the deadliest by fatality rate (~30%).",
+        "notable_facts": "First ascent 3 June 1950 by Maurice Herzog & Louis Lachenal (French) — first 8000er summited and done without prior reconnaissance; both suffered severe frostbite; highest fatality-to-summit ratio of all 14; Wikidata Q16400."
+      },
+      {
+        "name": "Gasherbrum I (Hidden Peak / K5)",
+        "type": "peak",
+        "one_liner": "Eleventh-highest (8,080 m) in the Pakistan Karakoram, first climbed by Americans in 1958.",
+        "notable_facts": "First ascent 5 July 1958 by Pete Schoening & Andy Kauffman (American); later famous for Messner & Habeler's 1975 alpine-style, small-team, no-siege ascent that reshaped Himalayan climbing philosophy; Wikidata Q212333."
+      },
+      {
+        "name": "Broad Peak (K3)",
+        "type": "peak",
+        "one_liner": "Twelfth-highest (8,051 m) in the Karakoram beside K2, first climbed in 1957.",
+        "notable_facts": "First ascent 9 June 1957 by Hermann Buhl, Kurt Diemberger, Marcus Schmuck & Fritz Wintersteller (Austrian) — alpine-style without high-altitude porters or supplemental oxygen, a landmark lightweight ascent; Buhl died weeks later on nearby Chogolisa; Wikidata Q104489."
+      },
+      {
+        "name": "Gasherbrum II (K4)",
+        "type": "peak",
+        "one_liner": "Thirteenth-highest (8,035 m) in the Karakoram, first climbed in 1956, generally the least deadly 8000er.",
+        "notable_facts": "First ascent 7 July 1956 by Fritz Moravec, Josef Larch & Hans Willenpart (Austrian); first winter ascent Feb 2011 (Simone Moro, Denis Urubko, Cory Richards) — the first winter ascent of any Karakoram 8000er; Wikidata Q214026."
+      },
+      {
+        "name": "Shishapangma (Xixabangma / Gosainthan)",
+        "type": "peak",
+        "one_liner": "Lowest of the 14 (8,027 m) and the only one entirely inside Tibet, the last 8000er to be first-climbed (1964).",
+        "notable_facts": "First ascent 2 May 1964 by a Chinese expedition (Xu Jing and team) — completed the summiting of all 14; wholly within China, so long access-restricted; a central-vs-main-summit distinction has caused disputed 'true summit' claims; Wikidata Q590210."
+      },
+      {
+        "name": "Reinhold Messner",
+        "type": "person",
+        "one_liner": "Italian alpinist who in 1986 became the first person to summit all 14 eight-thousanders, all without supplemental oxygen.",
+        "notable_facts": "First to climb all 14 (completed with Makalu & Lhotse in 1986); with Peter Habeler made the first oxygen-free ascent of Everest (1978); solo oxygen-free Everest 1980; pioneer of alpine-style Himalayan climbing; set the purist '14x8000 without O2' benchmark."
+      },
+      {
+        "name": "1996 Mount Everest disaster",
+        "type": "event",
+        "one_liner": "A May 1996 storm that killed 8 climbers in one day near the summit, the defining cautionary tale of commercial high-altitude guiding.",
+        "notable_facts": "Guides Rob Hall and Scott Fischer among the dead; popularized by Jon Krakauer's 'Into Thin Air' (1997, in copyright); catalyzed debate over commercialization, client experience, and turnaround-time discipline on Everest."
+      },
+      {
+        "name": "2008 K2 disaster",
+        "type": "event",
+        "one_liner": "An August 2008 sequence of serac collapses and accidents in the Bottleneck that killed 11 climbers, the deadliest single event on K2.",
+        "notable_facts": "Ice fall in the Bottleneck couloir severed fixed ropes high on the peak, stranding descending climbers; 11 dead across multiple national teams; a landmark case study in fixed-rope dependence and descent-phase fatality risk on the 8000ers."
+      },
+      {
+        "name": "George Mallory & Andrew Irvine (1924)",
+        "type": "event",
+        "one_liner": "Two British climbers who disappeared high on Everest on 8 June 1924, leaving open whether they reached the summit 29 years before Hillary and Tenzing.",
+        "notable_facts": "Part of the 1924 British expedition; Norton reached ~8,572 m without oxygen days earlier; Mallory's body found in 1999, Irvine's remains reportedly located 2024; documented in the public-domain 'The Fight for Everest 1924'."
+      }
+    ],
+    "notes": "Coverage strategy: no single source covers all 14 peaks at expedition granularity, so split the backbone. (1) Wikidata (CC0) as the safest bulk join layer for elevations, coordinates, first-ascent dates, names, and stable QID keys — import freely, no attribution burden. (2) Himalayan Database for deep expedition/summit/death records on the 8 NEPAL peaks (Everest, Kangchenjunga, Lhotse, Makalu, Cho Oyu, Dhaulagiri I, Manaslu, Annapurna I) — it does NOT cover the Karakoram peaks (K2, Nanga Parbat, GI, GII, Broad Peak, in Pakistan) or the Tibet side. (3) 8000ers.com (Jurgalski) fills that gap — authority for all 14, the 6 non-Nepal peaks especially, and for adjudicating disputed/partial summits. Pair these three for full-14 coverage.\n\nLicence discipline — the fact/expression split is the key lever: elevations, coordinates, dates, ascender names, summit counts, and death tallies are FACTS and not copyrightable, so extract and restate them from any source (Himalayan Database and 8000ers.com are free-to-read but ship under proprietary/custom terms — do NOT redistribute their files wholesale; do extract facts and cite). Prose narratives (Wikipedia CC-BY-SA; and all modern books — Herzog 'Annapurna' 1951, Buhl, Messner, Krakauer 'Into Thin Air' 1997) are copyrighted EXPRESSION — reuse Wikipedia text under CC-BY-SA (attribute + share-alike), treat books as citations only, never reproduce.\n\nSafe-to-reproduce-verbatim public-domain layer: the pre-1929 official Everest expedition volumes on archive.org (1921 Reconnaissance, 1922 Assault, 1924 'The Fight for Everest') are US public domain — full text republishable, the richest PD long-form source in the domain. NASA Earth Observatory imagery is US-gov public domain — one of the very few sources whose PICTURES (not just facts) you can reuse; use for base maps. Almost all other peak/expedition photography is in copyright — link but mark not-directly-reusable.\n\nData caveats to encode in schema: (a) elevations have competing figures — Everest 8,848.86 m (2020 joint China–Nepal) vs older 8,848 m; store source+year per height. (b) 'true summit' disputes (notably Shishapangma central vs main, plus Annapurna/Manaslu/Dhaulagiri) mean summit counts differ between Himalayan Database and 8000ers.com — record source + disputed-flag, not a single number. (c) fatality rates are period-dependent (the cited Annapurna ~32% / K2 ~26.5% are Jurgalski's 1950–2012 window) — always store the measurement window. (d) commercialization sharply inflated Everest, Manaslu, and Cho Oyu summit counts — cumulative counts need an as-of date. First-ascent span is firm: 1950 (Annapurna, first) → 1964 (Shishapangma, last)."
+  },
+  {
+    "domain": "iconic-peaks (non-8000m 标志性山峰:马特洪峰、艾格北壁、Denali、阿空加瓜、乞力马扎罗、七大洲最高峰、约塞米蒂大岩壁)",
+    "sources": [
+      {
+        "name": "Wikidata (WikiProject Mountains)",
+        "url": "https://query.wikidata.org/",
+        "kind": "structured-db",
+        "license": "CC0",
+        "access": "free",
+        "coverage": "全球山峰结构化事实:海拔(P2044)、突起度(P2660)、坐标(P625)、首登日期(P1264/P571)、山脉(P4552)、国家(P17)、山难/事件、人物与外部 ID(Peakbagger/GeoNames/OSM 互链)。覆盖本子领域全部头部条目。【最佳整批复用源:CC0 无署名义务】",
+        "formats": "SPARQL(https://query.wikidata.org/sparql)、REST/JSON(wbgetentities)、每周 RDF/JSON dump(可整批下载)",
+        "sample_records": "Matterhorn (Q1374) elevation 4478 m, first ascent 1865-07-14; Denali (Q130018) elevation 6190 m; Aconcagua (Q39739) elevation 6961 m, prominence 6961 m"
+      },
+      {
+        "name": "Wikipedia (英文及多语)",
+        "url": "https://en.wikipedia.org/",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0 (+ GFDL)",
+        "access": "free",
+        "coverage": "每座标志性山峰/北壁/大岩壁的深度条目:地质、登山史、路线、重大远征与山难时间线;专题列表(Seven Summits、Timeline of climbing the Eiger)。【文本表达受 CC-BY-SA,但其中事实本身不受版权;复用需署名+ShareAlike,优先取事实改写表达】",
+        "formats": "HTML、MediaWiki API(action=query, JSON)、REST、XML dump(dumps.wikimedia.org,可整批下载)",
+        "sample_records": "'Seven Summits' 条目列 Bass 版(Kosciuszko 2228 m)与 Messner 版(Carstensz 4884 m);'Eiger' 条目载 1938-07-24 首登北壁 Harrer/Heckmair/Vörg/Kasparek"
+      },
+      {
+        "name": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/",
+        "kind": "media",
+        "license": "混合:CC0 / CC-BY / CC-BY-SA / public-domain(逐文件标注)",
+        "access": "free",
+        "coverage": "山峰照片、历史版画、地图、全景。含大量确定公有领域历史图(Whymper 版画、19 世纪 Alpine Club 影像)与现代 CC 授权照片。【必须逐文件核许可:PD/CC0 可直接复用,CC-BY/BY-SA 需署名,不要假定整站统一】",
+        "formats": "原图文件、MediaWiki API、结构化数据(Wikibase, SPARQL commons-query)",
+        "sample_records": "Whymper《Scrambles》原版木刻(PD-old);Matterhorn/Eiger/El Capitan 现代 CC-BY-SA 照片"
+      },
+      {
+        "name": "Project Gutenberg — Whymper《Scrambles Amongst the Alps 1860-69》",
+        "url": "https://www.gutenberg.org/ebooks/41234",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "1871 年首版一手史料:马特洪峰 1865 首登与下撤 4 人罹难的当事人叙述,含大量原版插图(同为 PD)。本子领域最重要的确权公版老文本之一。【作者卒 1911,文图均过版权期,可整批采集全文与插图】",
+        "formats": "HTML、EPUB、plain txt、含图版本(可整批下载)",
+        "sample_records": "马特洪峰首登与断绳事故章节;姊妹版《The Ascent of the Matterhorn》(ebook 38044)"
+      },
+      {
+        "name": "Project Gutenberg — John Muir《The Yosemite》《My First Summer in the Sierra》",
+        "url": "https://www.gutenberg.org/ebooks/7091",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "约塞米蒂谷/大岩壁(El Capitan、Half Dome)的经典一手描写与地质叙述;Muir 作品(约 210 种)多数进入公有领域。【Muir 卒 1914,美国 1929 年前出版,确入公有领域】",
+        "formats": "HTML、EPUB、txt、PDF(Sierra Club 镜像)",
+        "sample_records": "《The Yosemite》(1912)称 Half Dome '最美最崇高'的岩体;谷底海拔约 4000 ft"
+      },
+      {
+        "name": "Internet Archive — Alpine Journal(伦敦 Alpine Club)历史卷",
+        "url": "https://archive.org/details/bub_gb_wiZNAAAAYAAJ",
+        "kind": "public-domain-text",
+        "license": "public-domain (1863–~1929 卷);较新卷受版权",
+        "access": "free",
+        "coverage": "世界最古老登山期刊。1863–约1929 年卷次经学术图书馆数字化、已入公有领域,含阿尔卑斯首登、马特洪峰/艾格早期记录与科学观测。【仅 1929 年前卷确权公版;1930 年代及后卷(如 1938 艾格北壁当代报道)须逐卷核版权】",
+        "formats": "扫描 PDF、全文 txt(OCR)、EPUB(可整批下载)",
+        "sample_records": "19 世纪各卷 'A record of mountain adventure and scientific observation';1865 后含马特洪峰事件讨论"
+      },
+      {
+        "name": "American Alpine Club — AAC Publications (American Alpine Journal + Accidents in North American Climbing)",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "other",
+        "license": "proprietary (© American Alpine Club;免费在线阅读≠可复用)",
+        "access": "free",
+        "coverage": "1929 至今全部 AAJ 报告(>20,000 篇、>31,000 页),按年份/路线/类型可检索;北美(含 Denali、Yosemite 大岩壁)首登与远征的权威一手记录+事故分析。【事实可引用(不受版权),但正文表达受版权不能整批转载;作事实核验与线索源】",
+        "formats": "HTML 全文可检索(在线阅读免费,无开放 dump/API)",
+        "sample_records": "Denali 各年度新线路报告;Yosemite El Capitan 新路线报道;'Renaissance: A New Route up the Eiger Nordwand'"
+      },
+      {
+        "name": "NPS — Denali National Park Annual Mountaineering Summaries",
+        "url": "https://www.nps.gov/dena/planyourvisit/mountaineering-summary-reports.htm",
+        "kind": "dataset",
+        "license": "public-domain (U.S. 联邦政府作品, 17 U.S.C. §105)",
+        "access": "free",
+        "coverage": "1979 至今 Denali 每年度登山统计:远征数、登山者数、登顶数、按路线分解、事故与救援。权威定量时间序列。【联邦作品无版权,可整批复用作 Denali 登顶统计事实层;嵌入的第三方照片可能另有版权】",
+        "formats": "HTML 页面 + PDF 年度报告(可按年下载)",
+        "sample_records": "逐年 'expeditions / climbers / summits by route'(如西壁 Buttress 路线登顶占比);Talkeetna Ranger Station 编制"
+      },
+      {
+        "name": "GeoNames",
+        "url": "https://www.geonames.org/",
+        "kind": "structured-db",
+        "license": "CC-BY 4.0",
+        "access": "free",
+        "coverage": "全球地名/地形点(feature class T=山峰/山脊),含坐标、海拔、多语别名、国家/行政区。可用于山峰权威坐标与命名规范化。【CC-BY 只需署名即可整批复用】",
+        "formats": "REST/JSON+XML API、整库 CSV dump(download.geonames.org,可整批下载)",
+        "sample_records": "Matterhorn / Monte Cervino 多语别名与坐标;Kilimanjaro/Uhuru Peak 坐标海拔"
+      },
+      {
+        "name": "OpenStreetMap",
+        "url": "https://www.openstreetmap.org/",
+        "kind": "structured-db",
+        "license": "ODbL 1.0",
+        "access": "free",
+        "coverage": "natural=peak / natural=cliff 等要素:峰名、ele 海拔、坐标、wikidata/wikipedia 互链;大岩壁与山体几何。【ODbL:衍生数据库需署名+share-alike(数据库层),嵌入时注意合规】",
+        "formats": "Overpass API(JSON/XML)、Planet dump、Geofabrik 区域提取(可整批下载)",
+        "sample_records": "node natural=peak name=Matterhorn ele=4478 wikidata=Q1374;El Capitan cliff 几何"
+      },
+      {
+        "name": "Peakbagger.com",
+        "url": "https://www.peakbagger.com/",
+        "kind": "structured-db",
+        "license": "proprietary / unknown (无开放许可、无官方 API)",
+        "access": "free",
+        "coverage": ">200,000 座山峰的海拔、突起度、孤立度、山脉层级、峰单(七大洲最高峰、各洲 list)与登山者记录。【无授权、依赖抓取——归为不可直接复用;用于交叉核验海拔/突起度事实,同类数据回落 Wikidata/GeoNames】",
+        "formats": "HTML(仅第三方社区抓取 CLI,无官方 API/dump)",
+        "sample_records": "Seven Summits 峰单及各峰 prominence;Aconcagua/Denali 突起度≈海拔"
+      },
+      {
+        "name": "Wikisource",
+        "url": "https://en.wikisource.org/wiki/Author:Edward_Whymper",
+        "kind": "public-domain-text",
+        "license": "public-domain / CC-BY-SA(逐文标注)",
+        "access": "free",
+        "coverage": "经校对的公版登山文献全文(Whymper 等),结构化章节,便于按段落引用。【底本公版文本可复用;维基编者新增注释/导言可能为 CC-BY-SA】",
+        "formats": "HTML、MediaWiki API、dump",
+        "sample_records": "Whymper 作者页汇集《Scrambles》等公版著作校对文本"
+      },
+      {
+        "name": "HathiTrust Digital Library",
+        "url": "https://www.hathitrust.org/",
+        "kind": "public-domain-text",
+        "license": "public-domain(1929 年前卷) / 受限(在版)",
+        "access": "partial",
+        "coverage": "大量数字化登山史书刊(Alpine Journal、早期远征记、Mummery《My Climbs in the Alps and Caucasus》1895 等),公版卷可全文下载。【仅 public-domain 状态卷可整批复用,逐卷核版权】",
+        "formats": "扫描 PDF、OCR txt(公版卷可整本下载)",
+        "sample_records": "Mummery 1895《My Climbs in the Alps and Caucasus》;早期 Appalachia/Alpine Journal 卷"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "马特洪峰 Matterhorn / Monte Cervino",
+        "type": "peak",
+        "one_liner": "阿尔卑斯瑞士-意大利边界 4478 m 金字塔峰,登山黄金时代的象征,因 1865 首登事故成为登山史转折点。",
+        "notable_facts": "1865-07-14 Edward Whymper 队首登;下撤时绳断,Croz、Hadow、Hudson、Douglas 四人坠亡;Wikidata Q1374;一手史料见 Whymper《Scrambles》(公版)。"
+      },
+      {
+        "name": "艾格北壁 Eiger Nordwand",
+        "type": "peak",
+        "one_liner": "伯尔尼阿尔卑斯 Eiger(3967 m)约 1800 m 北壁,20 世纪最具死亡名声的高山攀登舞台,人称'谋杀墙'(Mordwand)。",
+        "notable_facts": "1938-07-24 首登北壁:Anderl Heckmair、Ludwig Vörg、Heinrich Harrer、Fritz Kasparek;此前 1936 Hinterstoisser 队全灭。"
+      },
+      {
+        "name": "Denali(原 Mount McKinley)",
+        "type": "peak",
+        "one_liner": "北美最高峰,阿拉斯加 6190 m,以极端寒冷、大突起度与漫长冰川路线著称,是七大洲最高峰中技术/气候难度靠前的一座。",
+        "notable_facts": "1913 首登:Hudson Stuck、Harry Karstens、Walter Harper(首个登顶者)、Robert Tatum;2015 官方复名 Denali;NPS 自 1979 发布年度登山统计(公版)。"
+      },
+      {
+        "name": "阿空加瓜 Aconcagua",
+        "type": "peak",
+        "one_liner": "南美暨西/南半球最高峰,阿根廷安第斯 6961 m,非技术'walk-up'但高反致死率不低。",
+        "notable_facts": "1897 首登:瑞士向导 Matthias Zurbriggen(Edward FitzGerald 远征队);突起度≈海拔(6961 m),七大洲最高峰之一;Wikidata Q39739。"
+      },
+      {
+        "name": "乞力马扎罗 Kilimanjaro / Uhuru Peak",
+        "type": "peak",
+        "one_liner": "非洲最高峰,坦桑尼亚独立火山 5895 m,七大洲最高峰中最易抵达者,徒步可达顶但高反风险显著。",
+        "notable_facts": "1889-10-06 首登 Kibo 峰顶:Hans Meyer 与 Ludwig Purtscheller;顶点 Uhuru Peak;冰川持续退缩的气候标志地。"
+      },
+      {
+        "name": "七大洲最高峰 Seven Summits",
+        "type": "event",
+        "one_liner": "每大洲最高峰的集合登顶挑战,存在 Bass 与 Messner 两个版本之争(澳洲/大洋洲之别)。",
+        "notable_facts": "Bass 版用 Kosciuszko(2228 m),Messner 版用 Carstensz Pyramid/Puncak Jaya(4884 m);Richard Bass 1985 首个完成(Bass 版);Messner 提出更难的 Carstensz 版。"
+      },
+      {
+        "name": "卡斯滕兹金字塔 Carstensz Pyramid / Puncak Jaya",
+        "type": "peak",
+        "one_liner": "大洋洲最高峰(印尼新几内亚 4884 m),Messner 版七大洲最高峰,唯一需真正技术攀岩的一座。",
+        "notable_facts": "1962 首登:Heinrich Harrer 队;赤道附近石灰岩壁,进山受政治/许可限制;与 Kosciuszko 之争的核心。"
+      },
+      {
+        "name": "约塞米蒂大岩壁:El Capitan / The Nose",
+        "type": "peak",
+        "one_liner": "约塞米蒂谷约 900 m 花岗岩巨壁,现代大岩壁(big wall)攀登圣地,The Nose 是世界最著名岩线。",
+        "notable_facts": "1958 The Nose 首登:Warren Harding、Wayne Merry、George Whitmore(分段耗时约 47 天);2017 Alex Honnold Freerider 无保护 free solo。"
+      },
+      {
+        "name": "半穹顶 Half Dome",
+        "type": "peak",
+        "one_liner": "约塞米蒂标志性穹顶,西北壁与顶峰攀登史贯穿从 19 世纪拓荒到现代自由攀登。",
+        "notable_facts": "1875 George Anderson 首登顶(钻孔布绳);1957 Royal Robbins 队首登西北壁(Regular NW Face);John Muir 称其最崇高的岩体(公版著作)。"
+      },
+      {
+        "name": "黎明墙自由攀登 Dawn Wall Free Ascent",
+        "type": "event",
+        "one_liner": "2015 年 El Capitan 黎明墙首次完全自由攀登,被视为当代最难大岩壁自由攀登之一。",
+        "notable_facts": "2015-01-14 Tommy Caldwell 与 Kevin Jorgeson 完成,历时 19 天;32 段绳距、多段 5.14 难度;全球主流媒体报道。"
+      },
+      {
+        "name": "Edward Whymper",
+        "type": "person",
+        "one_liner": "英国登山家、版画家,马特洪峰首登者,其著作是阿尔卑斯登山黄金时代的核心一手史料。",
+        "notable_facts": "1840–1911(著作与插图已入公有领域);《Scrambles Amongst the Alps 1860-69》《The Ascent of the Matterhorn》均可全文复用。"
+      },
+      {
+        "name": "Reinhold Messner",
+        "type": "person",
+        "one_liner": "史上最具影响力登山家之一,提出更严格的 Messner 版七大洲最高峰,重塑高山与阿尔卑斯式攀登理念。",
+        "notable_facts": "倡导以 Carstensz 取代 Kosciuszko;虽以 8000m 无氧闻名,其登山哲学深刻影响本子领域的标志峰认知。"
+      },
+      {
+        "name": "Heinrich Harrer",
+        "type": "person",
+        "one_liner": "奥地利登山家,艾格北壁 1938 首登四人组之一,后以《西藏七年》闻名。",
+        "notable_facts": "1938 艾格北壁首登成员;1962 卡斯滕兹金字塔首登成员——横跨本子领域两大标志性事件。"
+      }
+    ],
+    "notes": "研究方法:Wikidata/Wikipedia/Gutenberg/Internet Archive/NPS/AAC 官方页交叉核验,已确认各源许可与整批下载能力。\\n\\n可整批复用的结构化源(推荐做数据地基):1) Wikidata(CC0,SPARQL+RDF dump,按'七大洲最高峰'/'大岩壁'过滤即可导全量事实,零署名义务,首选);2) GeoNames(CC-BY,CSV dump,坐标/多语别名底表);3) OpenStreetMap(ODbL,Overpass/Planet dump,海拔与几何,注意 share-alike);4) NPS Denali 年度统计(美国联邦公版,Denali 登顶时间序列)。\\n\\n确定进入公有领域的老文本(可整本采集全文+插图):Whymper《Scrambles/Ascent of the Matterhorn》(卒 1911)、John Muir 约塞米蒂著作(卒 1914)、Mummery《My Climbs》(1895)、Alpine Journal 1863–~1929 卷;经 Gutenberg/Wikisource/Internet Archive/HathiTrust 分发。\\n\\n事实 vs 表达的边界:海拔/坐标/首登日期/登顶者名单等属事实,不受版权,可自由采集(即便来源是有版权站点如 Peakbagger/AAC);受版权的是文章文字表达、近人著作、现代照片。\\n\\n不可直接复用(仅作事实核验/线索,勿抓正文):Peakbagger(无授权无 API)、AAC Publications(免费阅读但 © AAC)、Wikimedia Commons/Alpine Journal 1930 年后卷中的现代照片与在版内容(须逐件核许可)。\\n\\n覆盖缺口/后续:1) 阿尔卑斯各国官方测绘(如 swisstopo)许可待核,可补权威海拔;2) 大岩壁路线库 Mountain Project 为 CC-BY-NC-SA,商用受限,未纳入,但可作路线拓扑补充;3) 人物生卒/照片版权状态需逐条核验以判可复用性。"
+  },
+  {
+    "domain": "mountaineering / expeditions — chronological milestone expeditions & first ascents (1786 Mont Blanc → present): Golden Age of Alpinism, the 8000ers race (1950 Annapurna, 1953 Everest, 1954 K2), Everest North/South Col routes, and modern alpine-style milestones",
+    "sources": [
+      {
+        "name": "Wikidata",
+        "url": "https://www.wikidata.org/ (SPARQL: https://query.wikidata.org/)",
+        "kind": "structured-db",
+        "license": "CC0 (structured data is public-domain-equivalent; fully reusable, no attribution required)",
+        "access": "free",
+        "coverage": "Best batch-downloadable, licence-clean structured backbone. Items for essentially every named peak, notable first ascent, expedition and mountaineer, with typed statements: elevation P2044, coordinates P625, country P17, mountain range P4552, part-of massif, 'significant event' P793 (with point-in-time P585 qualifier used for first ascents), 'is a list of' P360→'first ascent' Q1194369. Facts are cross-linked to Wikipedia, VIAF, GND. Coverage of exact first-ascent parties/dates is uneven and often lives in linked Wikipedia prose rather than a single property, so treat Wikidata as the spine and enrich from text sources.",
+        "formats": "SPARQL endpoint (query.wikidata.org), REST/JSON per-entity (wikidata.org/wiki/Special:EntityData/Q513.json), full RDF/JSON dumps (dumps.wikimedia.org)",
+        "sample_records": "Q513 Mount Everest — elevation 8848.86 m, coordinates 27.988°N 86.925°E, located in Nepal/China. Q1194369 'first ascent' — concept node. Q337438 'Notable first ascents (mountaineering)' — Wikimedia list, P360→Q1194369. Q10519 Matterhorn — elevation 4478 m, first-ascent event linked to 14 July 1865."
+      },
+      {
+        "name": "Wikipedia (English + other language editions)",
+        "url": "https://en.wikipedia.org/wiki/List_of_first_ascents_of_mountain_summits",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0 (text; attribution + share-alike required). NOTE: underlying facts — who summited what peak on which date — are NOT copyrightable and can be extracted freely; only the prose expression is licensed.",
+        "access": "free",
+        "coverage": "Richest narrative source for the full 1786→present chronology: dedicated articles for nearly every milestone (First ascent of the Matterhorn, 1953 British Mount Everest expedition, 1950 French Annapurna expedition, 1954 Italian K2 expedition, Eight-thousander, Golden age of alpinism), plus curated list-articles that ARE the chronological archive skeleton. Infoboxes give structured first-ascent party, date, route.",
+        "formats": "HTML, MediaWiki API (action=query / REST), full XML dumps (dumps.wikimedia.org), wikitext",
+        "sample_records": "'List of first ascents of mountain summits' — Mont Blanc, 8 Aug 1786, Jacques Balmat & Michel-Gabriel Paccard. 'First ascent of the Matterhorn' — 14 Jul 1865, Whymper party, 4 killed on descent. 'Eight-thousander' — Annapurna I 3 Jun 1950 first 8000er ever climbed."
+      },
+      {
+        "name": "The Himalayan Database (Expedition Archives of Elizabeth Hawley)",
+        "url": "https://www.himalayandatabase.com/",
+        "kind": "structured-db",
+        "license": "Proprietary but free-to-use — maintained by the non-profit The Himalayan Database (est. 2017), free download since 2017. No open CC licence; redistribution of the compiled database is restricted, BUT the underlying facts (expedition dates, members, summit/death outcomes) are not copyrightable and can be ingested. Treat as authoritative fact source, not as a redistributable dump.",
+        "access": "free",
+        "coverage": "THE definitive structured record for Himalayan expeditions, 1905–Spring 2022, covering all significant Nepal peaks plus both sides of border peaks (Everest, Cho Oyu, Makalu, Kangchenjunga). ~471 peak records, 10,800+ expedition records, 81,900+ member records, 15,200+ literature references. Per-expedition: dates, routes, camps, supplemental-oxygen use, summit success, deaths/accidents. Directly answers 'who first climbed peak X and every expedition since.'",
+        "formats": "Downloadable Windows program (Himal 2.7) over a DBF/dBASE dataset; Excel export of query results; PDF guides & summary reports (HimalayaByNbrs.pdf). Community CSV extracts exist (see TidyTuesday below).",
+        "sample_records": "Everest first ascent expedition 1953 (British, Hillary/Tenzing, South Col route, O2 used). Annapurna I 1950 (French, Herzog/Lachenal). Peak record incl. height, first-ascent expedition ID, cumulative summit/death counts."
+      },
+      {
+        "name": "TidyTuesday 'Himalayan Database' CSV extract (2025-01-21)",
+        "url": "https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-01-21/readme.md",
+        "kind": "dataset",
+        "license": "Derived from Himalayan Database; the tidied CSVs are shared for educational use via the TidyTuesday project (GitHub). Same fact-vs-expression caveat as the source DB — usable as a ready-made CSV ingestion path.",
+        "access": "free",
+        "coverage": "Analysis-ready CSV flattening of Himalayan Database peaks + expeditions (peak_id, first-ascent year/country/host, height, expeditions, members, deaths). Convenient batch-download alternative to the Windows DBF program.",
+        "formats": "CSV (raw on GitHub / githubusercontent)",
+        "sample_records": "peaks.csv: EVER, Everest, 8849 m, first ascent 1953, Nepal/China. exped.csv rows keyed by peak+year with success/oxygen/death flags."
+      },
+      {
+        "name": "AAC Publications — American Alpine Journal & Accidents archive",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "encyclopedia",
+        "license": "Proprietary (© American Alpine Club); free to read online, NOT openly licensed — article text/photos are not redistributable. Factual expedition data (peak, route, party, date, outcome) is extractable. Older AAJ volumes (pre-1930, e.g. 1929 Vol.1) are entering/​in public domain via scans on Internet Archive.",
+        "access": "free",
+        "coverage": "20,000+ full-text expedition and first-ascent reports, 1929–2024, fully searchable, with an AAJ Comprehensive Index (peaks/routes/climbers). Primary-source authority for Greater Ranges first ascents and new routes worldwide; complements Himalayan Database beyond Nepal (Karakoram, Alaska, Andes, Antarctica).",
+        "formats": "HTML full-text + search UI + index pages; scanned volumes on Internet Archive (see below)",
+        "sample_records": "AAJ report on 1963 American Everest Expedition (West Ridge, Hornbein/Unsoeld). AAJ 1954 K2 Italian expedition account. AAJ Comprehensive Index entries by peak."
+      },
+      {
+        "name": "Project Gutenberg — public-domain mountaineering classics",
+        "url": "https://www.gutenberg.org/ebooks/subject/15943",
+        "kind": "public-domain-text",
+        "license": "Public domain (US) — fully reusable including verbatim text and original illustrations; the small Gutenberg trademark/licence applies only to the packaged files, strip it and the underlying work is free.",
+        "access": "free",
+        "coverage": "Primary-source narratives of the Golden Age of Alpinism and early Himalayan reconnaissance — the load-bearing public-domain corpus for pre-1930 milestones. Full-text of the actual expedition accounts, ideal for quoting and building an old-books shelf.",
+        "formats": "plain-text (.txt), HTML, EPUB, Kindle",
+        "sample_records": "#41234 Whymper, 'Scrambles Amongst the Alps 1860-69' (Matterhorn 1865). #38044 Whymper, 'The Ascent of the Matterhorn'. #39421 Howard-Bury, 'Mount Everest: The Reconnaissance, 1921'. #69128 G.I. Finch, 'The Making of a Mountaineer'. Tyndall, 'Hours of Exercise in the Alps'."
+      },
+      {
+        "name": "Internet Archive (archive.org)",
+        "url": "https://archive.org/details/scramblesamongst41234gut",
+        "kind": "public-domain-text",
+        "license": "Mixed — large body of pre-1930 mountaineering books & journal runs are public domain (fully reusable); post-1930 scans may be lending-only/in-copyright (read but not redistribute). Check each item's rights statement.",
+        "access": "partial",
+        "coverage": "Deep scan archive: early American Alpine Journal volumes (1929–1932 Vol.1 onward), Hooker's 'Himalayan Journals' (1854), Alpine Journal runs, historic expedition monographs, plus borrowable modern AAJ years. Best source for high-res scans and OCR full text of the old public-domain shelf.",
+        "formats": "PDF, full-text OCR (.txt), EPUB, DjVu, JPEG page scans; metadata API",
+        "sample_records": "'The American Alpine Journal 1929-1932 Vol 1'. 'Himalayan Journals' by J.D. Hooker (1854). Whymper 'Scrambles' Gutenberg mirror."
+      },
+      {
+        "name": "DBpedia",
+        "url": "https://dbpedia.org/ (SPARQL: https://dbpedia.org/sparql)",
+        "kind": "structured-db",
+        "license": "CC-BY-SA 3.0 (attribution + share-alike; inherits Wikipedia licence)",
+        "access": "free",
+        "coverage": "RDF-ified extraction of Wikipedia infoboxes — mountains with elevation, first-ascent date/party, ranges, coordinates as queryable triples. A structured, batch-queryable alternative view of the same facts, useful for cross-checking Wikidata gaps in first-ascent parties that live in infoboxes.",
+        "formats": "SPARQL endpoint, RDF dumps (Turtle/N-Triples), Linked-Data URIs",
+        "sample_records": "dbpedia.org/page/Mount_Everest — elevation, first ascenders Edmund Hillary & Tenzing Norgay, first ascent 1953. dbpedia.org/page/Matterhorn — first ascent 1865."
+      },
+      {
+        "name": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/Category:Mountaineering",
+        "kind": "media",
+        "license": "Mixed but reuse-friendly — historic photos/maps generally public domain (pre-1930 / expired), modern uploads CC-BY / CC-BY-SA / CC0. Each file states its licence; filter to PD + CC for a safely reusable image pool. Do NOT assume famous modern summit photos (e.g. the 1953 Tenzing-on-summit photo) are free — many remain in copyright.",
+        "access": "free",
+        "coverage": "Reusable image/map layer for the archive: portraits of Whymper/Balmat, historic Alpine and Himalayan expedition photos, route maps, peak panoramas. Structured file metadata via Commons API / SDC (Structured Data on Commons, CC0).",
+        "formats": "JPEG/PNG/SVG/TIFF, MediaWiki + Commons API, SDC statements (JSON)",
+        "sample_records": "PD engravings from Whymper's 'Scrambles'. Historic photos of the 1924 & 1953 Everest expeditions (rights vary). Route map SVGs for Everest South Col / North Col."
+      },
+      {
+        "name": "HIMALAYA journal + Digital Himalaya + EBHR",
+        "url": "https://journals.ed.ac.uk/himalaya",
+        "kind": "encyclopedia",
+        "license": "HIMALAYA: CC-BY-NC-ND 4.0 (free to read/share, NON-commercial, NO derivatives — so NOT freely reusable in a commercial archive, cite only). EBHR: CC-BY 4.0 (fully reusable with attribution). Digital Himalaya scans: mixed/permission-based.",
+        "access": "free",
+        "coverage": "Scholarly + regional context around Himalayan mountaineering history, Sherpa/porter history, expedition ethnography; secondary source for verification and context rather than a bulk fact dump. EBHR content is the openly-licensed subset.",
+        "formats": "PDF, HTML (OpenEdition / Edinburgh Diamond / Digital Commons platforms)",
+        "sample_records": "HIMALAYA back-issues on Sherpa mountaineering labour. EBHR (CC-BY) articles on Himalayan exploration history."
+      },
+      {
+        "name": "OpenStreetMap",
+        "url": "https://www.openstreetmap.org/ (Overpass: https://overpass-api.de/)",
+        "kind": "dataset",
+        "license": "ODbL 1.0 (Open Database License — free to use/redistribute with attribution + share-alike on the database)",
+        "access": "free",
+        "coverage": "Authoritative open geospatial layer: peak nodes (natural=peak) with names, elevation (ele), and increasingly wikidata= links for cross-referencing. Supplies clean coordinates/geometry for mapping the chronology; complements Wikidata's WikiProject Mountains linkage effort.",
+        "formats": "Overpass API (JSON/XML), planet dumps (.osm.pbf), Nominatim geocoding",
+        "sample_records": "node natural=peak name=Mount Everest ele=8849 wikidata=Q513. node natural=peak name=K2 ele=8611. natural=peak Annapurna I ele=8091."
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Mont Blanc — first ascent (1786)",
+        "type": "expedition/first-ascent",
+        "one_liner": "The founding event of mountaineering: the first ascent of the Alps' highest peak, taken as the chronological start (1786) of the whole discipline.",
+        "notable_facts": "8 Aug 1786; Jacques Balmat (crystal hunter) & Dr Michel-Gabriel Paccard reached 4808 m; spurred by Horace-Bénédict de Saussure's prize offer; Saussure himself summited 1787. Marks the pre-history before the organized Golden Age."
+      },
+      {
+        "name": "Golden Age of Alpinism (1854–1865)",
+        "type": "event/era",
+        "one_liner": "The decade in which most major Alpine 4000 m peaks saw their first ascents, largely by British climbers with Swiss/Italian guides, bracketed by Wetterhorn (1854) and the Matterhorn (1865).",
+        "notable_facts": "Alfred Wills' Wetterhorn ascent (1854) conventionally opens it; the Matterhorn tragedy (1865) closes it. Founding of the Alpine Club (London, 1857), the world's first mountaineering club. Key figures: Whymper, Leslie Stephen, John Tyndall."
+      },
+      {
+        "name": "First ascent of the Matterhorn (1865)",
+        "type": "expedition/first-ascent",
+        "one_liner": "The dramatic and deadly climax of the Golden Age — first ascent of the Matterhorn followed by a fatal descent that made mountaineering front-page news.",
+        "notable_facts": "14 Jul 1865; led by Edward Whymper via the Hörnli ridge; 7 on the team, 4 (Hadow, Hudson, Douglas, guide Michel Croz) killed when a rope broke on descent. Documented in Whymper's public-domain 'Scrambles Amongst the Alps'. Italian party (Carrel) reached the summit days later via the Italian ridge."
+      },
+      {
+        "name": "Aconcagua — first ascent (1897)",
+        "type": "expedition/first-ascent",
+        "one_liner": "First ascent of the highest peak outside Asia (6961 m) and highest in the Americas, extending milestone climbing to the Andes.",
+        "notable_facts": "14 Jan 1897; Swiss guide Matthias Zurbriggen (solo to summit) on the FitzGerald expedition. Now the most-climbed of the Seven Summits' non-Everest peaks."
+      },
+      {
+        "name": "Denali (Mt McKinley) — first ascent (1913)",
+        "type": "expedition/first-ascent",
+        "one_liner": "First ascent of North America's highest peak (6190 m), a milestone in high-latitude cold-weather mountaineering.",
+        "notable_facts": "7 Jun 1913; Hudson Stuck, Harry Karstens, Walter Harper (first to summit) & Robert Tatum. Followed the discredited 1906 false-summit claim of Frederick Cook."
+      },
+      {
+        "name": "Early Everest expeditions & the Mallory–Irvine mystery (1921–1924)",
+        "type": "expedition",
+        "one_liner": "The British reconnaissance and attempts on Everest's North (Tibetan) side that opened the world's highest peak and produced mountaineering's most enduring mystery.",
+        "notable_facts": "1921 Reconnaissance (Howard-Bury; Mallory scouts North Col route — book is public domain). 1922 first use of bottled oxygen (Finch/Bruce reach ~8320 m). 8 Jun 1924 George Mallory & Andrew Irvine disappear high on the NE ridge — 'because it's there.' Mallory's body found 1999."
+      },
+      {
+        "name": "Eiger North Face — first ascent (1938)",
+        "type": "expedition/first-ascent",
+        "one_liner": "First ascent of the notorious 1800 m Eiger Nordwand ('Mordwand'), the emblematic hard Alpine north-face milestone.",
+        "notable_facts": "21–24 Jul 1938; Austro-German rope of Heckmair, Vörg, Harrer, Kasparek. Followed years of fatal attempts (the 1936 Kurz tragedy). Defines the '6 great north faces of the Alps' era."
+      },
+      {
+        "name": "Annapurna I — first ascent (1950)",
+        "type": "expedition/first-ascent",
+        "one_liner": "The first eight-thousander ever climbed and the highest summit reached by humans at the time — the opening shot of the Himalayan Golden Age.",
+        "notable_facts": "3 Jun 1950; French expedition, Maurice Herzog & Louis Lachenal to the 8091 m summit with no supplemental oxygen; catastrophic frostbite (amputations) on descent. Herzog's book 'Annapurna' became the best-selling mountaineering book ever. Annapurna remains the deadliest 8000er by summit-to-fatality ratio."
+      },
+      {
+        "name": "Mount Everest — first ascent (1953)",
+        "type": "expedition/first-ascent",
+        "one_liner": "First ascent of the highest point on Earth (8848.86 m), the single most famous mountaineering milestone.",
+        "notable_facts": "29 May 1953, ~11:30; Edmund Hillary (NZ) & Tenzing Norgay (Sherpa) via the South Col / SE ridge (the now-standard route), British expedition led by John Hunt; bottled oxygen used. News reached London on Coronation Day (2 Jun 1953). The South Col route contrasts with the Tibetan North Col route of the 1920s attempts."
+      },
+      {
+        "name": "Nanga Parbat — first ascent (1953)",
+        "type": "expedition/first-ascent",
+        "one_liner": "First ascent of the 8126 m 'Killer Mountain,' achieved solo on the final push in one of mountaineering's greatest feats of endurance.",
+        "notable_facts": "3 Jul 1953; Hermann Buhl (Austrian, German-Austrian expedition) soloed the last ~1300 m, without oxygen, surviving a night standing on a ledge. Ended a deadly German obsession (31 deaths in prior attempts, incl. 1934 & 1937 disasters)."
+      },
+      {
+        "name": "K2 — first ascent (1954)",
+        "type": "expedition/first-ascent",
+        "one_liner": "First ascent of the world's second-highest (8611 m) and hardest of the giant peaks, the 'Savage Mountain.'",
+        "notable_facts": "31 Jul 1954; Italian expedition led by Ardito Desio, summit by Lino Lacedelli & Achille Compagnoni via the Abruzzi Spur. Enduring controversy over Walter Bonatti and Hunza porter Mahdi's high bivouac supporting the oxygen supply. K2 has never been summited in winter until Jan 2021 (Nirmal Purja's all-Nepali/Sherpa team)."
+      },
+      {
+        "name": "The 8000-metre-peaks race (1950–1964)",
+        "type": "event/era",
+        "one_liner": "The 14-year sprint in which all fourteen 8000 m peaks received their first ascents, the Himalayan analogue of the Alpine Golden Age.",
+        "notable_facts": "Annapurna 1950 → Shishapangma 1964 (last, Chinese team). Milestones between: Everest 1953, Nanga Parbat 1953, K2 1954, Cho Oyu 1954, Makalu 1955, Kangchenjunga 1955 (Band & Brown, stopped just short of the sacred summit), Lhotse & Manaslu & Gasherbrum II 1956, Broad Peak 1957, Gasherbrum I & Dhaulagiri 1960."
+      },
+      {
+        "name": "Everest without supplemental oxygen (1978)",
+        "type": "expedition/first-ascent",
+        "one_liner": "First ascent of Everest without bottled oxygen, shattering the belief that the 'death zone' summit was physiologically impossible to reach on lung power alone.",
+        "notable_facts": "8 May 1978; Reinhold Messner & Peter Habeler. Messner followed with the first solo, oxygen-less Everest ascent (North side, monsoon, Aug 1980)."
+      },
+      {
+        "name": "Reinhold Messner — all 14 eight-thousanders (completed 1986)",
+        "type": "person",
+        "one_liner": "The South Tyrolean who redefined high-altitude mountaineering and became the first person to climb all fourteen 8000 m peaks, all without supplemental oxygen.",
+        "notable_facts": "Completed the 14 with Lhotse in Oct 1986 (started Nanga Parbat 1970, where brother Günther died). Pioneer of alpine-style on the giants; also first Everest without O2 (1978) and solo (1980). Jerzy Kukuczka became the 2nd to complete the 14 (1987), far faster."
+      },
+      {
+        "name": "Elizabeth Hawley — chronicler of the Himalaya",
+        "type": "person",
+        "one_liner": "The Kathmandu-based American journalist whose meticulous expedition interviews became the Himalayan Database, the authoritative record for the whole era.",
+        "notable_facts": "Documented Nepal Himalayan expeditions from 1963 until her death in 2018; her verification of summit claims was so trusted that ascents were 'unofficially confirmed by Miss Hawley.' Peak Peak 'Hawley' / Peak Hawley named for her. Her archive → the free Himalayan Database (with Richard Salisbury digitising)."
+      },
+      {
+        "name": "Everest South Col vs North Col routes",
+        "type": "event/route",
+        "one_liner": "The two classic 'normal' routes on Everest — the Nepalese South Col route of the 1953 first ascent and the Tibetan North Col/NE-ridge route of the 1920s pioneers.",
+        "notable_facts": "South Col route: via Khumbu Icefall → Western Cwm → Lhotse Face → South Col (7900 m) → South Summit → Hillary Step → summit (first climbed 1953). North Col route: via East Rongbuk Glacier → North Col (7000 m) → NE ridge (attempted 1921–24, first climbed by a Chinese team 25 May 1960). These two 'col' routes remain the dominant commercial lines today."
+      }
+    ],
+    "notes": "RESEARCH CONFIDENCE & GAPS.\n\nBatch-downloadable structured sources (the archive's data foundation): (1) Wikidata via SPARQL/JSON/RDF dumps — the ONLY fully licence-clean (CC0) structured spine, but its first-ascent party/date coverage is patchy and often lives only in linked prose. (2) The Himalayan Database — the single most authoritative structured expedition record (10,800+ expeditions, 1905–2022), free to download, but distributed as a Windows/DBF program with proprietary terms; ingest the FACTS, don't redistribute the compiled DB. A ready-made CSV path exists via the TidyTuesday 2025-01-21 extract on GitHub. (3) DBpedia and (4) OpenStreetMap/Overpass give additional batch-queryable structured layers (CC-BY-SA and ODbL respectively).\n\nConfirmed public-domain old-text shelf (safe to reuse verbatim, incl. period illustrations): Project Gutenberg (Whymper's 'Scrambles Amongst the Alps' #41234 and 'Ascent of the Matterhorn' #38044; Howard-Bury 'Everest Reconnaissance 1921' #39421; Finch 'Making of a Mountaineer' #69128; Tyndall) and Internet Archive (early AAJ 1929–32, Hooker's 'Himalayan Journals' 1854, historic Alpine Journal runs). These cover roughly 1786→1930 primary narratives.\n\nFACT vs EXPRESSION — the load-bearing distinction for this archive: summit dates, parties, routes, elevations and outcomes are facts, NOT copyrightable, so they can be freely ingested from ANY source including the Himalayan Database, AAJ, and current books. What is protected is the specific prose, photographs, and maps. Practically: build the chronological fact database from Himalayan Database + Wikidata + AAJ; pull reusable narrative/quotes and images ONLY from public-domain (Gutenberg/IA/PD Commons) and openly-licensed (CC0/CC-BY) sources.\n\nNOT-DIRECTLY-REUSABLE (cite/verify only): AAJ article text & photos (© AAC, free to read), modern expedition books (Herzog's 'Annapurna', Buhl, Bonatti, Messner — in copyright), most famous 20th-c. summit photographs (e.g. the 1953 Tenzing summit photo — assume in copyright), and HIMALAYA journal (CC-BY-NC-ND: non-commercial + no-derivatives, so unusable in a commercial archive beyond citation). Wikipedia text is CC-BY-SA (reusable WITH attribution + share-alike) — cleanest to extract facts from it rather than copy prose.\n\nVERIFICATION STATUS: source licences/coverage were checked against primary pages (himalayandatabase.com, wikidata.org, publications.americanalpineclub.org, gutenberg.org) this session. Wikidata's exact property usage for first ascents was only partially pinned down — mountains reliably carry elevation (P2044)/coordinates (P625) but first-ascent parties are frequently modelled via 'significant event' (P793) qualifiers or absent, so a schema step should plan to enrich first-ascent fields from Himalayan Database + Wikipedia infoboxes rather than expecting a single clean Wikidata property. Key_entities facts are high-confidence standard mountaineering history; exact dates/times are as generally recorded but a couple (e.g. precise K2 Bonatti-affair details) remain historically contested and should be flagged in the archive.\""
+  },
+  {
+    "domain": "mountaineers — 跨时代跨国传奇登山家小传（登山编年档案库子领域）",
+    "sources": [
+      {
+        "name": "Wikidata",
+        "url": "https://query.wikidata.org/ (SPARQL) · https://www.wikidata.org/wiki/Q189307",
+        "kind": "structured-db",
+        "license": "CC0",
+        "access": "free",
+        "coverage": "几乎所有著名登山家、8000米山峰、重大远征、登山事件都有结构化条目（生卒、国籍、首登 P first ascent、死亡地点/死因、奖项、身份链接）。CC0 可无条件整批复用、再分发、商用，无署名要求——本档案库事实层首选地基。",
+        "formats": "SPARQL / JSON / RDF dump / REST API (wbgetentities)",
+        "sample_records": "Messner=Q189307（意大利, b.1944, 首位无氧登顶珠峰、首位完成14座8000米）；Rutkiewicz=Q237493（波兰,1943–1992,首位女性登顶K2）；每座8000米峰含海拔/坐标/首登日期结构化字段。"
+      },
+      {
+        "name": "维基百科 (Wikipedia 英/德/波/意等多语)",
+        "url": "https://en.wikipedia.org/wiki/Reinhold_Messner",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0",
+        "access": "free",
+        "coverage": "每位目标人物长篇传记+infobox（首登记录/远征年表/著作）；波语版对 Rutkiewicz/Kukuczka、意语版对 Messner 常比英文详。文字表达受 CC-BY-SA（复用需署名+相同共享）；底层事实不受版权，可自由抽取重写。",
+        "formats": "MediaWiki API (action=query) / REST / 全站 XML dump / HTML",
+        "sample_records": "Hillary & Tenzing 1953-05-29 首登珠峰；Lynn Hill 1993 首次自由攀登 El Capitan 'The Nose'；Ueli Steck 2017-04-30 于努子峰坠亡。"
+      },
+      {
+        "name": "Himalayan Database (Elizabeth Hawley 远征档案)",
+        "url": "https://www.himalayandatabase.com/downloads.html",
+        "kind": "dataset",
+        "license": "public-domain（2017 起免费，官方声明公共领域）",
+        "access": "free",
+        "coverage": "尼泊尔喜马拉雅权威远征逐条记录：1905–2024，490 座峰、11,500+ 远征、90,800+ 队员、16,100+ 文献引用；含每次登顶的人/日期/路线/是否用氧/死亡。可整批下载的结构化源，事实可自由复用（建议致敬 Hawley/Salisbury）。",
+        "formats": "可下载 Windows 程序(Himal 2.x)+底层数据表；社区镜像为 CSV/TSV（Maven Analytics、GitHub tacookson/data）",
+        "sample_records": "Messner/Habeler 1978 珠峰无氧登顶记录；Kukuczka 多条 8000 米首登/新路线/冬季记录，均带精确日期与用氧标志。"
+      },
+      {
+        "name": "8000ers.com (Eberhard Jurgalski 编年)",
+        "url": "https://www.8000ers.com/",
+        "kind": "structured-db",
+        "license": "proprietary（© Jurgalski 编纂版权）",
+        "access": "free",
+        "coverage": "14 座8000米峰最权威登顶年表与统计：每座历次登顶、无氧/用氧、季节、死亡名录及'全部14座'完成者榜，对真伪登顶（真顶 vs 前峰）做法证级校验。表达/列表排布受版权不可照搬；其中客观事实可作交叉验证与抽取。",
+        "formats": "HTML 表 + 可下载 PDF/Excel 列表",
+        "sample_records": "'All 14' 完成者榜（Messner 1986 首位、Kukuczka 1987 次位）；Annapurna/Manaslu 真顶争议校订。"
+      },
+      {
+        "name": "American Alpine Journal / AAC Publications",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "media",
+        "license": "proprietary（作者/AAC 版权，全文免费阅读）",
+        "access": "free",
+        "coverage": "1929 至今 20,000+ 篇远征报告全文免费全文检索；重大新路线的第一手叙述（含 Messner/Bonington/Steck 相关报道）+《Accidents in North American Climbing》事故档案。免费读≠免费复用：近现代报告受版权，作事实核验/引用/合理使用。",
+        "formats": "HTML 全文 + 站内检索（按年/页/类型/标题）",
+        "sample_records": "各年 8000 米新路线年度综述；1975 珠峰西南壁 Bonington 队报道；事故档案结构化字段（日期/地点/原因）。"
+      },
+      {
+        "name": "Alpine Journal (伦敦 Alpine Club) 历史卷 · Internet Archive",
+        "url": "https://archive.org/details/the-alpine-journal-vol-27-1913",
+        "kind": "public-domain-text",
+        "license": "public-domain（美国境内，约 1863–1929 卷）",
+        "access": "free",
+        "coverage": "世界最古老登山期刊（1863 创刊）。早期卷记录阿尔卑斯黄金时代与喜马拉雅早期探险，是 Whymper/Mummery 时代人物与事件的一手史料。确定公共领域，可整卷 OCR 抽取、全文入库、再分发——重点批下载源。",
+        "formats": "扫描 PDF / OCR txt / EPUB / DjVu",
+        "sample_records": "Vol 9 (1878–1880)、Vol 27 (1913)、Vol 37 (1925) 逐卷全文，标注 'Public Domain in the United States'。"
+      },
+      {
+        "name": "Project Gutenberg — 登山经典公版书",
+        "url": "https://www.gutenberg.org/ebooks/41234",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "已过版权期的登山文学/回忆录：Whymper《Scrambles Amongst the Alps》《The Ascent of the Matterhorn》、C.T. Dent《Above the Snow Line》等，构成'早期传奇+事件'的公版叙事底稿。确定公共领域、已人工校对，可全文入库/切片/再分发/商用。",
+        "formats": "txt / HTML / EPUB / Kindle（有 catalog/API 便于批量抓取）",
+        "sample_records": "Whymper Scrambles=eBook #41234（1865 马特洪峰首登与下撤惨剧一手记述）；The Ascent of the Matterhorn=#38044。"
+      },
+      {
+        "name": "Internet Archive — 登山文献总库",
+        "url": "https://archive.org/details/scramblesamongst00whym",
+        "kind": "public-domain-text",
+        "license": "mixed（老书 public-domain；近书受限借阅）",
+        "access": "partial",
+        "coverage": "海量登山书刊扫描：Whymper、Mummery、早期喜马拉雅远征报告、AAJ 旧卷、Alpine Journal 旧卷。老书可直接下载全文；逐条看版权标记，'Public Domain' 可复用，'lending' 借阅本不可批量抓取。",
+        "formats": "PDF / txt(OCR) / DjVu / EPUB · 有 Metadata API",
+        "sample_records": "Scrambles amongst the Alps 原始 1871 扫描本；AAJ 早期卷目录扫描。"
+      },
+      {
+        "name": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/",
+        "kind": "media",
+        "license": "mixed（多为 CC-BY-SA / CC0 / public-domain）",
+        "access": "free",
+        "coverage": "人物肖像、山峰照片、历史图片、地图——档案库配图首选可复用图源，但须逐图核对许可：老照片/PD 图可用；现代摄影多 CC-BY-SA 需署名+SA；在世人物近照多受专有版权，归为不可直接复用。",
+        "formats": "图片文件 + 结构化许可元数据 API",
+        "sample_records": "珠峰/K2/马特洪峰历史照片；部分登山家肖像（需逐图核许可）。"
+      },
+      {
+        "name": "DBpedia",
+        "url": "https://dbpedia.org/sparql",
+        "kind": "structured-db",
+        "license": "CC-BY-SA 4.0",
+        "access": "free",
+        "coverage": "从维基百科抽取的结构化 RDF，可 SPARQL 查询登山家/山峰实体及关系，作 Wikidata 补充（infobox 派生字段更全）。CC-BY-SA 需署名+相同共享；优先以 Wikidata(CC0) 为主、DBpedia 补缺。",
+        "formats": "SPARQL / RDF dump / JSON-LD",
+        "sample_records": "dbr:Reinhold_Messner 的 birthDate/nationality/notableWork 三元组。"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Edmund Hillary",
+        "type": "person",
+        "one_liner": "新西兰养蜂人出身的登山家，与丹增·诺盖于 1953-05-29 完成人类首次登顶珠穆朗玛峰。",
+        "notable_facts": "1919–2008；1953 英国珠峰远征队（John Hunt 领队）成员；后半生投身夏尔巴学校与医院建设（喜马拉雅信托）。Wikidata/Himalayan Database 均有权威条目。"
+      },
+      {
+        "name": "Tenzing Norgay",
+        "type": "person",
+        "one_liner": "尼泊尔/印度夏尔巴登山家，与 Hillary 并肩首登珠峰，象征夏尔巴对喜马拉雅登山的核心贡献。",
+        "notable_facts": "约 1914–1986；1953 前已多次参与珠峰远征积累经验；两人始终不公开谁先踏顶以示平等。事实无版权，早期照片多已公版。"
+      },
+      {
+        "name": "Reinhold Messner",
+        "type": "person",
+        "one_liner": "意大利/南蒂罗尔登山家，人类首位登顶全部14座8000米山峰、且 1980 首次无氧单人登顶珠峰。",
+        "notable_facts": "b.1944；1978 与 Peter Habeler 首次无氧登顶珠峰；1970 南迦帕尔巴特之行痛失弟弟 Günther。Wikidata Q189307；8000ers.com 列为'14座'首位完成者(1986)。"
+      },
+      {
+        "name": "Chris Bonington",
+        "type": "person",
+        "one_liner": "英国最具影响力的远征领队与登山家，主导 1970 安纳普尔纳南壁、1975 珠峰西南壁等里程碑式大墙远征。",
+        "notable_facts": "b.1934；擅长'围攻式'大型远征的组织；AAC Publications 与 Alpine Journal 有大量其远征一手报道，事实可交叉验证。"
+      },
+      {
+        "name": "Wanda Rutkiewicz",
+        "type": "person",
+        "one_liner": "波兰登山家，1986 成为首位登顶 K2 的女性、亦是首批登顶珠峰的欧洲女性之一。",
+        "notable_facts": "1943–1992；1978 登顶珠峰；1992 在干城章嘉冲顶途中失踪遇难；波兰喜马拉雅黄金一代旗帜。Wikidata Q237493。"
+      },
+      {
+        "name": "Jerzy Kukuczka",
+        "type": "person",
+        "one_liner": "波兰登山家，全球第二位完成全部14座8000米山峰者，且几乎全靠新路线或冬季首攀完成，风格远比 Messner 艰险。",
+        "notable_facts": "1948–1989；1987 完成 14 座（用时不到 8 年）；1989 于洛子峰南壁坠亡；'波兰冬季登山'时代代表。8000ers.com 列为 14 座次位完成者。"
+      },
+      {
+        "name": "Ueli Steck",
+        "type": "person",
+        "one_liner": "瑞士'瑞士机器'速攀大师，以阿尔卑斯北壁极速独攀（艾格北壁等）与高海拔轻量化风格闻名。",
+        "notable_facts": "1976–2017；多次刷新艾格/大乔拉斯北壁速度纪录；2017-04-30 在努子峰为珠峰-洛子连穿做适应时坠亡。Himalayan Database/维基百科有条目。"
+      },
+      {
+        "name": "Lynn Hill",
+        "type": "person",
+        "one_liner": "美国自由攀登传奇，1993 首次完成 El Capitan 'The Nose' 路线的自由攀登，1994 更以一日内完成，震动攀岩界。",
+        "notable_facts": "b.1961；名言'It goes, boys'；竞技攀岩与大墙自由攀登跨界标志人物，把女性攀登者推到技术前沿。"
+      },
+      {
+        "name": "Edward Whymper",
+        "type": "person",
+        "one_liner": "英国登山家/雕版画家，1865 首登马特洪峰，下撤时四名队员坠亡，成为阿尔卑斯黄金时代的悲剧性收官。",
+        "notable_facts": "1840–1911；著《Scrambles Amongst the Alps》（公版, Gutenberg #41234）——早期传奇的公版一手叙事底稿，可全文入库。"
+      },
+      {
+        "name": "珠穆朗玛峰首登 (1953)",
+        "type": "event",
+        "one_liner": "1953-05-29 Hillary 与 Tenzing 完成人类首次登顶地球最高峰，是 20 世纪登山史的分水岭事件。",
+        "notable_facts": "John Hunt 领队的英国远征队；Himalayan Database 有该远征逐条记录（队员/日期/用氧/路线），事实可自由复用。"
+      },
+      {
+        "name": "珠峰首次无氧登顶 (1978)",
+        "type": "event",
+        "one_liner": "1978 Messner 与 Habeler 首次不借助补充氧气登顶珠峰，证明人类生理极限被低估。",
+        "notable_facts": "颠覆当时'无氧不可能登顶 8848 米'的共识；Himalayan Database/8000ers.com 均有权威记录。"
+      },
+      {
+        "name": "K2 (乔戈里峰)",
+        "type": "mountain",
+        "one_liner": "海拔 8611 米的世界第二高峰，以极端难度与高死亡率著称，是检验顶尖登山家的试金石。",
+        "notable_facts": "1954 意大利队首登；Rutkiewicz 1986 女性首登；Wikidata 有坐标/海拔/首登结构化字段，8000ers.com 有完整登顶编年。"
+      }
+    ],
+    "notes": "调研方法：Wikidata/Wikipedia/Himalayan Database/AAJ/Alpine Journal/8000ers.com/Gutenberg 均经本轮网络搜索交叉核实（非纯记忆）。\n\n复用优先级（给档案库建库）：\n1) 事实地基批量入库——首选 Wikidata(CC0，无条件复用) + Himalayan Database(声明公共领域，尼泊尔远征逐条事实)。这两个是可整批下载的结构化源，覆盖'人物×远征×山峰×日期×用氧×死亡'的核心事实矩阵。\n2) 叙事/史料——公版老文本可全文入库、切片、再分发：Project Gutenberg(Whymper 等经典) + Internet Archive/Alpine Journal 1863–1929 旧卷(美国境内公共领域)。\n3) 交叉验证/权威核对（可引用、慎复用表达）——8000ers.com(© Jurgalski，表达受版权、事实可抽取) + AAC Publications 全文(近现代报告受版权，作事实核验与合理使用摘引)。\n4) 配图——Wikimedia Commons，须逐图核对许可；老照片/PD 可用，现代摄影多 CC-BY-SA 需署名+SA，在世人物近照多受专有版权，归为不可直接复用。\n\n关键法律区分（贯穿建库）：'事实'（谁于何日登顶哪座峰、生卒、死因）不受版权保护，可自由抽取重写；'受版权保护的表达'（他人叙述段落、统计表排布、现代摄影）不可照搬。CC-BY-SA 源（维基百科/DBpedia/部分 Commons 图）复用需署名+相同方式共享；优先以 CC0 的 Wikidata 承载事实层、SA 源补缺并合规署名。\n\n待办/开放问题：\n- Himalayan Database 底层表结构（程序内 DBF 类格式）转 CSV/JSON 的 ETL 需实测；社区镜像(Maven Analytics、GitHub tacookson/data)可作现成 CSV 起点但字段可能被裁剪，建库应回官方程序取全字段。\n- 波兰喜马拉雅黄金一代（Rutkiewicz/Kukuczka/Wielicki 等）最详资料常在波兰语维基/文献，需波兰语源补充。\n- 具体人物肖像的可复用性须逐图在 Commons 核许可，本报告未逐一清点。"
+  },
+  {
+    "domain": "mountaineering-disasters (著名山难与生还史诗:1996 珠峰、2008 K2、南迦帕尔巴特、Touching the Void、Into Thin Air 事件)",
+    "sources": [
+      {
+        "name": "Wikidata",
+        "url": "https://query.wikidata.org/ (SPARQL) · https://www.wikidata.org/wiki/Special:EntityData/{QID}.json",
+        "kind": "structured-db",
+        "license": "CC0-1.0 (公有领域奉献,可无条件整批复用)",
+        "access": "free",
+        "coverage": "覆盖本领域几乎全部实体:山峰(Everest Q513, K2 Q43512, Nanga Parbat Q41419, Annapurna Q192749)、灾难事件(1996 珠峰 Q1145128、2008 K2 Q1362175)、人物(Rob Hall、Scott Fischer、Jon Krakauer、Reinhold Messner、Hermann Buhl 等)。字段含坐标、海拔、首登日期、死亡人数、死亡原因、P话题主页、外链到维基百科/Commons。事实性数据可 CC0 自由入库。",
+        "formats": "SPARQL / JSON / RDF / TTL / 每周全量 dump (.json.gz, .ttl.gz)",
+        "sample_records": "1) Nanga Parbat (Q41419): elevation 8126 m, first ascent 1953-07-03, located in Gilgit-Baltistan. 2) 2008 K2 disaster (Q1362175): point in time 2008-08-01, death toll 11. 3) K2 (Q43512): elevation 8611 m, part of Karakoram, coordinates 35.8825N 76.5133E。"
+      },
+      {
+        "name": "维基百科 English Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/1996_Mount_Everest_disaster · /wiki/2008_K2_disaster · /wiki/List_of_deaths_on_eight-thousanders",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0 + GFDL (需署名+相同方式共享;正文可复用,内嵌图片各自独立授权需单独核查)",
+        "access": "free",
+        "coverage": "本领域最完整的叙事+结构化清单来源。专条:1996 Everest disaster、2008 K2 disaster、1934/1937 Nanga Parbat disaster、Touching the Void、Into Thin Air。列表条目 List of deaths on eight-thousanders 提供逐人死亡表(姓名/日期/山峰/死因),可解析为结构化行。",
+        "formats": "HTML / MediaWiki API (action=query,parse) / REST summary API / 全量 XML dump / infobox 经 DBpedia 转 RDF",
+        "sample_records": "1) 1996 珠峰:8 人于 5 月 10-11 日暴风雪中死亡,含 Rob Hall、Scott Fischer、Doug Hansen、Yasuko Namba。2) 2008 K2:8 月 1 日 Bottleneck 上方冰塔崩塌,11 死。3) 1937 Nanga Parbat:营地雪崩致 16 死(7 德+9 Sherpa),史上最惨单次登山事故。"
+      },
+      {
+        "name": "The Himalayan Database (Elizabeth Hawley 远征档案)",
+        "url": "https://www.himalayandatabase.com/ · downloads.html · himalsql.html",
+        "kind": "structured-db",
+        "license": "专有 (proprietary) — 自 2017 年起免费下载,但无开放许可;为编纂型数据库,事实可用,整库不可再分发/再授权。用前须注明来源,商用需谨慎核实条款。",
+        "access": "free",
+        "coverage": "权威中的权威:1905 年至今尼泊尔喜马拉雅 340+ 座主要山峰的全部远征与队员记录,可按山峰/攀登者/季节/国籍/死亡率/死因检索。1996 珠峰各队队员与死亡记录、南迦帕尔巴特(尼泊尔侧不覆盖,K2/南迦在巴基斯坦不在其范围——注意其地理边界仅限尼泊尔喜马拉雅)。",
+        "formats": "Visual FoxPro 9 可执行程序 (43 MB ZIP) + 可选 SQL 版;底层 DBF 表可导出。Windows 原生,Mac 需 CrossOver/Wine。含多份 PDF 分析报告。",
+        "sample_records": "每条 expedition 记录含:peak code、year、season、host country、termination reason、summit success、逐 member 的登顶/死亡/死因(如 AMS、fall、avalanche、exposure)、是否用氧。1996 春季 Everest 有多支队伍逐人条目可比对 Krakauer/Boukreev 叙事。"
+      },
+      {
+        "name": "8000ers.com (Eberhard Jurgalski 统计库)",
+        "url": "https://www.8000ers.com/",
+        "kind": "structured-db",
+        "license": "专有 (proprietary) — 免费浏览,无批量下载/开放许可;统计事实可引用并署名,表格不可整批抓取再分发。",
+        "access": "free",
+        "coverage": "14 座八千米峰的登顶/死亡统计与年表,与 Himalayan Database 并列为八千米峰两大权威。含 Fatalities tables、各峰死亡率、登顶争议核验(Bottleneck 等)。覆盖 K2、Nanga Parbat、Annapurna 的死亡统计(本领域除珠峰外的巴基斯坦侧空白由它补齐)。",
+        "formats": "HTML 表格(手工解析);无官方 API/dump",
+        "sample_records": "1950-2012 死亡率:Annapurna 31.9%(最致命)、K2 26.5%、Nanga Parbat 20.3%、Dhaulagiri 15.4%、Kangchenjunga 14.1%。逐峰 fatalities 表列死者姓名/年份/死因。"
+      },
+      {
+        "name": "AAC Publications — American Alpine Journal (AAJ) + Accidents in North American Climbing (ANAC)",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "encyclopedia",
+        "license": "版权归 American Alpine Club(受版权保护);全文免费在线阅读,但为受版权保护的表达——只可引用事实、不可整篇复制入库。",
+        "access": "free",
+        "coverage": "20,000+ 篇 AAJ 报告 + 5,000+ 篇事故分析全部免费在线。含 1996 珠峰的第一手当事人报告(如 'A Time To Live, A Time To Die')、历年八千米峰远征报告。第一手 primary source 价值极高,是核验事实的黄金来源。",
+        "formats": "HTML(可检索归档);无开放 API,需按篇抓取",
+        "sample_records": "1) 1997 卷收录珠峰东南山脊悲剧当事人报告。2) 各年 AAJ 收 K2/Nanga Parbat 远征季度综述含死亡与救援细节。3) ANAC 逐起事故含 Analysis 栏教训复盘。"
+      },
+      {
+        "name": "Project Gutenberg — 登山公版文本",
+        "url": "https://www.gutenberg.org/ebooks/subject/15943 (Mountaineering)",
+        "kind": "public-domain-text",
+        "license": "公有领域 (US public domain) — 可无条件全文复用",
+        "access": "free",
+        "coverage": "登山史公版经典。与本领域直接相关:A.F. Mummery《My Climbs in the Alps and Caucasus》(1895)——Mummery 同年殒命南迦帕尔巴特首次尝试,是该峰灾难史的起点文本。另有 Whymper《Scrambles Amongst the Alps》(1871,含马特洪峰下山四人坠亡)、Tyndall《Hours of Exercise in the Alps》。注:1985-2008 现代灾难的名著(Into Thin Air/The Climb/Touching the Void/No Way Down)全部仍在版权期,不可复用。",
+        "formats": "Plain txt / EPUB / HTML / Kindle;有 gutenbergr 等批量下载工具",
+        "sample_records": "1) Mummery, My Climbs in the Alps and Caucasus (1895), Gutenberg ID 可检索。2) Whymper, Scrambles Amongst the Alps 1860-69 (eBook 41234)。3) Whymper, The Ascent of the Matterhorn (eBook 38044)。"
+      },
+      {
+        "name": "Internet Archive",
+        "url": "https://archive.org/",
+        "kind": "public-domain-text",
+        "license": "混合 — 收录条目各自授权:pre-1929 期刊多为公有领域可复用;近人扫描书为 borrow-only 受版权保护(仅可查证事实)。逐条核对 rights 字段。",
+        "access": "partial",
+        "coverage": "老 Alpine Journal / Himalayan Journal 卷(含 1930 年代南迦帕尔巴特德国远征早期记述)、Mummery 原扫描、Whymper 导游书等。也有借阅型现代山难书(No Way Down、Buried in the Sky 等,仅供核实)。",
+        "formats": "PDF / DjVu / full-text txt / EPUB / 扫描 JP2;有 IA API 与 CLI 批量下载(仅限公版项)",
+        "sample_records": "1) Mummery, My Climbs in the Alps and Caucasus 扫描本(bub_gb_KX8SAAAAYAAJ)。2) Whymper, Chamonix and the Range of Mont Blanc 1906。3) 早期 Himalayan Journal 卷含 1934 Merkl 远征通讯。"
+      },
+      {
+        "name": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/",
+        "kind": "media",
+        "license": "混合 CC0 / CC-BY / CC-BY-SA / public-domain — 每张单独标注,需逐图核对并署名;不可复用者不入库",
+        "access": "free",
+        "coverage": "山峰照片(Everest、K2、Nanga Parbat、Siula Grande)、地图、路线图、部分历史 PD 影像。注意:多数 1996/2008 现场照片受版权保护不在 Commons;可复用者以峰体地形图/公版地图为主。",
+        "formats": "原图 JPG/PNG/SVG/TIFF + 结构化数据(SDC, 经 Commons Query Service SPARQL 可查)+ API",
+        "sample_records": "1) K2 北壁/南南东山脊照(多为 CC-BY-SA)。2) Nanga Parbat Rupal Face 图。3) 八千米峰位置地图(PD/CC0)。"
+      },
+      {
+        "name": "Wikisource",
+        "url": "https://en.wikisource.org/",
+        "kind": "public-domain-text",
+        "license": "公有领域 / CC-BY-SA(按文本标注)",
+        "access": "free",
+        "coverage": "登山史公版一手文献与老期刊文章转录(校对后纯文本),质量高于 OCR。适合把 Mummery/Whymper 等公版原文以干净结构化文本入库。",
+        "formats": "HTML / MediaWiki API / txt 导出 / EPUB",
+        "sample_records": "登山类公版著作与 Alpine Journal 早期文章转录页,含逐页校对状态标记。"
+      },
+      {
+        "name": "DBpedia",
+        "url": "https://dbpedia.org/sparql",
+        "kind": "structured-db",
+        "license": "CC-BY-SA 3.0(源自维基百科 infobox)",
+        "access": "free",
+        "coverage": "把维基百科 infobox 结构化为 RDF,可对山峰/事件/人物做 SPARQL 联表(海拔、坐标、首登、死亡人数)。作为 Wikidata 的补充交叉校验源。",
+        "formats": "SPARQL endpoint / RDF dump / JSON-LD",
+        "sample_records": "dbr:K2 → dbo:elevation 8611; dbr:1996_Mount_Everest_disaster → 关联 dbr:Rob_Hall, dbr:Scott_Fischer。"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Mount Everest (珠穆朗玛峰 / Sagarmatha / Chomolungma)",
+        "type": "peak",
+        "one_liner": "世界最高峰(8,849 m),1996 与 2015 等多起最著名商业登山灾难的舞台。",
+        "notable_facts": "中尼边界。1996 年 5 月 10-11 日东南山脊暴风雪致 8 死,催生 Krakauer《Into Thin Air》。Wikidata Q513。"
+      },
+      {
+        "name": "K2 (乔戈里峰)",
+        "type": "peak",
+        "one_liner": "世界第二高峰(8,611 m),死亡率约四分之一,'野蛮之峰',2008 灾难现场。",
+        "notable_facts": "巴基斯坦-中国 Karakoram。首登 1954(意大利)。2008-08-01 Bottleneck 冰塔崩塌致 11 死。Wikidata Q43512。"
+      },
+      {
+        "name": "Nanga Parbat (南迦帕尔巴特 / 裸山)",
+        "type": "peak",
+        "one_liner": "世界第九高峰(8,126 m),20 世纪上半叶德国登山的'魔山',早期灾难连绵。",
+        "notable_facts": "巴基斯坦 Gilgit-Baltistan。1895 Mummery 首尝殒命;1934 Merkl 远征 9 死;1937 雪崩 16 死(史上最惨单次);1953 Buhl 首登;1970 Messner 兄弟悲剧。"
+      },
+      {
+        "name": "Annapurna (安纳普尔纳峰)",
+        "type": "peak",
+        "one_liner": "首座被登顶的八千米峰(1950),却是死亡率最高(约 32%)的八千米峰。",
+        "notable_facts": "尼泊尔。1950 Herzog/Lachenal 法国队首登(严重冻伤)。统计学上最致命的八千米峰。Wikidata Q192749。"
+      },
+      {
+        "name": "Siula Grande",
+        "type": "peak",
+        "one_liner": "秘鲁安第斯山(6,344 m),Joe Simpson 与 Simon Yates 生还史诗《Touching the Void》的发生地。",
+        "notable_facts": "1985 年西壁首登后下撤中 Simpson 摔断腿、Yates 割绳,Simpson 独自爬出冰裂缝生还。"
+      },
+      {
+        "name": "1996 Mount Everest disaster (1996 珠峰山难)",
+        "type": "event",
+        "one_liner": "1996 年 5 月 10-11 日商业登山队在下撤途中遭暴风雪,单次 8 人罹难。",
+        "notable_facts": "Adventure Consultants(Rob Hall)与 Mountain Madness(Scott Fischer)两队为主;越过安全折返时间是核心诱因。Wikidata Q1145128。"
+      },
+      {
+        "name": "2008 K2 disaster (2008 K2 山难)",
+        "type": "event",
+        "one_liner": "2008 年 8 月 1 日 Bottleneck 上方冰塔连环崩塌,固定绳被毁,11 名登山者死亡——K2 史上最惨一日。",
+        "notable_facts": "约 25 人趁天窗冲顶;Ger McDonnell 为救三名被困者遇难。多队伍协作失灵与超时冲顶叠加。Wikidata Q1362175。"
+      },
+      {
+        "name": "1937 Nanga Parbat disaster",
+        "type": "event",
+        "one_liner": "1937 年营地遭夜间雪崩,7 名德国登山者与 9 名 Sherpa 共 16 人罹难,史上最惨重单次登山事故。",
+        "notable_facts": "延续 1934 Merkl 远征灾难,使南迦帕尔巴特成为战前德国民族登山的悲情象征。"
+      },
+      {
+        "name": "Touching the Void 事件 (1985)",
+        "type": "event",
+        "one_liner": "登山伦理与生还意志的经典案例:'割绳'抉择后奇迹爬出的三天。",
+        "notable_facts": "Joe Simpson 1988 同名著作、2003 同名纪录片。'是否该割绳'成为登山伦理教学范本。"
+      },
+      {
+        "name": "Rob Hall",
+        "type": "person",
+        "one_liner": "新西兰向导、Adventure Consultants 创始人,1996 珠峰灾难中为守护客户 Doug Hansen 殒命南峰上方。",
+        "notable_facts": "临终经卫星电话与妻子通话,成为该事件最广为人知的片段。"
+      },
+      {
+        "name": "Scott Fischer",
+        "type": "person",
+        "one_liner": "美国向导、Mountain Madness 创始人,1996 珠峰灾难中在东南山脊力竭死亡。",
+        "notable_facts": "与 Rob Hall 商业竞争关系是事件背景之一。"
+      },
+      {
+        "name": "Jon Krakauer",
+        "type": "person",
+        "one_liner": "《户外》记者兼当事登山者,《Into Thin Air》(1997)作者,把 1996 灾难写成全球畅销书。",
+        "notable_facts": "其叙事与 Anatoli Boukreev《The Climb》存在著名争议;两书均在版权期,仅事实可复用。"
+      },
+      {
+        "name": "Anatoli Boukreev",
+        "type": "person",
+        "one_liner": "哈萨克/俄罗斯高山向导,1996 珠峰灾难当夜无氧多次返回营地上方救回数名客户。",
+        "notable_facts": "与 Krakauer 就无氧攀登与救援决策争论;著《The Climb》。1997 年死于安纳普尔纳雪崩。"
+      },
+      {
+        "name": "Ger McDonnell (Gerard McDonnell)",
+        "type": "person",
+        "one_liner": "首位登顶 K2 的爱尔兰人,2008 灾难中为解救三名被困登山者放弃自救而牺牲。",
+        "notable_facts": "被视为山难利他主义典范;事迹见《Dictionary of Irish Biography》与《The Summit》纪录片。"
+      },
+      {
+        "name": "Hermann Buhl",
+        "type": "person",
+        "one_liner": "奥地利登山家,1953 年独自完成南迦帕尔巴特最后冲顶,首登该峰且无氧——八千米峰史上壮举。",
+        "notable_facts": "冲顶往返约 40 小时、露天站立过夜。1957 年死于 Chogolisa 雪檐崩塌。"
+      },
+      {
+        "name": "Reinhold Messner",
+        "type": "person",
+        "one_liner": "史上最伟大高海拔登山家,1970 年南迦帕尔巴特远征中弟弟 Günther 于下撤途中遇难。",
+        "notable_facts": "首位无氧登顶珠峰、首位完成全部 14 座八千米峰。Günther 之死引发数十年争议。"
+      },
+      {
+        "name": "Joe Simpson 与 Simon Yates",
+        "type": "person",
+        "one_liner": "《Touching the Void》两位当事人:断腿爬出冰裂缝的生还者,与作出'割绳'抉择的搭档。",
+        "notable_facts": "1985 Siula Grande 事件当事人;Simpson 后成畅销登山作家。"
+      },
+      {
+        "name": "Elizabeth Hawley",
+        "type": "person",
+        "one_liner": "驻加德满都数十年的传奇登山记录者,Himalayan Database 缔造者,喜马拉雅登顶的事实权威。",
+        "notable_facts": "本领域最重要的一手数据编纂者;其数据库是核验尼泊尔侧远征/死亡的黄金标准。2018 年去世。"
+      },
+      {
+        "name": "A.F. Mummery",
+        "type": "person",
+        "one_liner": "英国先锋登山家,1895 年在南迦帕尔巴特首次尝试中失踪遇难,开启八千米峰灾难史。",
+        "notable_facts": "著《My Climbs in the Alps and Caucasus》(1895,已入公有领域,可全文复用)。"
+      }
+    ],
+    "notes": "许可与复用要点(区分'事实'与'受版权保护的表达/图片'):\n\n1) 可整批下载/开放复用的结构化源:Wikidata(CC0,SPARQL+周 dump,首选事实地基)、维基百科/Wikisource(CC-BY-SA,API+XML dump,需署名+相同共享)、DBpedia(CC-BY-SA SPARQL)。这三者可安全构成档案库事实骨架。\n\n2) 免费但非开放许可、只能'引用事实不能整库复制'的权威源:Himalayan Database(免费下载但为专有编纂数据库,FoxPro/SQL,注意其地理范围仅限尼泊尔喜马拉雅——K2 与 Nanga Parbat 在巴基斯坦侧不覆盖)、8000ers.com(免费浏览、专有、补齐八千米峰死亡统计尤其巴基斯坦侧)、AAC Publications AAJ/ANAC(受版权、免费在线,一手当事人报告价值极高)。这些用于事实核验与交叉印证,不可整篇入库。\n\n3) 确定进入公有领域的老文本:本子领域灾难多为 1985-2008 的现代事件,其奠基名著(Into Thin Air 1997、The Climb 1997、Touching the Void 1988、No Way Down 2010、Buried in the Sky 2012)全部仍在版权期,不可直接复用——只能取其中的'事实'(日期、死者、路线、天气),表达与文本不可复制。真正 PD 的直接关联文本是南迦帕尔巴特灾难史起点 Mummery《My Climbs in the Alps and Caucasus》(1895,Gutenberg/Archive.org/Wikisource 均有,可全文复用),以及 Whymper/Tyndall 等阿尔卑斯公版经典(背景史)。老 Alpine Journal / Himalayan Journal 卷(pre-1929 US-PD)含 1930 年代南迦远征早期通讯,可在 Internet Archive 取全文。\n\n4) 图片红线:1996 珠峰、2008 K2 现场照片几乎全部受版权保护,不在可复用范围;Wikimedia Commons 可复用素材以峰体地形照、路线图、公版地图为主,须逐张核对授权并署名。\n\n5) 建库建议:以 Wikidata QID 作主键串联山峰/事件/人物,维基百科正文做叙事层,Himalayan Database + 8000ers 做死亡/远征事实核验层,AAJ 做一手证据引用层,Mummery 等 PD 文本做可全文收录的历史文献层。数据源在地理与年代上互补(Himalayan Database 尼泊尔侧 vs 8000ers 全八千米峰),需做去重与交叉校验。\n\n未决/待深挖:Himalayan Database 的确切再分发条款未在下载页明示,商用前应邮件向其确认;八千米峰逐人死亡名单可从维基百科 List of deaths on eight-thousanders 解析为结构化行,但需与 8000ers/Himalayan Database 三方对账消歧(登顶争议、死因分类口径不一)。"
+  },
+  {
+    "domain": "alpine-history — 19世纪阿尔卑斯登山黄金/白银时代、登山运动起源、早期 Alpine Club、Whymper 与马特洪峰惨案",
+    "sources": [
+      {
+        "name": "Wikidata (登山领域实体图谱)",
+        "url": "https://query.wikidata.org/",
+        "kind": "structured-db",
+        "license": "CC0",
+        "access": "free",
+        "coverage": "可整批下载的头号结构化源;CC0 无条件复用,是档案库实体主键/骨架首选。覆盖几乎所有阿尔卑斯著名山峰、19世纪登山家/向导/Alpine Club,含海拔(P2044)、坐标(P625)、山脉(P4552)、significant event(P793,用于登记首登事件+日期)、图像(P18链 Commons)。注意:首登信息不统一,部分在 P793 限定符、部分只在山峰正文,需与维基百科交叉补全。建议用 SPARQL 拉'海拔>3500m 且 located in 阿尔卑斯'的山峰全集做种子表。",
+        "formats": "SPARQL(query.wikidata.org)、REST API、每周全量 JSON/RDF dump",
+        "sample_records": "马特洪峰 Q1090:elevation 4478 m,coordinate 45.976°N 7.658°E,首登事件 1865-07-14;Edward Whymper Q313283:1840-1911,职业 mountaineer/illustrator;Alpine Club Q391162:inception 1857,located London。"
+      },
+      {
+        "name": "English Wikipedia (登山条目正文)",
+        "url": "https://en.wikipedia.org/wiki/Golden_age_of_alpinism",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA",
+        "access": "free",
+        "coverage": "黄金时代(1854-1865)、白银时代(1865-1882)、首登马特洪峰、各山峰/人物/远征最完整的叙事来源(含逐峰首登年表、参与者、事故经过)。版权提醒:事实本身(日期/海拔/人名)不受版权保护可自由抽取重写;若逐句照搬表达需 CC-BY-SA 署名+同权分享。定位为叙事字段来源。",
+        "formats": "HTML、MediaWiki API(action=query / REST)、月度 XML dump、Enterprise HTML dump",
+        "sample_records": "黄金时代=1854 Wills 登 Wetterhorn 至 1865 Whymper 登 Matterhorn;1865 年阿尔卑斯共约 65 次首登;白银时代终于 1882 年 Dent du Géant。"
+      },
+      {
+        "name": "DBpedia (维基百科结构化抽取)",
+        "url": "https://dbpedia.org/page/Golden_age_of_alpinism",
+        "kind": "structured-db",
+        "license": "CC-BY-SA",
+        "access": "free",
+        "coverage": "把维基百科 infobox/链接结构化为 RDF,可对山峰/人物做 SPARQL 关系查询,作 Wikidata 的补充(部分维基信息 Wikidata 未收)。CC-BY-SA 署名可复用;覆盖不如 Wikidata 干净,定位交叉验证/补漏。",
+        "formats": "SPARQL(dbpedia.org/sparql)、RDF dump、JSON-LD",
+        "sample_records": "dbr:Matterhorn 关联 dbr:Edward_Whymper、firstAscentYear 1865;dbr:Golden_age_of_alpinism 链接一批首登山峰实体。"
+      },
+      {
+        "name": "Wikimedia Commons (公版版画/肖像/地图)",
+        "url": "https://commons.wikimedia.org/wiki/Category:Edward_Whymper",
+        "kind": "media",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "19世纪登山主题公有领域图像:Whymper 亲绘《Scrambles》木刻版画、山峰早期照片、登山家肖像、古地图。铁律:只选标 PD-old/PD-US 的老图;近人拍摄的现代照片即便在 Commons 也多为 CC-BY-SA 需逐张核许可——区分'古版画(可复用)'与'今照片(带署名义务)'。",
+        "formats": "原始 JPG/PNG/SVG、Commons API、批量下载",
+        "sample_records": "Whymper《Scrambles》马特洪峰断绳版画;de Saussure 肖像;1865 事故遇难者插图。"
+      },
+      {
+        "name": "Project Gutenberg — Whymper 原著",
+        "url": "https://www.gutenberg.org/ebooks/41234",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "确定进入公有领域(作者 1911 逝世、书 1871 出版),可整本复用做全文语料——最高价值的公版一手文本。含《Scrambles Amongst the Alps in the Years 1860-69》(1871,#41234)+《The Ascent of the Matterhorn》(#38044),马特洪峰事故的当事人叙述。",
+        "formats": "纯 txt/UTF-8、HTML、EPUB、Kindle;可整本下载",
+        "sample_records": "#41234 含 1865-07-14 登顶及下撤断绳全过程的 Whymper 亲述;#38044 为其后出的马特洪峰专著。"
+      },
+      {
+        "name": "Wikisource — 登山公版文库",
+        "url": "https://en.wikisource.org/wiki/Author:Edward_Whymper",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "校对过的公版登山文献,文本本身公有领域可整批复用;比 Gutenberg 结构更规整(带章节锚点)适合可检索全文。含 Whymper 著作、早期 Alpine Club 文集《Peaks, Passes and Glaciers》、Leslie Stephen《The Playground of Europe》等 19 世纪经典。",
+        "formats": "HTML、MediaWiki API、可导出 EPUB/PDF",
+        "sample_records": "《Peaks, Passes, and Glaciers》(1859,Alpine Club 第一部会员文集);Stephen《The Playground of Europe》(1871)。"
+      },
+      {
+        "name": "Internet Archive — Alpine Journal 全卷 + 原版书",
+        "url": "https://archive.org/details/bub_gb_wiZNAAAAYAAJ",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "《The Alpine Journal》(Alpine Club 会刊,1863 创刊)多卷 Google 数字化扫描本 + Whymper/Tyndall/Stephen 原版书。含逐年远征记录、讣告、首登报告——19世纪登山最权威的一手连续出版物。1900 年前各卷 US 公有领域,可整批下载做语料(域外访问 1900 后卷可能受限)。",
+        "formats": "整本 PDF、full-text OCR txt、EPUB、DjVu;可整批下载+全文检索 API",
+        "sample_records": "Alpine Journal Vol 9 (1878-1880)、Vol 27 (1913) 等卷全本可下;含各次首登的当事人报告与年度事故记录。"
+      },
+      {
+        "name": "The Online Books Page (UPenn) — Alpine Journal 索引",
+        "url": "https://onlinebooks.library.upenn.edu/webbin/serial?id=alpinejournal",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "free",
+        "coverage": "把散落在 Archive/HathiTrust/Google 的 Alpine Journal 各卷聚合成一张卷号→在线全文目录。本身是索引不是内容,但为批量抓取 Alpine Journal 提供 crawl 清单,工程上很省事。",
+        "formats": "HTML 索引,链向各托管方的 PDF/txt",
+        "sample_records": "按卷号列出 1863 起各卷的可读链接及托管方。"
+      },
+      {
+        "name": "HathiTrust — Alpine Journal 全序列",
+        "url": "https://catalog.hathitrust.org/Search/Home?lookfor=alpine+journal&type=title",
+        "kind": "public-domain-text",
+        "license": "public-domain",
+        "access": "partial",
+        "coverage": "Alpine Journal 约 Vol 1-42(1863-1930)可在线阅读,公有领域卷(约 1900 前)可整本下载。覆盖比单一 Archive 更连续,但下载权限受地域/登录限制,1923 后卷在美外多受限;定位为 Archive 的补全序列。",
+        "formats": "页面图像+OCR txt;公版卷可整本 PDF(需登录/在美)",
+        "sample_records": "Vol 1 (1863-64) 起连续序列,含创刊期首登报告。"
+      },
+      {
+        "name": "American Alpine Club Publications 数据库",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "public-domain-text",
+        "license": "unknown",
+        "access": "free",
+        "coverage": "American Alpine Journal 全文可检索库;对阿尔卑斯黄金时代一手性弱于伦敦 AJ,但含大量历史登山文章与回顾可交叉引用。许可未明确标注:老文章多为公版但需逐篇核实,近人文章受版权;定位参考/补充,非整批复用源。",
+        "formats": "HTML 全文检索、按文章浏览",
+        "sample_records": "可搜 'Matterhorn 1865'、'Whymper' 相关历史回顾文章。"
+      },
+      {
+        "name": "Alpine Club (London) 官方 AJ 存档",
+        "url": "https://www.alpine-club.org.uk/the-alpine-journal/",
+        "kind": "public-domain-text",
+        "license": "proprietary",
+        "access": "partial",
+        "coverage": "世界第一个登山俱乐部(1857)官方 Alpine Journal 存档,提供历史卷 PDF(通常到近三年为止)。老卷内容公版但官方站整体条款偏保留;事实(创立年、会员名录)可自由用,PDF 排版/近人文章不作直接复用;用作事实校准的权威源。",
+        "formats": "PDF",
+        "sample_records": "历史卷 PDF + 俱乐部沿革页。"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "马特洪峰 (Matterhorn / Cervino)",
+        "type": "peak",
+        "one_liner": "海拔 4478 m 的阿尔卑斯标志性金字塔峰,其 1865 年首登既是黄金时代的巅峰也是终章。",
+        "notable_facts": "位于瑞士 Zermatt 与意大利边界;Wikidata Q1090;1865-07-14 由 Whymper 一行首登;下撤断绳致 4 人坠亡。"
+      },
+      {
+        "name": "1865 年马特洪峰首登与惨案 (event)",
+        "type": "event",
+        "one_liner": "7 人登顶、下撤时断绳致 4 人坠亡的登山史转折事件,既终结黄金时代又把登山推入公众视野。",
+        "notable_facts": "1865-07-14;登顶 7 人:Whymper、Croz、老少 Taugwalder、Lord Francis Douglas、Charles Hudson、Douglas Hadow;Hadow 失足连坠 Croz/Hudson/Douglas,备用旧绳断裂;Whymper 与 Taugwalder 父子生还,后被控割绳但获判无罪;Douglas 遗体仅寻回一截衣袖。"
+      },
+      {
+        "name": "Edward Whymper",
+        "type": "person",
+        "one_liner": "英国插画家兼登山家,马特洪峰首登领队,其著作《Scrambles》塑造了登山文学的原型。",
+        "notable_facts": "1840-1911;Wikidata Q313283;著《Scrambles Amongst the Alps》(1871,公有领域);7 次尝试后于 1865 首登马特洪峰;亲绘书中木刻版画(公版可复用)。"
+      },
+      {
+        "name": "Michel Croz",
+        "type": "person",
+        "one_liner": "夏慕尼顶级向导,黄金时代众多首登的技术核心,在马特洪峰惨案中首个坠亡。",
+        "notable_facts": "1830-1865;法国 Chamonix 向导;参与 Aiguille Verte、Grand Combin 等首登;1865 马特洪峰事故遇难,葬于 Zermatt 教堂旁。"
+      },
+      {
+        "name": "Peter Taugwalder (父)",
+        "type": "person",
+        "one_liner": "Zermatt 本地向导,马特洪峰首登断绳事故的两名生还者之一,长期背负割绳嫌疑。",
+        "notable_facts": "约 1820-1888;瑞士 Zermatt 向导;与其子随 Whymper 登顶生还;调查证断裂的是备用旧绳、无割绳证据,获判无罪。"
+      },
+      {
+        "name": "Alfred Wills",
+        "type": "person",
+        "one_liner": "1854 年登顶 Wetterhorn,一般被定为登山黄金时代的开端标志。",
+        "notable_facts": "1828-1912;英国法官兼登山家;1854 Wetterhorn 登顶被视为黄金时代起点;后任 Alpine Club 主席;著《Wanderings Among the High Alps》。"
+      },
+      {
+        "name": "Wetterhorn 首登 (event)",
+        "type": "event",
+        "one_liner": "Alfred Wills 1854 年的这次登顶,被英语史学界定为登山黄金时代的开幕。",
+        "notable_facts": "1854 年;伯尔尼阿尔卑斯;实为多次登顶之一,但因 Wills 的畅销记述而成为象征性起点。"
+      },
+      {
+        "name": "Alpine Club (London)",
+        "type": "organization",
+        "one_liner": "1857 年创立于伦敦的世界第一个登山俱乐部,黄金时代的组织中枢与话语中心。",
+        "notable_facts": "成立 1857;Wikidata Q391162;出版《Peaks, Passes and Glaciers》(1859)及《The Alpine Journal》(1863- );早期会员几乎垄断黄金时代首登。"
+      },
+      {
+        "name": "The Alpine Journal (publication)",
+        "type": "publication",
+        "one_liner": "Alpine Club 1863 年创刊的会刊,19世纪登山首登与事故最权威的连续一手记录。",
+        "notable_facts": "1863 创刊,至今连续出版;副题 'a record of mountain adventure and scientific observation';1900 年前各卷已入公有领域,Archive/HathiTrust 可整本下载。"
+      },
+      {
+        "name": "《Scrambles Amongst the Alps》(publication)",
+        "type": "publication",
+        "one_liner": "Whymper 1871 年出版的登山回忆录,登山文学的奠基之作,含马特洪峰惨案第一手叙述。",
+        "notable_facts": "1871 出版,记 1860-69 九年攀登;公有领域(Gutenberg #41234、Wikisource);Whymper 亲绘版画;马特洪峰断绳一节为经典文本。"
+      },
+      {
+        "name": "John Tyndall",
+        "type": "person",
+        "one_liner": "爱尔兰物理学家兼登山家,Whymper 的马特洪峰竞争对手,1861 年首登 Weisshorn。",
+        "notable_facts": "1820-1893;冰川科学先驱;1861 首登 Weisshorn(4506 m);多次争夺马特洪峰意大利侧;代表'科学登山'一脉。"
+      },
+      {
+        "name": "Leslie Stephen",
+        "type": "person",
+        "one_liner": "Alpine Club 主席、多座峰首登者,以《The Playground of Europe》确立登山散文传统。",
+        "notable_facts": "1832-1904;首登 Schreckhorn(1861)、Zinalrothorn(1864)等;著《The Playground of Europe》(1871,公版);Virginia Woolf 之父。"
+      },
+      {
+        "name": "黄金时代首登群:Weisshorn/Dent Blanche/Zinalrothorn 等 (peak cluster)",
+        "type": "peak",
+        "one_liner": "1854-1865 间被首登的一批 4000 m 级瓦莱/伯尔尼高峰,构成黄金时代的成就主体。",
+        "notable_facts": "含 Weisshorn(1861,Tyndall)、Dent Blanche(1862)、Zinalrothorn(1864,Stephen)、Barre des Écrins(1864)、Aiguille Verte(1865);1865 一年阿尔卑斯约 65 次首登。"
+      },
+      {
+        "name": "Mont Blanc 首登 (Balmat & Paccard, 1786)",
+        "type": "event",
+        "one_liner": "1786 年 Jacques Balmat 与 Michel Paccard 登顶西阿尔卑斯最高峰,被视为现代登山运动的起源事件。",
+        "notable_facts": "1786-08-08;缘于 de Saussure 悬赏;早黄金时代近 70 年,是'登山运动起源'叙事的锚点;Mont Blanc 4808 m。"
+      },
+      {
+        "name": "Horace-Bénédict de Saussure",
+        "type": "person",
+        "one_liner": "日内瓦博物学家,以悬赏催生 Mont Blanc 首登、次年亲登,常被称为登山运动的思想奠基人。",
+        "notable_facts": "1740-1799;1760 悬赏首登 Mont Blanc;1787 亲率队登顶做科学观测;著《Voyages dans les Alpes》(公版)。"
+      },
+      {
+        "name": "Lucy Walker",
+        "type": "person",
+        "one_liner": "英国女登山家,1871 年成为首位登顶马特洪峰的女性,标志女性进入白银时代登山。",
+        "notable_facts": "1836-1916;活跃于 1858-1879,完成 98 次远征;1871-07 首位登顶马特洪峰的女性,赶在对手 Meta Brevoort 之前。"
+      }
+    ],
+    "notes": "优先复用建议(按安全度排序):(1) 结构化骨架用 Wikidata(CC0,SPARQL 可整批拉山峰/人物/事件),无义务复用首选;(2) 全文语料用 Project Gutenberg + Wikisource + Internet Archive 的 1900 年前公有领域文本(Whymper《Scrambles》/《Ascent of the Matterhorn》、Alpine Journal 早卷、Stephen《Playground of Europe》、Saussure《Voyages dans les Alpes》)——可整本下载做可检索档案;(3) 叙事字段可从英文维基百科抽'事实'(日期/海拔/人名不受版权)后重写,若照搬表达须 CC-BY-SA 署名+同权。\n\n版权红线:(a) 现代照片即便在 Commons 也常为 CC-BY-SA,只用标 PD-old 的 19 世纪版画/肖像/古地图;(b) 近人著作(如 2015《1865: the Golden Age of Mountaineering》)、SummitPost/Explorersweb/History Today 等博客与媒体文章为专有版权,只可作事实交叉验证,不可整段复用;(c) Alpine Club 官网与 American Alpine Club 库中老文章多公版但混有近人版权文章,需逐篇核实。\n\n数据模型提示:Wikidata 没有统一的'首登'属性,首登事件多以 P793(significant event)+ point-in-time 限定符表达且覆盖不全,建议以维基百科 'First ascent of X' / 'Golden age of alpinism' 条目做首登年表补全后回填结构化表。时代边界口径可采用英语史学通行说法:黄金时代 1854(Wetterhorn)–1865(Matterhorn),白银时代 1865–1882(Dent du Géant)。\n\n待补(下一步):瑞士侧可查 SAC(Schweizer Alpen-Club,1863 创立)及其会刊 Die Alpen 的数字化与许可;e-periodica.ch(瑞士期刊数字化平台)可能含 SAC 年鉴公版卷;法语 Wikisource 的 Saussure 全文;Zermatt/Chamonix 地方档案与向导名录。这些能加厚瑞士/法国本地向导与机构维度。所有关键事实已用网络搜索交叉验证(Wikipedia 'First ascent of the Matterhorn'、Golden age of alpinism、Gutenberg 目录、Archive 卷目),置信度高。"
+  },
+  {
+    "domain": "mountaineering / science-physiology — 高海拔生理与医学(缺氧·习服·死亡地带·HAPE/HACE·供氧史·人体极限)",
+    "sources": [
+      {
+        "name": "Wikidata",
+        "url": "https://query.wikidata.org/ (SPARQL endpoint: https://query.wikidata.org/sparql)",
+        "kind": "structured-db",
+        "license": "CC0",
+        "access": "free",
+        "coverage": "生理/病理概念的机器可读实体:acute mountain sickness、high-altitude pulmonary edema、high-altitude cerebral edema、hypoxia、hypobaric hypoxia、acclimatization、death zone;每实体带 ICD-10/ICD-11 编码、MeSH ID、UMLS、外链、多语标签与描述。可整批 SPARQL/JSON dump 拉取,CC0 可无限制复用。",
+        "formats": "SPARQL / JSON / RDF / Wikidata dump(.json.gz / .ttl)",
+        "sample_records": "Q621636 = high-altitude pulmonary edema(HAPE),ICD-10 T70.2;acute mountain sickness 关联 MeSH D000532;death zone(Q1194687)descibed as altitude > 8000 m where O2 insufficient to sustain life。可用 SPARQL 一次拉全部『高海拔疾病』P279*子类。"
+      },
+      {
+        "name": "English Wikipedia — 高海拔生理条目集",
+        "url": "https://en.wikipedia.org/wiki/Effects_of_high_altitude_on_humans",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0",
+        "access": "free",
+        "coverage": "叙述性科普正文,可复用需署名+同协议。核心条目:Effects of high altitude on humans、Death zone、Altitude sickness、High-altitude pulmonary edema、High-altitude cerebral edema、Acclimatization、Hypoxia (medicine)、1922 British Mount Everest expedition。可通过 MediaWiki API / dumps.wikimedia.org 整批下载。",
+        "formats": "HTML / MediaWiki API(JSON)/ XML dump / Wikitext",
+        "sample_records": "『死亡地带 = 海拔 8000m 以上,人体无法习服,缺氧持续会导致机能衰退、意识丧失、死亡』;『习服机制:红细胞增多、心率加快、非必要机能抑制、呼吸加深加快,需数天至数周』。"
+      },
+      {
+        "name": "Internet Archive — Mosso《Life of Man on the High Alps》(1898)",
+        "url": "https://archive.org/details/lifeofmanonhigha00mossuoft",
+        "kind": "public-domain-text",
+        "license": "public-domain(1898 出版,版权已过期)",
+        "access": "free",
+        "coverage": "Angelo Mosso 在 Monte Rosa Capanna Margherita 高山实验室的经典专著英译本,山地病、周期性呼吸(Cheyne-Stokes)、二氧化碳/缺氧之争的早期原始文献。全书可整批下载。",
+        "formats": "full-text TXT / PDF / EPUB / DjVu / OCR",
+        "sample_records": "记述高山周期性呼吸观测;Mosso 提出『acapnia(低碳酸血症)』假说解释山地病(后被证伪,但为原始史料);含 Capanna Regina Margherita(4559m,世界最高常设实验室)建站记录。"
+      },
+      {
+        "name": "Internet Archive — Paul Bert《Barometric Pressure / La Pression barométrique》(1878)",
+        "url": "https://archive.org/details/b21447159",
+        "kind": "public-domain-text",
+        "license": "public-domain(1878 法文原著版权已过期;注意:1943 年 Hitchcock 英译本可能仍受版权,需单独核实,不直接复用)",
+        "access": "free",
+        "coverage": "高海拔生理学奠基之作。系统证明高山病的根本原因是低氧分压(而非低气压本身),奠定『缺氧=病因』范式。法文原著整批可下载;Wellcome Collection 另存节选。",
+        "formats": "full-text TXT / PDF / DjVu(法文);英译节选见 Wellcome Collection HTML",
+        "sample_records": "实验证明减压舱内动物症状取决于氧分压;为后世 alveolar PO2、氧饱和度理论提供实验基础;被公认为『高原生理学之父』的核心著作。"
+      },
+      {
+        "name": "Project Gutenberg — 《The Assault on Mount Everest, 1922》(C. G. Bruce 等)",
+        "url": "https://www.gutenberg.org/ebooks/61083",
+        "kind": "public-domain-text",
+        "license": "public-domain(Gutenberg 已核定 US 公有领域)",
+        "access": "free",
+        "coverage": "1922 远征官方报告,含 George Ingle Finch 亲述首次系统使用瓶装氧(『English air』)、习服策略、8320m 登高记录。史实+一手叙述,可整批复用。",
+        "formats": "HTML / plain TXT / EPUB / Kindle",
+        "sample_records": "Finch 与 Geoffrey Bruce 登至 8320m(时人类最高),上升速率约 290 m/h;搬运工/藏尼向导戏称氧气瓶为『英国空气』;记述交替步行与骑马以促进习服。LibriVox 另有配套公有领域有声版(https://librivox.org/the-assault-on-mount-everest-1922-by-various-authors/)。"
+      },
+      {
+        "name": "PMC (PubMed Central, NIH) — 高原生理开放获取文献",
+        "url": "https://pmc.ncbi.nlm.nih.gov/",
+        "kind": "encyclopedia",
+        "license": "混合(部分 CC-BY/CC-BY-NC 开放获取;多数仅免费阅读,版权归作者/期刊)。事实数据可复用,受版权保护的是表达文字。",
+        "access": "free",
+        "coverage": "含 John B. West《High Life: A History of High-Altitude Physiology and Medicine》书评/条目、Operation Everest II 系列论文、AMREE 1981 数据、Kellas/Finch 史学论文、2018 Lake Louise Score。权威二次文献,用于事实核对与年表锚定。",
+        "formats": "HTML / PDF /(开放获取子集提供 XML 批量:PMC Open Access Subset,可 FTP 整批下载 CC 授权文章)",
+        "sample_records": "West 实测 Everest 峰顶气压约 253 mmHg(远高于标准大气模型外推值,决定了无氧登顶在生理上勉强可能);Operation Everest II(1985,USARIEM)减压舱模拟登顶 40 天,VO2max 由 4.13 降至 1.17 L/min。"
+      },
+      {
+        "name": "Wilderness Medical Society Clinical Practice Guidelines(高原病防治指南)",
+        "url": "https://journals.sagepub.com/doi/10.1016/j.wem.2023.05.013",
+        "kind": "other",
+        "license": "proprietary(Elsevier/SAGE 版权;临床事实与分级建议可作事实引用,原文不可复制)。多版有免费 PDF 流出(mountainguides.com 等)。",
+        "access": "partial",
+        "coverage": "AMS/HACE/HAPE 的预防、诊断、治疗循证指南(2010 原版 / 2019 / 2024 更新)。海拔阈值、上升速率建议、乙酰唑胺/地塞米松/硝苯地平方案、下撤原则等标准化事实。",
+        "formats": "PDF / HTML",
+        "sample_records": "建议 3000m 以上每日睡眠海拔升幅 ≤500m、每升 1000m 增一休整日;HAPE 定义为高原非心源性肺水肿,一线处置=下撤+吸氧+硝苯地平;HACE=共济失调+意识改变,需即刻下撤+地塞米松。"
+      },
+      {
+        "name": "MSD / Merck Manual — Altitude Illness",
+        "url": "https://www.msdmanuals.com/professional/injuries-poisoning/altitude-illness/altitude-illness",
+        "kind": "encyclopedia",
+        "license": "proprietary(Merck 版权,免费阅读,不可批量复用;仅作事实来源)",
+        "access": "free",
+        "coverage": "临床权威科普:AMS/HAPE/HACE 定义、病理、Lake Louise 评分、预防用药、海拔分级(high 1500–3500 / very high 3500–5500 / extreme >5500m)。适合做条目事实校验基线。",
+        "formats": "HTML(专业版/消费版双版本)",
+        "sample_records": "引用 2018 Lake Louise AMS Score;区分 high/very high/extreme altitude 三档;给出乙酰唑胺预防剂量。"
+      },
+      {
+        "name": "International Society for Mountain Medicine (ISMM)",
+        "url": "https://ismm.org/",
+        "kind": "other",
+        "license": "unknown / proprietary(工具与指南文本版权归学会;评分表本身作为临床工具广泛引用)",
+        "access": "free",
+        "coverage": "官方托管最新 Lake Louise AMS 评分表、STAR 高原临床研究数据报告规范、会员机构与共识文件入口。用于标准化术语与评分锚点。",
+        "formats": "HTML / PDF",
+        "sample_records": "2018 Lake Louise AMS Score(头痛+胃肠+乏力+头晕四项自评,阈值判定 AMS);STAR 报告指南统一高原研究的海拔/暴露时长/上升速率报告字段。"
+      },
+      {
+        "name": "Journal of Applied Physiology — West 高原生理史学系列 & AMREE 数据",
+        "url": "https://journals.physiology.org/journal/jappl",
+        "kind": "other",
+        "license": "proprietary(American Physiological Society 版权;部分历史文自由获取)。事实/测量数据可引用。",
+        "access": "partial",
+        "coverage": "供氧史与人体极限的权威一手/二手来源:Finch 1922 氧装置、Kellas 1920 手稿分析、Operation Everest II、1981 American Medical Research Expedition to Everest(AMREE)峰顶气体样本与气压实测。",
+        "formats": "HTML / PDF / abstract",
+        "sample_records": "『George I. Finch and his pioneering use of oxygen』(2003);『Alexander M. Kellas and the physiological challenge of Mt. Everest』(1987);AMREE 采集峰顶肺泡气样,alveolar PO2 约 35 mmHg、PCO2 约 7.5 mmHg。"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "死亡地带(Death Zone)",
+        "type": "生理概念",
+        "one_liner": "海拔约 8000m 以上、氧分压过低使人体无法习服、机能持续衰退的高度带。",
+        "notable_facts": "术语由瑞士医生 Édouard Wyss-Dunant(1953)提出为『lethal zone』;峰顶气压约为海平面的 1/3;停留越久意识丧失与死亡风险越高;14 座 8000m 级山峰均部分处于此带。Wikidata Q1194687。"
+      },
+      {
+        "name": "低压性缺氧与高原习服(Hypobaric Hypoxia & Acclimatization)",
+        "type": "生理机制",
+        "one_liner": "海拔升高致气压下降、氧分压降低,人体通过通气、血液与循环系统代偿性适应的过程。",
+        "notable_facts": "机制:过度换气(HVR)、红细胞生成素↑致红细胞增多、心率↑、2,3-DPG 调节、肺动脉压↑;需数天至数周;习服有上限,>8000m 只能耗竭。Paul Bert 1878 确立缺氧为病因。"
+      },
+      {
+        "name": "急性高山病(Acute Mountain Sickness, AMS)",
+        "type": "疾病",
+        "one_liner": "快速上升至高海拔后出现头痛、恶心、乏力、头晕的最常见轻症高原反应。",
+        "notable_facts": "常见于 >2500m;用 2018 Lake Louise Score 评分(头痛为必备项);可进展为 HACE;预防用乙酰唑胺、缓升、『爬高睡低』。"
+      },
+      {
+        "name": "高原肺水肿(HAPE)",
+        "type": "疾病",
+        "one_liner": "高海拔非心源性肺水肿,缺氧性肺血管收缩不均致毛细血管渗漏,致命高原急症之一。",
+        "notable_facts": "ICD-10 T70.2;症状:休息时呼吸困难、咳粉红泡沫痰、发绀;一线处置=立即下撤+吸氧+硝苯地平;个体易感性差异大。Wikidata Q621636。"
+      },
+      {
+        "name": "高原脑水肿(HACE)",
+        "type": "疾病",
+        "one_liner": "AMS 的严重终末阶段,脑组织水肿致共济失调、意识障碍,数小时内可致死。",
+        "notable_facts": "标志性体征:走直线共济失调、精神状态改变;处置=即刻下撤+地塞米松+吸氧+高压袋(Gamow Bag);常与 HAPE 并发。"
+      },
+      {
+        "name": "Everest 峰顶气压 ≈ 253 mmHg(人体极限锚点)",
+        "type": "科学事实/里程碑",
+        "one_liner": "John B. West 领队的 1981 AMREE 实测珠峰顶气压约 253 Torr,揭示无氧登顶在生理上勉强可能。",
+        "notable_facts": "实测值高于标准大气外推,因赤道附近平流层增厚;峰顶肺泡 PO2 仅约 35 mmHg;这一数据解释了 1978 年 Messner/Habeler 无氧登顶为何可行。"
+      },
+      {
+        "name": "Reinhold Messner & Peter Habeler(1978 首次无氧登顶珠峰)",
+        "type": "人物/事件",
+        "one_liner": "1978 年 5 月两人首次不借助瓶装氧登顶珠峰,证明人体极限可及死亡地带之巅。",
+        "notable_facts": "此前生理学界普遍认为无氧登顶不可能;Messner 1980 再完成无氧单人登顶;事件成为高原生理学『人体极限』研究的关键实证。"
+      },
+      {
+        "name": "George Ingle Finch(瓶装氧登山先驱)",
+        "type": "人物",
+        "one_liner": "1922 珠峰远征首次系统证明补充供氧的价值,登至 8320m,其开路式(open-circuit)氧装置原理沿用至今。",
+        "notable_facts": "物理化学家出身,亲自设计氧装置;与 Geoffrey Bruce 上升速率约 290 m/h;porters 称氧气瓶为『English air』;现代开路供氧系统可溯源至此。"
+      },
+      {
+        "name": "Alexander M. Kellas(高原生理理论奠基者)",
+        "type": "人物",
+        "one_liner": "英国化学家/登山家,1920 年未刊手稿首次定量论证登顶珠峰的生理可行性。",
+        "notable_facts": "1868–1921;八次喜马拉雅远征;推算峰顶气压、alveolar PO2、氧饱和度、最大摄氧量与登高速率;1921 远征途中病逝;手稿存皇家地理学会与 Alpine Club。"
+      },
+      {
+        "name": "Operation Everest I(1946)& II(1985)",
+        "type": "科学事件",
+        "one_liner": "在减压舱内模拟渐进登顶珠峰的里程碑式人体生理实验,系统测量极端缺氧下的生理反应。",
+        "notable_facts": "OE I 由 Charles Houston 主持;OE II(1985,USARIEM)40 天减压至 240 Torr,VO2max 由 4.13 降至 1.17 L/min,测得肺动脉压/肺血管阻力升高但无右心衰。"
+      },
+      {
+        "name": "Paul Bert(高原生理学之父)",
+        "type": "人物",
+        "one_liner": "1878《La Pression barométrique》以减压舱实验证明高山病病因是低氧分压而非低气压本身。",
+        "notable_facts": "1833–1886;奠定缺氧病因范式与航空/高原医学基础;著作已入公有领域(法文原著);同时是气压性减压病研究先驱。"
+      },
+      {
+        "name": "Lake Louise Score(高山病标准化评分)",
+        "type": "临床工具/标准",
+        "one_liner": "1991 年首创、2018 年修订的 AMS 自评量表,是高原研究与临床沟通的通用术语基准。",
+        "notable_facts": "四维度自评(头痛/胃肠/乏力/头晕),2018 版将睡眠障碍剔除;由 ISMM 世界大会与国际缺氧研讨会共识修订;为档案库统一『高原反应严重度』字段的锚点。"
+      }
+    ],
+    "notes": "可安全整批复用的两类首选:①结构化/可 dump 源——Wikidata(CC0,SPARQL 一次拉全部『高原疾病』子类含 ICD/MeSH 编码,零版权风险)、Wikipedia dumps(CC-BY-SA,需署名同协议)、PMC Open Access Subset(CC 授权子集可 FTP 批量);②确定进入公有领域的老文本——Mosso《Life of Man on the High Alps》1898、Paul Bert《La Pression barométrique》1878 法文原著、Project Gutenberg《The Assault on Mount Everest, 1922》(附 LibriVox 公有领域有声版)。\n\n版权红线提醒:(a)事实/测量数据(如珠峰顶 253 mmHg、VO2max 数值、海拔阈值)不受版权保护,可自由录入档案库;受保护的是具体表达文字与图片。(b)WMS 指南、MSD Manual、Journal of Applied Physiology、High Altitude Medicine & Biology 等均为专有版权,只能作事实来源与引用锚点,正文与图表不可复制。(c)Paul Bert 1943 年 Hitchcock 英译本、West《High Life》(2013)等近人著作仍受版权,归为『不可直接复用』,仅供事实核对。(d)近现代远征照片(如 1953 珠峰、Messner 影像)基本受版权保护,须逐张核实,默认不可复用。\n\n覆盖缺口/后续:①尚未逐一核实 Wikidata 各高原病实体的 QID 完整性,建库时应实跑一次 SPARQL 导出并人工校对 ICD-11 映射。②供氧技术史(开路 vs 闭路、Draeger/Poisk/现代文丘里系统)有专门二次文献(Windsor & Rodway 系列),多为专有版权,可作年表事实源。③非欧裔高原原住民生理适应(藏族 EPAS1、安第斯 Monge 病/慢性高山病)是重要子主题,Wikidata + PMC 开放获取覆盖良好,建议单列条目。④建议为每条生理事实在档案库中双绑定 Wikidata QID + 一条公有领域史料/一篇 PMC 文献,形成『机器可查 ID + 可追溯出处』的双锚。"
+  },
+  {
+    "domain": "mountaineering / gear-technique — 装备·技术·分级体系演进(冰镐绳索岩楔演化、UIAA/YDS/法国/苏格兰分级、围攻式 vs 阿式、自由 vs 器械攀登)",
+    "sources": [
+      {
+        "name": "Wikidata",
+        "url": "https://www.wikidata.org/wiki/Q609276",
+        "kind": "structured-db",
+        "license": "CC0 (public domain dedication)",
+        "access": "free",
+        "coverage": "本子领域的结构化骨架:分级体系概念(climbing grade Q609276 及其子项 YDS/UIAA/French/Scottish)、climbing route(Q1699583)、装备品类(ice axe/piton/carabiner/camming device 均有 item)、人物(Chouinard/Messner/Jardine/Whymper 等有生卒地、职业、获奖等结构化字段)。可整批下载:全库 JSON/TTL dump + 实时 SPARQL(query.wikidata.org)+ 每 item 的 JSON/RDF/CSV 导出。是唯一可无条件复用(CC0,连署名都不要求)的结构化源。",
+        "formats": "SPARQL / JSON / RDF-TTL / CSV / 全库 dump",
+        "sample_records": "Q609276 climbing grade = 'degree of difficulty of a climbing route', subclass of rating system; Reinhold Messner (Q60128) 有 date of birth 1944-09-17、first Everest without supplemental oxygen 关联; camming device 概念项关联发明者 Ray Jardine。"
+      },
+      {
+        "name": "English Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Grade_(climbing)",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0(文本;需署名+同协议;内嵌图片许可各异需逐张查)",
+        "access": "free",
+        "coverage": "本子领域最完整的叙述性覆盖,可作条目正文底稿(署名即可复用):Grade (climbing)、Yosemite Decimal System、UIAA scale、Scottish winter grade、French grading、Aid climbing、Clean climbing、Free climbing、Ice axe/Piolet、Crampons、Piton、Nut (climbing)、Camming device、Expedition climbing、Alpine climbing、Mixed climbing、List of grade milestones in rock climbing。全站有 API(action=query / REST)+ 数据库 dump。",
+        "formats": "HTML / MediaWiki API (JSON) / 全站 XML dump",
+        "sample_records": "'1894 年 Fritz Benesch 创首个分级(七级,VII 最易);1923 年 Welzenbach 压缩并倒序;1967 年正式成 UIAA 分级 I–VI;1978 加第七级,1985 开放上限。' 'YDS 由 Sierra Club 1950s 提出,Robbins/Wilson/Wilts 定 5.0–5.9,1970s Bridwell 开放到 5.10+。'"
+      },
+      {
+        "name": "Wikisource",
+        "url": "https://en.wikisource.org/wiki/My_Climbs_in_the_Alps_and_Caucasus_(1895)",
+        "kind": "public-domain-text",
+        "license": "public-domain(原著;转录本 CC-BY-SA,但文本本身公版)",
+        "access": "free",
+        "coverage": "已过版权期的登山经典全文,校对分章、可整批抓取。含 A.F. Mummery《My Climbs in the Alps and Caucasus》(1895/1908,银色时代 + 早期无向导/阿式雏形与器械观念)、Edward Whymper 作品等。事实与整段文字均可直接复用。",
+        "formats": "HTML / MediaWiki API / 可导 EPUB/PDF",
+        "sample_records": "Mummery 提出'难峰无路终成简单雪坡'的攀登哲学,记述 Grépon、Aiguille du Dru 等早期无向导攀登,是'攀登为运动而非仅登顶'伦理的源头文本。"
+      },
+      {
+        "name": "Project Gutenberg",
+        "url": "https://www.gutenberg.org/ebooks/41234",
+        "kind": "public-domain-text",
+        "license": "public-domain(美国;Gutenberg 授权条款)",
+        "access": "free",
+        "coverage": "确定进入公有领域的老登山书,纯文本/HTML/EPUB 可整批下载。Edward Whymper《Scrambles Amongst the Alps in the Years 1860-69》(#41234)、《The Ascent of the Matterhorn》(#38044)。含黄金时代技术描述:step-cutting 砍冰阶、alpenstock、绳索结组、导向与保护的早期做法——是'冰镐/绳索/技术'演化的一手史料。",
+        "formats": "TXT / HTML / EPUB / Kindle",
+        "sample_records": "#41234 记 1865 马特洪峰首登下撤断绳坠亡事故,详述当年绳索质量与结组保护实践;书内插图与 step-cutting 描述反映前冰爪时代技术。"
+      },
+      {
+        "name": "Internet Archive",
+        "url": "https://archive.org/details/scramblesamongst41234gut",
+        "kind": "media",
+        "license": "mixed(逐件而定:公版扫描件可复用;近人卷册仅 borrow,不可复用)",
+        "access": "partial",
+        "coverage": "海量登山书刊/期刊扫描件,含 American Alpine Journal 多卷(1929 创刊起若干年份公版,近年卷册受版权仅限借阅)、公版指南书与传记。用作公版老文本与老图版(pre-1929 多为公版)的补给站。有全站 metadata API 与 IIIF 图像接口可批量。",
+        "formats": "PDF / DjVu / full-text OCR (txt) / JSON metadata API / IIIF",
+        "sample_records": "AAJ Vol.1 1929–1932 目录扫描;Whymper《Scrambles》多版扫描;可按 collection 拉 metadata JSON 批量建档。区分:1929 前卷公版可复用,当代卷仅事实可提取、扫描图不可复用。"
+      },
+      {
+        "name": "AAC Publications (American Alpine Journal + Accidents 全文库)",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "api",
+        "license": "proprietary(AAC 版权;免费在线阅读,文本/图不可整体复用——但其中的事实(首登、日期、路线分级、风格)不受版权保护可提取)",
+        "access": "free",
+        "coverage": "20,000+ 篇 AAJ 报告 + 北美事故年鉴全文可免费检索,是首登记录、路线分级、围攻/阿式风格、装备使用的权威事实源。可搜索、可按峰/年/地区筛。作为'事实核验 + 实体填充'源,不作正文复制源。",
+        "formats": "HTML(站内搜索)/ 部分 PDF",
+        "sample_records": "逐年首登报告标注攀登风格(alpine-style / capsule / siege)、路线难度(如 ED2, 5.11 A2, WI5)、所用保护;可交叉印证 Himalayan Database 之外区域(南美/北美/巴基斯坦)的技术演进。"
+      },
+      {
+        "name": "The Himalayan Database (Elizabeth Hawley 远征档案)",
+        "url": "https://himalayandatabase.com/downloads.html",
+        "kind": "structured-db",
+        "license": "proprietary-but-free(2017 起免费;可整库下载,官方允许使用,非开放许可——事实字段可提取入档)",
+        "access": "free",
+        "coverage": "尼泊尔喜马拉雅 1905–至今、340+ 座山峰全部远征的结构化记录,可完整下载数据库程序 + 数据。**直接编码本子领域的核心变量**:是否用补充氧气、是否 sherpa/fixed rope 支持(围攻 vs 阿式)、登顶手段、路线。是判定'围攻式/阿式'与'有氧/无氧'演进的量化金矿。",
+        "formats": "可下载数据库(HimalSQL 程序 + 数据集)/ 配套 PDF 报表",
+        "sample_records": "Messner-Habeler 1978 珠峰记录:O2=None(首次无氧登顶);Messner 1980 珠峰:solo, alpine-style, monsoon, no O2。每条记录带 host/oxygen/route/style 字段,可导出做时间序列。"
+      },
+      {
+        "name": "UIAA 官方(分级标准文档)",
+        "url": "https://www.theuiaa.org/grades-standards/rock-climbing/",
+        "kind": "other",
+        "license": "proprietary(UIAA 版权;免费在线——分级定义作为事实/标准可引用,官方 PDF 图表不可直接再发布)",
+        "access": "free",
+        "coverage": "UIAA 岩石/冰雪/混合官方分级定义与换算,以及历史文献《The Scales of Difficulty in Climbing》(Mandelli & Angriman,PDF)。是 UIAA 分级演进(Benesch→Welzenbach→UIAA 1967→开放上限)的权威一手定义源。",
+        "formats": "HTML / PDF",
+        "sample_records": "官方 UIAA 岩级 I–XII+ 定义与 +/− 细分规则;历史 PDF 追溯 1894 Benesch 与 1923 Welzenbach 谱系及各国换算表。"
+      },
+      {
+        "name": "OpenStreetMap Climbing (含 theCrag / OpenBeta 生态)",
+        "url": "https://wiki.openstreetmap.org/wiki/Climbing",
+        "kind": "dataset",
+        "license": "ODbL(OSM 数据库许可;需署名+同协议,可整批下载复用)",
+        "access": "free",
+        "coverage": "OSM 的 climbing=* 标签体系记录岩场/路线及其各体系分级(climbing:grade:uiaa / yds / french / saxon 等),可整批下载。配合 OpenBeta(开源攀岩数据集,部分 CC0/CC-BY)可获路线级分级数据做体系换算训练。是少数可复用的路线级结构化分级数据。",
+        "formats": "OSM XML / PBF / Overpass API (JSON) / OpenBeta JSON dump",
+        "sample_records": "节点 tag: climbing:grade:french=6a, climbing:grade:uiaa=7-, climbing:grade:yds=5.10a——同一路线多体系并列,天然的分级换算样本。"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Willo Welzenbach 分级(Welzenbach scale → UIAA scale)",
+        "type": "grading-system/event",
+        "one_liner": "1923 年 Welzenbach 将 Benesch 1894 的七级制压缩并倒序为 I–VI,成为阿尔卑斯通用标准,1967 年正式定为 UIAA 分级。",
+        "notable_facts": "1894 Fritz Benesch 首创(VII 最易);1923 Welzenbach 反转;1967 成 UIAA I–VI 闭合制;1978 加第七级;1985 开放上限至今 XII+。德/奥/瑞/捷/斯洛伐克仍用。"
+      },
+      {
+        "name": "Yosemite Decimal System (YDS)",
+        "type": "grading-system",
+        "one_liner": "美国分级体系,1950s 由 Sierra Club(Robbins/Wilson/Wilts)将第五类细分为 5.0–5.9,后由 Bridwell 于 1970s 开放到 5.10 以上。",
+        "notable_facts": "含 class 1–5 徒步到技术攀登、5.x 自由攀登难度、A0–A5 器械等级、罗马数字 I–VII 综合投入等级、R/X 保护风险后缀。现最高约 5.15d。"
+      },
+      {
+        "name": "苏格兰冬季双分级(Scottish winter grade)",
+        "type": "grading-system",
+        "one_liner": "1991 年确立的两级制:罗马数字表综合难度、阿拉伯数字表最难动作技术难度,专为传统保护的混合攀登设计。",
+        "notable_facts": "如 'VI,8' 表示技术难度高于综合级;I–XI 开放;因用传统保护而对胆识/里程/体能加权,深刻影响现代 mixed/drytooling 语言。"
+      },
+      {
+        "name": "法国分级(adjectival + numerical / Fontainebleau 源流)",
+        "type": "grading-system",
+        "one_liner": "法国综合形容词级(F/PD/AD/D/TD/ED)评整条路线严肃度,数字自由攀级(源自枫丹白露抱石)评单段难度,是全球运动攀登主流体系。",
+        "notable_facts": "形容词级用于阿尔卑斯路线综合评价;数字级 6a/7a/8a/9a 开放;与 UIAA/YDS 有标准换算表(UIAA 官方与 Wikidata 均有)。"
+      },
+      {
+        "name": "冰镐 / piolet 演化",
+        "type": "gear",
+        "one_liner": "由牧羊人 alpenstock(长杖)与砍冰小斧合并而来,Grivel 约 1840 造出首把真正冰镐,20 世纪逐步缩短、弯镐化。",
+        "notable_facts": "19 世纪镐长 120–130cm 用于砍冰阶;Oscar Eckenstein 推短镐 85–86cm;1966 Yvon Chouinard 发明弯镐(curved pick)提升人体工学。"
+      },
+      {
+        "name": "冰爪 / 前齿技术(crampons & front-pointing)",
+        "type": "gear/technique",
+        "one_liner": "Oscar Eckenstein 20 世纪初设计 10 齿冰爪,Grivel 于 1932 加前伸两齿(front points),使前齿踢冰取代砍冰阶,革新冰雪技术。",
+        "notable_facts": "Laurent Grivel 1932 的 12 齿前齿冰爪是冰雪攀登效率跃升点;结合弯镐催生 1970s 'piolet traction' 双镐攀冰(Cecchinel/Jager 1973 Dru 北沟)。"
+      },
+      {
+        "name": "piolet traction 双镐攀冰技术",
+        "type": "technique",
+        "one_liner": "1970s 确立的用两把带弯镐冰镐牵引攀陡冰的技术,1973 年 Walter Cecchinel 与 Claude Jager 首用于 Dru 北沟。",
+        "notable_facts": "配合前齿冰爪把陡冰/瀑布冰从'砍阶数小时'变为可直接攀爬,直接催生现代 ice climbing 与 WI 分级。"
+      },
+      {
+        "name": "岩钉 / piton 演化与 RURP",
+        "type": "gear",
+        "one_liner": "从软铁一次性岩钉发展到 Chouinard 铬钼钢可复用岩钉,以及极小缝用 RURP(Realized Ultimate Reality Piton),是器械攀登黄金期的核心硬件。",
+        "notable_facts": "铬钼钢岩钉可反复打入优质硬岩(Yosemite 花岗岩);反复打钉破坏岩体的问题正是 1972 clean climbing 革命的导火索。"
+      },
+      {
+        "name": "Chock / Nut(被动保护)与 clean climbing 革命",
+        "type": "gear/event",
+        "one_liner": "1967 Robbins 从英国带回人工岩楔并用其首攀 Nutcracker;1972 Chouinard 装备目录倡导'clean climbing',以岩楔取代破坏岩体的岩钉。",
+        "notable_facts": "1972 目录含 Chouinard-Frost 与 Doug Robinson《The Whole Natural Art of Protection》;英国传统的天然楔石/机械螺母演化为 Stopper/Hexcentric,确立'不留痕'伦理。"
+      },
+      {
+        "name": "Friends 弹簧凸轮装置(SLCD)",
+        "type": "gear",
+        "one_liner": "航天工程师兼攀登者 Ray Jardine 发明的双组对置独立弹簧凸轮保护器,1977 由 Wild Country(Mark Vallance)量产,1978 首登广告。",
+        "notable_facts": "Jardine 1971 起研发,突破在于对置独立弹簧凸轮可在平行缝可靠受力;彻底改变平行缝/横缝的保护能力,是现代 trad 攀登基石。"
+      },
+      {
+        "name": "Kernmantle 动力绳与尼龙绳革命",
+        "type": "gear",
+        "one_liner": "二战尼龙取代天然纤维绳,1953 年 Edelrid 推出芯鞘结构(kernmantle)动力绳,大幅提升缓冲坠落能力与耐用度。",
+        "notable_facts": "从马特洪峰 1865 断绳事故的天然纤维静力绳,到尼龙 perlon 芯鞘动力绳,使'冲坠可保护'成为可能,是自由攀登能推极限的前提。"
+      },
+      {
+        "name": "围攻式(siege / expedition style)",
+        "type": "technique/concept",
+        "one_liner": "19 世纪末军事化组织的登山法:固定绳、逐级建补给营、大量 porter/sherpa 与补充氧气,反复上下线路'围攻'高峰。",
+        "notable_facts": "早期 8000 米首登(如 1953 珠峰、Annapurna)多为围攻式;Warren Harding 1958 首攀 El Cap 'The Nose' 用固定绳围攻式,是大墙版围攻。"
+      },
+      {
+        "name": "阿式(alpine style)",
+        "type": "technique/concept",
+        "one_liner": "1970s 兴起的反主流风格:小队自背全部装备一次性冲顶,无 porter、无固定绳、无预设营地,强调速度、简约与承诺。",
+        "notable_facts": "Bonington 一代英国人与 Messner 为早期旗手;将阿尔卑斯轻快风格移植到喜马拉雅,重塑'纯粹性'伦理。"
+      },
+      {
+        "name": "Reinhold Messner",
+        "type": "person",
+        "one_liner": "阿式登山与无氧高海拔的化身:1978 与 Habeler 首次无氧登珠峰,1980 无氧单人阿式登珠峰,首位登完全部 14 座 8000 米。",
+        "notable_facts": "将'by fair means'伦理推到极限;Himalayan Database 中其记录的 oxygen=None、style=alpine 字段是围攻→阿式转变的量化标志点。"
+      },
+      {
+        "name": "Yvon Chouinard",
+        "type": "person",
+        "one_liner": "攀登装备革新与伦理领袖:发明弯镐(1966)、铬钼钢岩钉,主导 1972 clean climbing 革命,后创 Patagonia。",
+        "notable_facts": "1972 Chouinard Equipment 目录既是产品册也是环境宣言,一举把美国攀登从'打钉'转向'岩楔清洁攀登'。"
+      },
+      {
+        "name": "自由攀登 vs 器械攀登(free vs aid climbing)",
+        "type": "concept",
+        "one_liner": "自由攀登仅用手脚上升、器械只作坠落保护;器械攀登直接借助装备(钉/梯/凸轮)上升——二者的此消彼长定义了 20 世纪攀登伦理主线。",
+        "notable_facts": "1960s–70s Yosemite 大墙是器械攀登黄金期(Robbins 'minimal aid' vs Harding);Robbins 极简伦理 + Chouinard clean 伦理推动自由化,终点如 1993 Lynn Hill 首次自由攀登 The Nose。"
+      },
+      {
+        "name": "Oscar Eckenstein",
+        "type": "person",
+        "one_liner": "英国攀登者与器械革新者,20 世纪初设计现代 10 齿冰爪并倡导短冰镐,奠定前齿冰雪技术的硬件基础。",
+        "notable_facts": "其冰爪设计经 Grivel 1932 加前齿后成现代冰爪;短镐理念终结了长 alpenstock 时代。"
+      }
+    ],
+    "notes": "范围与方法:本轮聚焦 gear-technique 子领域四条主线(装备演化、分级体系、围攻 vs 阿式、自由 vs 器械),经 7 组网络检索交叉印证,事实点均有 2+ 来源支撑(UIAA/Wikipedia 分级谱系、Grivel/AAC 冰镐史、Wild Country/Jardine 凸轮史、Himalayan Database 风格字段)。\n\n许可分层(建档复用优先级):\n1) 可无条件整批复用:**Wikidata(CC0)**——建议作结构化骨架,SPARQL 拉分级体系/装备/人物 item;**OSM climbing + OpenBeta(ODbL/部分 CC0)**——唯一可复用的路线级多体系分级数据。\n2) 署名即可复用:**Wikipedia(CC-BY-SA)**正文底稿;**Wikisource/Gutenberg(公版)**老文本可全文入库(Whymper #41234/#38044、Mummery)。注意:公版仅限文本本身,当代重排版/扫描图需逐件核。\n3) 仅提取事实、不可复制表达/图:**AAC/AAJ 全文库**、**UIAA 官方文档**、**Himalayan Database**——'谁在何时以何风格首登、用何保护、路线分级'这类事实不受版权保护可入档,但其撰写文字与照片受版权,不可直接再发布。\n\n版权红线提示:近代(约 1929 年后)攀登照片、当代 AAJ/杂志文字、装备厂商官网叙述(Grivel/Wild Country blog)属受版权表达,仅可作事实核验与引注,不可整段/整图搬入档案库;建档时对每条实体标注'事实来源'与'表达/图片是否可复用'两栏。\n\n尚未覆盖(建议后续轮):冰瀑 WI/M 混合分级细则、萨克森(Saxon/Elbsandstein)与英国传统 E-grade 谱系、法国 Fontainebleau 抱石级与 V-scale/Font-scale 换算、UIAA 装备安全标准(EN/UIAA 认证)演化、绳索 UIAA fall rating 技术史。"
+  },
+  {
+    "domain": "mountaineering-records-stats（登山纪录与统计:速登、无氧、冬季首登、登顶最多、年龄纪录、死亡率、雪豹奖、14 座全集齐者)",
+    "sources": [
+      {
+        "name": "The Himalayan Database (Elizabeth Hawley 远征档案)",
+        "url": "https://www.himalayandatabase.com/",
+        "kind": "structured-db",
+        "license": "专有软件但免费公开发布;底层为事实记录(远征/登顶/死亡),事实本身不受版权保护可提取复用,数据库编排的整体表达受保护",
+        "access": "free",
+        "coverage": "尼泊尔喜马拉雅(含边境 8000 米峰)自 1905 年至今全部有记录远征,涵盖每次远征的成员、雇工、登顶/未登顶、是否用氧、死亡原因、路线、季节等;是死亡率、无氧登顶、季节首登统计的黄金标准来源",
+        "formats": "可整批下载:Windows Visual FoxPro 9 应用(约 43MB zip,内含全部表)+ 可选 SQL 版(多表查询,可导出 CSV/结构化);Mac 需 CrossOver/Wine。半年更新一次",
+        "sample_records": "①1950-06-03 Annapurna I 法国队 Herzog/Lachenal 首登(首座登顶的 8000 米峰);②每条 member 记录含 O2used 字段可筛无氧登顶;③每次远征含 death/cause 字段,可聚合出各峰死亡率(如 Annapurna 历来最高)"
+      },
+      {
+        "name": "8000ers.com (Eberhard Jurgalski)",
+        "url": "https://www.8000ers.com/",
+        "kind": "encyclopedia",
+        "license": "专有(网站版权 All rights reserved);统计事实可引用不可整批镜像",
+        "access": "free",
+        "coverage": "14 座 8000 米峰的登顶统计、死亡统计、按年份/国籍/是否用氧的汇总、速登与集齐 14 座名录;登山界公认的 8000 米峰纪录仲裁源(Jurgalski 团队对 Harila/Purja 等纪录做真实性核查)",
+        "formats": "HTML 表格(需手工/脚本抓取),无官方 API/dump;PDF 统计表",
+        "sample_records": "①Annapurna I:约 365 次登顶 / 72 死(登顶段),死亡返回比最高;②Gasherbrum II 属最安全之一(2025-11 约 25 死);③各峰按十年分段的死亡率下降趋势(1990 后约为早期一半)"
+      },
+      {
+        "name": "Wikidata",
+        "url": "https://www.wikidata.org/wiki/Q185552",
+        "kind": "structured-db",
+        "license": "CC0(公有领域,可无条件整批复用)",
+        "access": "free",
+        "coverage": "山峰(海拔/坐标/首登日期/首登者 P1259 等)、登山者(国籍/生卒/获奖如雪豹奖·Piolet d'Or)、远征事件;结构化程度高但深度不及 Himalayan Database,适合做实体骨架 + 交叉链接",
+        "formats": "整批可下载:SPARQL 端点(query.wikidata.org)、JSON/RDF 实体导出、每周全库 dump",
+        "sample_records": "①Q185552 eight-thousander 定义 14 座;②各峰实体带 first ascent(P1259 类)日期与队伍;③登山者实体带 award received(P166)= Snow Leopard / Piolet d'Or,可 SPARQL 一次性拉全获奖名单"
+      },
+      {
+        "name": "Wikipedia (英文)相关列表条目",
+        "url": "https://en.wikipedia.org/wiki/List_of_deaths_on_eight-thousanders",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0(可复用,须署名+相同方式共享;事实本身不受限)",
+        "access": "free",
+        "coverage": "记录与统计的核心叙事+已整理列表:List of deaths on eight-thousanders、List of Mount Everest records(年龄/速登/最多次)、List of people who have climbed all 14 eight-thousanders、Snow Leopard award、Eight-thousander、First ascent",
+        "formats": "整批可下载:MediaWiki API、HTML dump、结构化 wikitable 可解析;pageviews API",
+        "sample_records": "①最年幼登顶珠峰 Jordan Romero 2010 年 13 岁(北侧);最年长 Yuichiro Miura 2013 年 80 岁;②14 座冬季首登逐峰列表(多为波兰队 1980s,K2 2021 尼泊尔队收官);③集齐 14 座者按时间排序名录"
+      },
+      {
+        "name": "AAC Publications(American Alpine Journal + Accidents in North American Mountaineering)",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "encyclopedia",
+        "license": "专有(AAC 版权),但全文免费在线可搜;引用事实可,整批复制表达不可",
+        "access": "free",
+        "coverage": "AAJ 全archive(1929 至今)权威远征年度报道 + Accidents in North American Mountaineering 事故统计;是纪录/事故/首登一手叙事的权威二次源",
+        "formats": "HTML 全文可搜(逐篇);无官方整批 dump",
+        "sample_records": "①每年 AAJ 收录当年全球重要首登与新路线;②Accidents 年鉴含北美登山事故分类统计(死因/海拔/经验);③历史无氧/冬季远征的一手队报"
+      },
+      {
+        "name": "Internet Archive — American Alpine Journal / Himalayan Journal 老刊",
+        "url": "https://archive.org/details/pub_american-alpine-journal",
+        "kind": "public-domain-text",
+        "license": "早期卷次(约 1929 及更早、美国 1929 年前出版物)已进入公有领域可直接复用;较新卷次仍受版权(仅 borrow)。Himalayan Journal Vol.1(1929)等老卷公有领域",
+        "access": "partial",
+        "coverage": "AAJ 1929–1996 扫描、Himalayan Journal 早期卷;登山黄金年代首登/远征的公版一手文本与图版(注意逐卷核对出版年判定是否真进入公有领域)",
+        "formats": "整批可下载:PDF / 全文 txt / DjVu / EPUB,archive.org 有 API 批量取",
+        "sample_records": "①Himalayan Journal 1(1929)可全文下载;②AAJ 1929–1932 Vol.1 目录与全文;③1920s-30s 珠峰/Kangchenjunga 早期尝试的公版叙述与照片(逐图核版权年)"
+      },
+      {
+        "name": "Peakbagger.com(纪录名单)",
+        "url": "https://www.peakbagger.com/list.aspx?lid=5618",
+        "kind": "structured-db",
+        "license": "专有(网站版权);名单事实可引用",
+        "access": "free",
+        "coverage": "各类登山清单与登顶者名录:Snow Leopard (CIS) Award 完成者、8000ers 完成者、各国最高峰;适合交叉核对 Wikidata/Wikipedia 名单",
+        "formats": "HTML 列表(可脚本抓);无官方 API",
+        "sample_records": "①Snow Leopard 完成者列表(五座苏联 7000 米峰);②登顶者按峰/日期的结构化行;③国家最高点完成名录"
+      },
+      {
+        "name": "DBpedia",
+        "url": "https://dbpedia.org/page/The_Himalayan_Database",
+        "kind": "structured-db",
+        "license": "CC-BY-SA(源自 Wikipedia 抽取)",
+        "access": "free",
+        "coverage": "Wikipedia 信息盒抽取的结构化三元组:山峰海拔/首登、登山者获奖/国籍;可作 Wikidata 之外的第二结构化交叉源",
+        "formats": "整批可下载:SPARQL 端点 + RDF dump + JSON",
+        "sample_records": "①各 8000 米峰 dbo:firstAscentPerson/dbo:elevation;②登山者 dbo:award;③可 SPARQL 拉全 8000 米峰属性表"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Himalayan Database(Elizabeth Hawley 档案)",
+        "type": "数据源/机构档案",
+        "one_liner": "记录尼泊尔喜马拉雅一个多世纪全部远征的权威数据库,是无氧、季节首登、死亡率一切统计的事实地基。",
+        "notable_facts": "Hawley 1963 起在加德满都逐队核实登顶真伪;2018 年她去世后由 Richard Salisbury 维护;2017 起免费公开;是纪录仲裁最重要一手源。"
+      },
+      {
+        "name": "Reinhold Messner",
+        "type": "人物",
+        "one_liner": "1986 年成为史上首位登顶全部 14 座 8000 米峰者,且全程无补充氧气。",
+        "notable_facts": "1978 年与 Peter Habeler 首次无氧登顶珠峰;1980 年完成珠峰单人无氧;定义了'无氧'纪录范式。"
+      },
+      {
+        "name": "集齐 14 座 8000 米峰(14×8000 完成者名录)",
+        "type": "纪录类别/名录",
+        "one_liner": "全球登顶全部 14 座 8000 米峰的登山者名单,登山纪录统计的核心榜单。",
+        "notable_facts": "首位 Messner(1986)、第二 Jerzy Kukuczka(1987,含多条冬季/新路线);争议点在是否用氧、真实登顶(Jurgalski 团队对若干人做真登顶核查)。"
+      },
+      {
+        "name": "Kristin Harila & Tenjen (Lama) Sherpa",
+        "type": "人物/速登纪录",
+        "one_liner": "2023-07-27 以 92 天完成全部 14 座 8000 米峰,创最快集齐纪录(用氧+直升机转场)。",
+        "notable_facts": "打破 Nirmal Purja 189 天旧纪录近一半;Tenjen 同为纪录共同保持者(后于 2023 年秋在 Shishapangma 遇难)。"
+      },
+      {
+        "name": "Nirmal Purja (Nimsdai)",
+        "type": "人物/速登纪录",
+        "one_liner": "2019 年'Project Possible'以 6 个月 6 天(189 天)集齐 14 座,并领导 2021 年 K2 冬季首登。",
+        "notable_facts": "K2 冬季首登(2021-01-16)全尼泊尔 10 人队收官最后一座待冬攀的 8000 米峰;他称自己 K2 段无氧。"
+      },
+      {
+        "name": "K2 冬季首登(2021-01-16)",
+        "type": "事件/冬季首登",
+        "one_liner": "全尼泊尔 10 人团队完成 K2 首次冬季登顶,补齐 8000 米峰冬季首登版图的最后一块。",
+        "notable_facts": "成员含 Nirmal Purja、Mingma G、Mingma David 等 9 名夏尔巴+1 名马嘉;此前 K2 是唯一未冬攀成功的 8000 米峰。"
+      },
+      {
+        "name": "Annapurna I",
+        "type": "山峰/死亡率纪录",
+        "one_liner": "1950 年人类首登的 8000 米峰,同时是历史死亡率最高的 8000 米峰。",
+        "notable_facts": "Herzog/Lachenal 首登;登顶段死亡返回比约 19/100,高于 K2;死亡率统计常引用作最危险 8000 米峰代表。"
+      },
+      {
+        "name": "Kami Rita Sherpa",
+        "type": "人物/登顶最多纪录",
+        "one_liner": "登顶珠峰次数最多的人,持续刷新自己保持的世界纪录。",
+        "notable_facts": "1994 年首登珠峰,此后几乎每年登顶,已累计 30 次以上(逐年递增);'登顶最多'类纪录的头部条目。"
+      },
+      {
+        "name": "珠峰年龄纪录(最年幼 / 最年长)",
+        "type": "纪录类别",
+        "one_liner": "最年幼登顶者 Jordan Romero(2010 年 13 岁,北侧),最年长 Yuichiro Miura(2013 年 80 岁)。",
+        "notable_facts": "尼泊尔不发 16 岁以下许可,故 Romero 走西藏侧;Miura 三度刷新最年长纪录(2003/2008/2013);年龄纪录受两国许可政策约束。"
+      },
+      {
+        "name": "Snow Leopard Award(雪豹奖)",
+        "type": "奖项/纪录类别",
+        "one_liner": "苏联登山荣誉,授予登顶苏联境内全部五座 7000 米峰者。",
+        "notable_facts": "1967 年设立;五峰为共产主义峰(7495)、Korzhenevskaya(7105)、列宁峰(7134)、胜利峰 Pobeda(7439)、汗腾格里(7010);1961–2012 约 600+ 人获得,含 31 名女性。"
+      },
+      {
+        "name": "8000 米峰冬季首登序列(逐峰)",
+        "type": "纪录类别/名录",
+        "one_liner": "14 座 8000 米峰的首次冬季登顶清单,1980s 波兰'冰雪战士'主导、2021 年 K2 收官。",
+        "notable_facts": "珠峰 1980(波兰 Wielicki/Cichy)开创;Manaslu/Dhaulagiri/Cho Oyu/Kangchenjunga/Annapurna/Lhotse 均波兰队;最后完成:GI(2012)、K2(2021)。"
+      },
+      {
+        "name": "Jerzy Kukuczka",
+        "type": "人物",
+        "one_liner": "第二位集齐 14 座 8000 米峰者(1987),多数经由新路线或冬季完成,风格最硬。",
+        "notable_facts": "仅用约 8 年完成 14 座 vs Messner 16 年;含 4 条冬季首登、10 条新路线;1989 年于 Lhotse 南壁遇难。"
+      }
+    ],
+    "notes": "复用策略要点(区分事实 vs 表达):①登顶/死亡/日期/海拔等【事实】不受版权保护,可从任何源提取重编——但整批复制某数据库的编排/文字表达受保护。②推荐数据地基三层:Wikidata(CC0,做实体骨架+可 SPARQL/JSON/dump 整批拉)→ Wikipedia 列表(CC-BY-SA,做已整理榜单,须署名)→ Himalayan Database(免费下载 FoxPro/SQL,做尼泊尔侧权威事实校验+死亡率/无氧统计的黄金真值)。③8000ers.com 是纪录仲裁权威但版权 All-rights-reserved,只引用统计不镜像。④公版老文本:archive.org 的 AAJ 早期卷 + Himalayan Journal Vol.1(1929)可整批下 PDF/txt/EPUB 直接复用,但必须逐卷/逐图核出版年——较新卷次与近人照片仍受版权,归不可直接复用。⑤DBpedia 可作 Wikidata 之外第二结构化交叉源做一致性核对。\\n\\n数据质量陷阱:8000 米峰'登顶真实性'存在系统性争议(Jurgalski/8000ers 团队重核了 Harila、多位早期集齐者的部分登顶是否到真正最高点、是否用氧),建档时每条纪录应带【来源+是否用氧+是否经核实】字段,并允许同一事件多源分歧并存,不要单源定论。速登纪录须标注是否用氧、是否直升机转场(Harila/Purja 用氧用直升机,与'无氧自主'不可比)。年龄纪录受尼泊尔/中国许可政策影响(<16 岁只能走北侧)。\\n\\n未决/建议后续:(a)Himalayan Database 的 SQL 版实际导出 schema 需真机拉一份确认字段;(b)Karakoram/巴基斯坦侧(K2、Gasherbrum、Nanga Parbat)缺一个等价于 Himalayan Database 的权威库,目前只能靠 8000ers.com+AAJ 拼,是数据薄弱区;(c)雪豹奖完整获奖名单需 Peakbagger+俄语源交叉补全(英文源仅约数)。"
+  },
+  {
+    "domain": "mountaineering / data-apis (免费结构化数据集与 API 猎取:登山编年档案库的数据地基)",
+    "sources": [
+      {
+        "name": "Wikidata (SPARQL 端点 + 全量 dump)",
+        "url": "https://query.wikidata.org/",
+        "kind": "structured-db",
+        "license": "CC0(公有领域奉献,可无条件商用/再分发)",
+        "access": "free",
+        "coverage": "全球山峰、远征、登山者、山脉的核心事实层。关键属性:P31(instance of,山 Q8502)、P625(坐标)、P2044(海拔)、P1444(首登日期)、P610(最高点)、P1566(GeoNames ID 互链)。★可整批下载:SPARQL 可分页拉全部 instance-of-mountain,另有每周 JSON dump。CC0 是全库最安全的复用底座,建议作档案库主键层。",
+        "formats": "SPARQL(HTTP,JSON/CSV/TSV)、REST(wbgetentities)、每周全量 JSON/TTL dump(dumps.wikimedia.org)",
+        "sample_records": "珠峰 Q513:海拔 8848.86 m,27.988°N 86.925°E,首登 1953-05-29;K2 Q43512:8611 m,首登 1954-07-31;Annapurna I Q16419:首登 1950-06-03(P1444)。"
+      },
+      {
+        "name": "Wikipedia(维基百科)全站 dump",
+        "url": "https://dumps.wikimedia.org/",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0(正文;署名+相同方式共享);图片/媒体单独授权",
+        "access": "free",
+        "coverage": "每座主要山峰、每次著名远征、每位登山者的叙事长文+infobox(首登/海拔/路线/伤亡),多语种。★可整批:enwiki-latest-pages-articles.xml.bz2。事实可自由复用;叙事表达受 CC-BY-SA 约束,再发布须署名+同协议。",
+        "formats": "XML dump(.xml.bz2,可整批)、REST API、Parsoid",
+        "sample_records": "'1996 Mount Everest disaster' 含遇难名单与时间线;'List of deaths on eight-thousanders' 表格;'Timeline of climbing Mount Everest'。"
+      },
+      {
+        "name": "The Himalayan Database (Elizabeth Hawley 远征档案)",
+        "url": "https://www.himalayandatabase.com/",
+        "kind": "dataset",
+        "license": "专有/受限:免费下载,但官方无开放许可声明。编纂物(程序+数据表)受版权保护,不得整批再分发/商用;其中客观事实不受版权,可提取。",
+        "access": "free",
+        "coverage": "权威登山史核心:尼泊尔喜马拉雅 490 座峰,1905→2024,>11,500 次远征、>90,800 名成员、>16,100 条文献引用。字段:峰/季/路线/营地/补氧/登顶/死亡与事故/公民/日期。最有价值的登山史结构化源,但许可最敏感:当事实核对权威,提取事实入库,不整包镜像其数据文件。",
+        "formats": "Windows 程序(v2.74,zip 43 MB,内部 DBF/HDB 表)+PDF 报告附录。官网不直供 CSV;社区镜像(Maven/Kaggle 样本)提供 CSV。",
+        "sample_records": "1953 春 Everest 英国队 Hillary/Tenzing 登顶;1950 Annapurna Herzog 队首登;逐条含 PEAKID/EXPID/成员补氧与存殁标志。"
+      },
+      {
+        "name": "8000ers.com (Eberhard Jurgalski 八千米统计)",
+        "url": "https://www.8000ers.com/",
+        "kind": "dataset",
+        "license": "专有(© E. Jurgalski & 8000ers.com)。事实可提取,统计表/编纂不可整批复用。",
+        "access": "free",
+        "coverage": "全球 14 座八千米峰登顶统计、编年、争议裁定(forensic 级:登顶照/GPS/证人)。唯一系统覆盖巴基斯坦 5 座八千米峰的公开源。作八千米峰完攀认证与峰高的交叉校验源;提取事实,不镜像其表。",
+        "formats": "HTML 表格 + 可下载 PDF/文档(download.html)",
+        "sample_records": "全 14 座完攀者名单(Messner 1986 首位;截至 2024/25 约 44–48 名严格认证);各峰历年登顶/死亡计数;Kangchenjunga 真顶争议裁定。"
+      },
+      {
+        "name": "GeoNames 地名库",
+        "url": "https://www.geonames.org/export/",
+        "kind": "structured-db",
+        "license": "CC-BY 4.0(仅需署名,可商用/再分发)",
+        "access": "free",
+        "coverage": "全球 >1200 万地名,含山峰要素类 T(T.MT 山、T.PK 峰、T.MTS 山脉)。字段:名称/经纬/海拔/国家/feature code/多语别名/时区。★可整批下载+CC-BY 可商用,是补齐坐标/别名/海拔与地名消歧的理想底座。",
+        "formats": "整库 dump(allCountries.zip,tab)、按国家文件、REST/JSON API、featureCodes_en.txt",
+        "sample_records": "Mount Everest geonameid 1283416,T.PK,27.98°/86.92°,海拔 8848,含多语别名;可用 P1566 与 Wikidata 对接。"
+      },
+      {
+        "name": "OpenStreetMap(natural=peak)+ Geofabrik 抽取",
+        "url": "https://wiki.openstreetmap.org/wiki/Tag:natural=peak",
+        "kind": "structured-db",
+        "license": "ODbL 1.0(署名+share-alike;衍生数据库须同协议开放)",
+        "access": "free",
+        "coverage": "全球社区标注山峰点(natural=peak),常带 ele/name/name:xx/wikidata 标签;含山口/山脊/冰川。★可整批(Geofabrik/planet)+Overpass 按需。注意 share-alike:混入自建库对外发布时该衍生库须 ODbL 开放;事实性坐标可用,发布形态需合规设计。",
+        "formats": "整块 PBF/Shapefile(Geofabrik)、Overpass API、planet.osm",
+        "sample_records": "Overpass 查 [natural=peak][ele] 拉区域全部带海拔峰点;多数主要峰含 wikidata=* 直连。"
+      },
+      {
+        "name": "OpenTopoMap 地形图瓦片",
+        "url": "https://opentopomap.org/",
+        "kind": "media",
+        "license": "CC-BY-SA 3.0(渲染瓦片;署名 opentopomap.org+OSM+SRTM)",
+        "access": "free",
+        "coverage": "基于 OSM+SRTM 渲染的地形底图瓦片(等高线/阴影/峰名)。是渲染产物非原始数据:展示可用,须保留署名;大批量取瓦片需守 tile policy,建议自建缓存或用 SRTM 自渲染。",
+        "formats": "XYZ 栅格瓦片(PNG,tile server),嵌入 Leaflet/MapLibre",
+        "sample_records": "z/x/y 瓦片直接嵌入展示某峰周边地形。"
+      },
+      {
+        "name": "SRTM / NASADEM 数字高程(NASA/USGS)",
+        "url": "https://www.earthdata.nasa.gov/data/instruments/srtm",
+        "kind": "dataset",
+        "license": "公有领域(美国政府作品,无版权,可自由商用/再分发)",
+        "access": "free",
+        "coverage": "全球 30 m/90 m DEM,为峰点提供独立海拔校验、生成地形剖面/阴影/等高线,喜马拉雅-喀喇昆仑全覆盖。★公有领域+可整批:海拔真值校验与自建地形图的干净基石。",
+        "formats": "GeoTIFF/HGT 瓦片(EarthData/USGS EarthExplorer 批量下载)",
+        "sample_records": "珠峰格网高程 ~8800 m(雪盖导致 DEM 与实测峰高有差);可批量取喀喇昆仑瓦片自渲等高线。"
+      },
+      {
+        "name": "American Alpine Club Publications(AAJ + ANAC 全档)",
+        "url": "https://publications.americanalpineclub.org/",
+        "kind": "encyclopedia",
+        "license": "专有版权(AAC 及作者),免费在线阅读,非开放许可。事实可引用/提取,原文表达受版权。",
+        "access": "free",
+        "coverage": "American Alpine Journal(1929→,>20,000 篇新线路/远征第一手报告)+Accidents in North American Climbing(1948→,>5,000 篇事故分析)。全文免费、按年/类型/标题检索。1929 后美国出版物多仍受版权(非公版),只做事实提取+引用+链接,不镜像全文。",
+        "formats": "HTML 文章页+S3 PDF(aac-publications.s3.amazonaws.com/...)",
+        "sample_records": "每年重大新线路首攀报告;北美事故逐条含成因分析;含对经典著作书评。"
+      },
+      {
+        "name": "公版登山经典文本(Gutenberg / Internet Archive / Wikisource)",
+        "url": "https://www.gutenberg.org/",
+        "kind": "public-domain-text",
+        "license": "公有领域(作者殁 >100 年/1929 前出版,美英均已过版权期),可自由全文复用/再排版",
+        "access": "free",
+        "coverage": "登山史一手叙事:Whymper《Scrambles Amongst the Alps 1860-69》(1871)与《Ascent of the Matterhorn》;Mummery《My Climbs in the Alps and Caucasus》(1895);Leslie Stephen《The Playground of Europe》(1871);早期 Alpine Journal 卷次。★确定公版:可整段收入做编年原始文献层,无许可负担;含插图(木刻版画)多亦公版。",
+        "formats": "txt/EPUB/HTML(Gutenberg)、扫描 PDF+OCR(Archive.org)、结构化章节(Wikisource)",
+        "sample_records": "Whymper 亲述 1865 马特洪峰首登及下撤四人罹难(Gutenberg #41234);Mummery 记 Grépon、Dych Tau 首攀。"
+      },
+      {
+        "name": "Wikimedia Commons(媒体库)",
+        "url": "https://commons.wikimedia.org/",
+        "kind": "media",
+        "license": "逐文件不同:大量 CC0/CC-BY/CC-BY-SA/公有领域;须逐图核验,不能整库假定可用",
+        "access": "free",
+        "coverage": "山峰照片、历史远征影像、地图、肖像。历史照片(1929 前)多公版;现代照片多 CC-BY-SA。事实无版权但图片表达有版权:仅整批采纳 PD/CC0 图;CC-BY/BY-SA 携署名;不明者标为不可直接复用。",
+        "formats": "REST/MediaWiki API(含许可元数据)、类别批量、图片直链",
+        "sample_records": "1953 Everest 队史照(部分 PD);各峰现代 CC-BY-SA 照片;每文件页标注许可与署名要求。"
+      },
+      {
+        "name": "DBpedia(维基百科结构化抽取)",
+        "url": "https://www.dbpedia.org/",
+        "kind": "structured-db",
+        "license": "CC-BY-SA 3.0(随维基百科)",
+        "access": "free",
+        "coverage": "把维基百科 infobox 抽成 RDF:山峰海拔/首登/山脉/坐标,SPARQL 可查。作 Wikidata 补充(infobox 有但 Wikidata 未录字段)。可整批 RDF dump;CC-BY-SA 需署名+同协议,不如 Wikidata(CC0)干净,作补充源。",
+        "formats": "SPARQL 端点、RDF dump(TTL/NT)",
+        "sample_records": "dbr:Mount_Everest 的 dbo:elevation、dbo:firstAscent 三元组。"
+      },
+      {
+        "name": "PeakVisor 峰库 / API",
+        "url": "https://peakvisor.com/api",
+        "kind": "api",
+        "license": "专有(Routes Software SRL)。无开放数据许可,不授权整库再分发。",
+        "access": "partial",
+        "coverage": ">100 万命名峰+3D 地形/全景识别,覆盖广但为封闭商业库。归为不可直接复用:仅可展示嵌入或人工参考,不能抽取入库。同类封闭源 Peakbagger.com 亦然。",
+        "formats": "嵌入式全景 widget / 有限 API",
+        "sample_records": "某峰 3D 全景与周边峰识别面板嵌入。"
+      },
+      {
+        "name": "Himalayan Journal(The Himalayan Club, 印度)",
+        "url": "https://www.himalayanclub.org/hj/",
+        "kind": "encyclopedia",
+        "license": "专有版权(俱乐部/作者),部分早期卷在线免费。事实可引用,原文受版权。",
+        "access": "partial",
+        "coverage": "1929→ 喜马拉雅远征一手报告,与 AAJ 互补,含大量印度/喀喇昆仑视角。作 AAJ 补充一手源;只做事实提取+链接,1929 前个别篇目可核公版后全文收录。",
+        "formats": "HTML/PDF 卷次",
+        "sample_records": "历年喜马拉雅首攀与探险叙事;早期卷可能进入公有领域。"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Mount Everest / 珠穆朗玛峰 (Sagarmatha / Chomolungma)",
+        "type": "peak",
+        "one_liner": "世界最高峰,8848.86 m,登山编年的绝对核心节点。",
+        "notable_facts": "中尼边界;1953-05-29 Hillary & Tenzing 经南坳-东南山脊首登;1924 Mallory & Irvine 失踪于北坡;1978 Messner/Habeler 首次无氧登顶;Wikidata Q513 / GeoNames 1283416。"
+      },
+      {
+        "name": "K2 (Chhogori / Mount Godwin-Austen)",
+        "type": "peak",
+        "one_liner": "世界第二高峰 8611 m,公认技术与死亡率最高的八千米峰。",
+        "notable_facts": "中巴喀喇昆仑;1954-07-31 意大利队(Lacedelli/Compagnoni)首登;2021 尼泊尔十人队首次冬攀;Wikidata Q43512。"
+      },
+      {
+        "name": "Kangchenjunga / 干城章嘉",
+        "type": "peak",
+        "one_liner": "世界第三高峰 8586 m,首登者出于宗教尊重止步于真顶之下数米。",
+        "notable_facts": "印度锡金-尼泊尔界;1955-05-25 英国队 Band & Brown 首登;真顶/子峰之争是 8000ers.com 裁定经典案例;Wikidata Q40858。"
+      },
+      {
+        "name": "Annapurna I",
+        "type": "peak",
+        "one_liner": "人类首座登顶的八千米峰(8091 m),也是死亡率最高的八千米峰之一。",
+        "notable_facts": "1950-06-03 法国队 Herzog & Lachenal 首登——早于珠峰3年,开启八千米时代;Herzog《Annapurna》为经典;Wikidata Q16419。"
+      },
+      {
+        "name": "The Matterhorn / 马特洪峰",
+        "type": "peak",
+        "one_liner": "阿尔卑斯黄金时代的象征,首登以四人罹难的悲剧收场。",
+        "notable_facts": "瑞士-意大利界 4478 m;1865-07-14 Whymper 队首登,下撤时四名队员坠亡;催生现代登山伦理讨论;一手叙事《Scrambles Amongst the Alps》已公版。"
+      },
+      {
+        "name": "14 座八千米山峰(Eight-thousanders)",
+        "type": "peak_set",
+        "one_liner": "全球仅有的 14 座 >8000 m 独立山峰,构成八千米登山编年的骨架。",
+        "notable_facts": "珠峰/K2/干城章嘉/洛子/马卡鲁/卓奥友/道拉吉里/马纳斯鲁/南迦帕尔巴特/安纳普尔纳/GI/宽峰/GII/希夏邦马;均在喜马拉雅-喀喇昆仑;8000ers.com 为完攀认证权威。"
+      },
+      {
+        "name": "1953 British Everest Expedition / 珠峰首登远征",
+        "type": "expedition",
+        "one_liner": "人类首次登顶世界最高峰的里程碑远征。",
+        "notable_facts": "John Hunt 领队;1953-05-29 Edmund Hillary 与 Tenzing Norgay 登顶;开放式氧气系统;Himalayan Database 有完整记录。"
+      },
+      {
+        "name": "1924 British Mount Everest Expedition",
+        "type": "expedition",
+        "one_liner": "Mallory 与 Irvine 冲顶后失踪,登山史最大悬案。",
+        "notable_facts": "George Mallory & Andrew Irvine 于 1924-06-08 北坡失踪,是否登顶成谜;1999 年 Mallory 遗体被发现;'Because it is there' 名言出处。"
+      },
+      {
+        "name": "1996 Mount Everest disaster",
+        "type": "event",
+        "one_liner": "单日八人罹难的商业登山灾难,重塑公众对高海拔风险认知。",
+        "notable_facts": "1996-05-10/11 暴风雪;Rob Hall、Scott Fischer 等遇难;Jon Krakauer《Into Thin Air》记述;维基百科词条含结构化遇难名单与时间线。"
+      },
+      {
+        "name": "Reinhold Messner",
+        "type": "person",
+        "one_liner": "史上首位无氧登顶珠峰、并首位完攀全部14座八千米峰的传奇登山家。",
+        "notable_facts": "意大利;1978 与 Habeler 无氧登顶珠峰,1980 无氧单人登顶;1986 完成全14座(首人);阿尔卑斯式攀登倡导者;Wikidata Q60128。"
+      },
+      {
+        "name": "Tenzing Norgay",
+        "type": "person",
+        "one_liner": "与 Hillary 共同首登珠峰的夏尔巴登山家,南亚登山史象征。",
+        "notable_facts": "尼泊尔/印度夏尔巴;1953 珠峰首登两人之一;此前多次珠峰远征经验;夏尔巴群体在喜马拉雅登山中的核心地位代表。"
+      },
+      {
+        "name": "Edmund Hillary",
+        "type": "person",
+        "one_liner": "新西兰登山家,珠峰首登者,后半生投身夏尔巴社区公益。",
+        "notable_facts": "1953 珠峰首登;1958 抵达南极点;创立 Himalayan Trust;Wikidata Q42902。"
+      },
+      {
+        "name": "Elizabeth Hawley",
+        "type": "person",
+        "one_liner": "加德满都的美国记者,以数十年访谈建立喜马拉雅远征权威档案,催生 Himalayan Database。",
+        "notable_facts": "1960s 起系统记录尼泊尔所有远征;其个人档案演化为 Himalayan Database;登顶认证的事实核对权威。"
+      },
+      {
+        "name": "Jerzy Kukuczka",
+        "type": "person",
+        "one_liner": "第二位完攀全14座八千米峰者,以冬攀与新线路著称的波兰登山黄金一代代表。",
+        "notable_facts": "波兰;仅用约8年完攀14座(1987),多为新线/冬季;1989 洛子南壁遇难;波兰冰人世代象征。"
+      },
+      {
+        "name": "Edward Whymper",
+        "type": "person",
+        "one_liner": "阿尔卑斯黄金时代核心人物,马特洪峰首登者与经典公版著作作者。",
+        "notable_facts": "1840-1911;1865 马特洪峰首登;《Scrambles Amongst the Alps 1860-69》(1871)与其木刻插图现为公有领域,可全文入库。"
+      }
+    ],
+    "notes": "复用安全分级(供档案库落地):① 最安全底座——Wikidata(CC0)、SRTM/NASADEM(公有领域)、1929前公版文本(Whymper/Mummery/Leslie Stephen);这三类可整批下载且无条件复用,建议做主键+海拔真值+原始文献三层。② 可整批但带义务——GeoNames(CC-BY,仅署名)、Wikipedia/DBpedia(CC-BY-SA,署名+同协议)、OSM(ODbL,share-alike,衍生库须同许可开放,发布形态要设计)。③ 事实可提取、编纂不可镜像——Himalayan Database、8000ers.com、AAJ/ANAC、Himalayan Journal:当作事实核对/交叉校验权威,逐条抽取客观事实(日期/海拔/成员/存殁,事实不受版权),链接回原页,绝不整包镜像其数据文件或全文。④ 不可直接复用——PeakVisor、Peakbagger 等封闭商业库,仅人工参考或官方嵌入。关键法律区分:事实(首登日期、海拔、伤亡数)不受版权保护可自由复用;叙事表达、精编数据表、照片/插图是受版权保护的表达,须按各自许可处理——历史照片(1929前)多为公有领域,现代照片以 Wikimedia Commons 的 PD/CC0/CC-BY(-SA) 逐文件核验后使用。建议技术路线:以 Wikidata QID 为主键,用 P1566(GeoNames)、OSM wikidata 标签做实体对齐,SRTM 校验海拔,公版文本与 CC 图片挂到实体上,受限源仅存事实+引用链接。未决项:Himalayan Database 官网无 CSV 直供(仅 Windows 程序内 DBF/HDB 表),需评估从程序导出 vs 社区 CSV 镜像(Maven/Kaggle 样本可能仅子集)的合规与完整性;Himalayan Journal 早期卷逐篇公版年份需个案核实;8000ers.com 具体许可页未见明文,按默认版权保留处理。"
+  },
+  {
+    "domain": "public-domain-lit — 公有领域登山文学(Project Gutenberg / Internet Archive / Wikisource):Whymper、Mummery、Leslie Stephen、Tyndall、早期 Alpine Journal、早期 Everest 远征官方志、Mallory 文稿等可全文复用的历史登山文本;辅以 Wikidata(CC0)/维基百科(CC-BY-SA)提供事实层结构化数据",
+    "sources": [
+      {
+        "name": "Project Gutenberg — 登山文学全文库",
+        "url": "https://www.gutenberg.org/ebooks/subject/24269",
+        "kind": "public-domain-text",
+        "license": "public-domain (Project Gutenberg License;在美国无版权,文本本身处于公有领域)",
+        "access": "free",
+        "coverage": "登山经典的校对纯文本核心源。已确认可整本下载的头部书目:Whymper《Scrambles Amongst the Alps 1860-69》(#41234)、Whymper《The Ascent of the Matterhorn》(#38044)、Tyndall《Hours of Exercise in the Alps》(#47209)、Tyndall《The Glaciers of the Alps》(#34192)、Howard-Bury《Mount Everest: The Reconnaissance 1921》(#39421)、Bruce《The Assault on Mount Everest 1922》(#61083)。每书含 subject/author 分类页可枚举。",
+        "formats": "HTML / EPUB / plain-txt(UTF-8)/ Kindle;整库有 RDF/CSV 元数据 dump(gutenberg.org/cache/epub/feeds)+ GutenDex JSON API(gutendex.com)可批量枚举 ID、作者、语言、下载链接",
+        "sample_records": "1) #41234 Whymper 《Scrambles Amongst the Alps in the Years 1860-69》(1871),含马特洪峰首登与下撤山难亲述;2) #61083 Bruce《The Assault on Mount Everest, 1922》(1923),含 Mallory/Finch/Somervell 分章;3) #47209 Tyndall《Hours of Exercise in the Alps》(1871)"
+      },
+      {
+        "name": "Internet Archive — pub_the-alpine-journal 合集 + 图书扫描",
+        "url": "https://archive.org/details/pub_the-alpine-journal",
+        "kind": "public-domain-text",
+        "license": "多为 public-domain(1863-1929 前出版物);单条 rights 字段需逐项核,少数近代卷可能受限",
+        "access": "free",
+        "coverage": "全球最大扫描原件源。含 Alpine Journal(世界最古登山期刊,1863 创刊)大量早期整卷(如 Vol 9 1878-80、Vol 27 1913、Vol 33/34 1920-22、Vol 37 1925)+ 几乎所有上述图书的原版扫描(带插图/照片版)。适合取原始版式、插图与 OCR 文本。",
+        "formats": "PDF / full-text OCR txt / DjVu / EPUB / 单页 JP2 图;每条目有 JSON 元数据 API(archive.org/metadata/{id})+ Scraping/Advanced Search API 可批量枚举合集",
+        "sample_records": "1) scramblesamongst00whym — Whymper 原版扫描含钢版画插图;2) the-alpine-journal-vol-9-1878-1880 — Alpine Club 官方期刊整卷 OCR;3) mounteverestreco00howa — Howard-Bury 1921 侦察远征官方志原版"
+      },
+      {
+        "name": "Wikisource(English)— 校勘转录全文 + 作者门户",
+        "url": "https://en.wikisource.org/wiki/Author:Edward_Whymper",
+        "kind": "public-domain-text",
+        "license": "public-domain(原作已过版权期);Wikisource 转录标记与协作层为 CC-BY-SA,原文文字本身公有领域",
+        "access": "free",
+        "coverage": "人工校勘、结构化(章节锚点、脚注)转录,比 Gutenberg 更适合按章节抽取与引用。已确认:Mummery《My Climbs in the Alps and Caucasus (1895)》全文、Whymper《Travels amongst the Great Andes of the Equator》、Author:John Tyndall 门户、1911 Britannica / DNB 人物传记条目(可作人物小传复用)。",
+        "formats": "HTML / wikitext / MediaWiki Action API(JSON,可按页/分类批量拉取)/ 可导出 EPUB/PDF",
+        "sample_records": "1) 《My Climbs in the Alps and Caucasus (1895)》Mummery 逐章转录;2) Whymper《Travels amongst the Great Andes of the Equator》含厄瓜多尔火山首登章;3) DNB12/1911 Britannica 之 Whymper 传记条目"
+      },
+      {
+        "name": "HathiTrust — Alpine Journal 完整卷列(Vol 1-42, 1863-1930)",
+        "url": "https://catalog.hathitrust.org/Search/Home?lookfor=alpine+journal+alpine+club&type=all",
+        "kind": "public-domain-text",
+        "license": "public-domain(1863-1930 卷在美国境内 full-view);1900 后部分卷在美国境外可能受限",
+        "access": "partial",
+        "coverage": "早期 Alpine Journal 卷列最系统的可读源(比 IA 更连续)。适合补齐 IA 缺卷、做逐年检索。含全文检索。",
+        "formats": "在线阅读 / 逐卷 PDF 下载(public-domain 卷)/ Bibliographic API + Data API(需注册,支持批量元数据)",
+        "sample_records": "1) The Alpine Journal Vol 1 (1863-64) 创刊卷;2) 逐年卷含首登记录、讣告、山难报告;3) 全文检索可定位人名/峰名跨卷出处"
+      },
+      {
+        "name": "Wikidata — 结构化事实层(峰/人/远征/首登)",
+        "url": "https://query.wikidata.org/",
+        "kind": "structured-db",
+        "license": "CC0(公有领域,可无条件商用/再分发)",
+        "access": "free",
+        "coverage": "档案库事实骨架的首选:山峰(海拔 P2044、坐标、山脉 P4552)、首登事件(significant event P793 + 日期 P585 + 参与者 P710)、登山者(生卒、国籍)、远征、图书(作者 P50、出版年 P577、Gutenberg ID P2034、IA ID P724)。可用 SPARQL 一次性把'某国全部山峰及其首登者与日期'导出。",
+        "formats": "SPARQL 端点(JSON/CSV/TSV)/ REST Entity API(JSON)/ 每周全库 JSON dump / 可按 P2034(Gutenberg)、P724(IA)反查关联电子文本",
+        "sample_records": "1) Q1425(Matterhorn):elevation 4478 m,首登 1865-07-14,参与者含 Whymper;2) Q513(Mount Everest)链接各远征事件;3) SPARQL:列出瑞士全部 mountain 及 P793 首登日期+P710 climber"
+      },
+      {
+        "name": "维基百科(English Wikipedia)— 事实与叙述层",
+        "url": "https://en.wikipedia.org/wiki/Alpine_Journal",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA 4.0(需署名+相同方式共享;事实本身不受版权,可自由重述)",
+        "access": "free",
+        "coverage": "峰/远征/人物/事件的二次综述与交叉索引,补 Wikidata 的叙事上下文。适合抽事实建条目、拿参考文献链回一手公版源。整站有 REST API + 定期 XML dump。",
+        "formats": "HTML / MediaWiki API(JSON)/ REST Summary API / 全站 XML dump",
+        "sample_records": "1) 1924 British Mount Everest expedition(Mallory & Irvine 失踪);2) Alpine Journal 创刊/编辑沿革;3) Edward Whymper 生平与马特洪峰山难"
+      },
+      {
+        "name": "The Online Books Page(U. Penn)— Alpine Journal 连载索引",
+        "url": "https://onlinebooks.library.upenn.edu/webbin/serial?id=alpinejournal",
+        "kind": "other",
+        "license": "索引本身信息性;所指向卷为 public-domain",
+        "access": "free",
+        "coverage": "把散落于 IA/HathiTrust/Google Books 的 Alpine Journal 各卷聚合成一张按年份的直达链接表,是做期刊系统化采集的最省事导航层。",
+        "formats": "HTML 链接索引(逐卷跳转到 IA/HathiTrust)",
+        "sample_records": "1) 按卷号/年份列出可读电子版直链;2) 覆盖 19 世纪末至 20 世纪初连续卷次"
+      },
+      {
+        "name": "Library of Congress — 数字馆藏(Everest 侦察等)",
+        "url": "https://www.loc.gov/item/22013019/",
+        "kind": "public-domain-text",
+        "license": "public-domain(无版权声明的 1922 版)",
+        "access": "free",
+        "coverage": "权威机构级扫描,适合取高质量 PDF 与馆藏元数据;个别早期远征书有独立条目。覆盖窄但可信度高。",
+        "formats": "PDF / JSON API(loc.gov/item/{id}/?fo=json)/ IIIF 图像",
+        "sample_records": "1) Mount Everest, the reconnaissance, 1921(Howard-Bury,1922 Longmans)PDF;含 rights=public-domain 标注"
+      },
+      {
+        "name": "Magdalene College Cambridge — George Mallory 档案(AtoM)",
+        "url": "https://magdalene.maxarchiveservices.co.uk/index.php/mallory-george-herbert-leigh",
+        "kind": "media",
+        "license": "unknown / 谨慎(2024 百年首次公开;可免费在线查阅,但扫描图与转录的再分发许可未明示——按'不可直接复用'处理,复用前需向学院申请)",
+        "access": "free",
+        "coverage": "Mallory 1914-1924 与妻 Ruth 通信、日记、诗作及 1999 遗体上发现的三封信的高保真扫描。文字表达本身(Mallory 卒于 1924,英国 life+70 于 1995 进入公有领域)在多数法域已属公版,但学院扫描件/网站呈现另有条款。事实可引,扫描图与独家转录默认归为不可直接复用。",
+        "formats": "在线扫描图像 + 转录(AtoM 平台,逐条目 HTML;无开放批量 API)",
+        "sample_records": "1) To Ruth Mallory, 27 May 1924(登顶前最后一封信);2) 订婚期至 1924 通信序列;3) 诗作与日记片段"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "Edward Whymper《Scrambles Amongst the Alps in the Years 1860-69》",
+        "type": "book",
+        "one_liner": "英雄时代阿尔卑斯登山文学的奠基之作,含 1865 马特洪峰首登与下撤四人坠亡的亲历叙述。",
+        "notable_facts": "1871 出版;作者卒 1911,文本公有领域;Gutenberg #41234,IA scramblesamongst00whym;含大量钢版画插图(插图亦已过版权期)。档案库应收全文+插图。"
+      },
+      {
+        "name": "Edward Whymper《The Ascent of the Matterhorn》",
+        "type": "book",
+        "one_liner": "Whymper 专述马特洪峰征服史的修订本,是马特洪峰事件的一手权威文本。",
+        "notable_facts": "1880;Gutenberg #38044;公有领域;与《Scrambles》互补,适合做马特洪峰事件的核心引文源。"
+      },
+      {
+        "name": "A. F. Mummery《My Climbs in the Alps and Caucasus》",
+        "type": "book",
+        "one_liner": "无向导登山与'凭本事而非靠向导'理念的宣言,现代阿尔卑斯攀登精神的源头文本。",
+        "notable_facts": "1895(Mummery 同年殒于南迦帕尔巴特);公有领域;Wikisource 有全章转录,IA 多版扫描;确立难度美学与自主攀登伦理。"
+      },
+      {
+        "name": "Leslie Stephen《The Playground of Europe》",
+        "type": "book",
+        "one_liner": "把阿尔卑斯确立为'欧洲运动场'的散文经典,黄金时代登山审美与文学化叙述的代表。",
+        "notable_facts": "1871 初版/1894 增订;作者卒 1904,公有领域;IA playgroundofeur00stepiala 等多份;Stephen 为多座阿尔卑斯峰首登者、Alpine Club 早期核心。"
+      },
+      {
+        "name": "John Tyndall《Hours of Exercise in the Alps》/《The Glaciers of the Alps》",
+        "type": "book",
+        "one_liner": "科学家登山家把冰川物理学与高山亲历熔于一炉,兼具科学史与登山史价值。",
+        "notable_facts": "1871 / 1860;公有领域;Gutenberg #47209 与 #34192;Tyndall 为魏斯峰(Weisshorn)首登者,连接登山史与科学史。"
+      },
+      {
+        "name": "The Alpine Journal(早期卷,Alpine Club 伦敦)",
+        "type": "publication",
+        "one_liner": "世界最古老登山期刊(1863 创刊),逐年记录首登、山难、讣告与科学观察,是编年档案的期刊主干。",
+        "notable_facts": "创刊编辑 H. B. George;Vol 1-42(1863-1930)公有领域;IA 合集 pub_the-alpine-journal + HathiTrust 全卷 + Penn 索引;结构化程度高,适合按年抽事件条目。"
+      },
+      {
+        "name": "C. K. Howard-Bury 等《Mount Everest: The Reconnaissance, 1921》",
+        "type": "book",
+        "one_liner": "1921 首次珠峰侦察远征的官方志,人类系统性挑战珠峰的起点文献。",
+        "notable_facts": "1922 Longmans;公有领域;Gutenberg #39421、IA mounteverestreco00howa、LoC 22013019;含 Mallory 侦察章。"
+      },
+      {
+        "name": "C. G. Bruce 等《The Assault on Mount Everest, 1922》",
+        "type": "book",
+        "one_liner": "人类首次真正尝试登顶珠峰的官方远征志,含首次使用氧气与高海拔死亡的一手记录。",
+        "notable_facts": "1923;公有领域;Gutenberg #61083;分章作者含 Mallory、Finch、Somervell;1922 北坳雪崩致 7 名背夫遇难为高海拔登山首起重大山难。"
+      },
+      {
+        "name": "1924 British Mount Everest Expedition(Mallory & Irvine)",
+        "type": "expedition/event",
+        "one_liner": "Mallory 与 Irvine 于最后冲顶中失踪、'是否曾登顶'成为登山史头号悬案的远征。",
+        "notable_facts": "官方志 E. F. Norton《The Fight for Everest 1924》(1925,美境公版);Mallory 遗体 1999 寻获;事实层可由 Wikidata/维基百科取,叙述引文用官方志。"
+      },
+      {
+        "name": "Matterhorn 首登(1865-07-14)",
+        "type": "event",
+        "one_liner": "阿尔卑斯黄金时代的收官与转折点——首登成功即遇灾,四名队员下撤坠亡。",
+        "notable_facts": "Whymper 队;Wikidata Q1425 有 elevation 4478 m 与首登事件结构化字段;一手叙述见 Whymper 两书;事实(日期/人员)不受版权,可自由复用。"
+      },
+      {
+        "name": "George Mallory 文稿与书信",
+        "type": "person/manuscript",
+        "one_liner": "'因为它在那里'的珠峰传奇人物,其 1914-1924 书信/日记/诗作是研究早期珠峰远征的一手心理档案。",
+        "notable_facts": "卒 1924,文字表达多数法域已进入公有领域(英国 1995 起);但 Magdalene College 2024 公开的扫描/转录再分发条款未明,归'事实可引、扫描图不可直接复用';另散见于 1921/1922 官方志署名章节(那些已是明确公版)。"
+      }
+    ],
+    "notes": "调研方法:网络搜索交叉验证 Gutenberg ID、IA 条目、Wikisource 转录与许可状态,已核实的电子文本 ID 均在 sources 中标注,可直接抓取。\n\n关键区分(供档案库法务/采集用):\n1) 事实 vs 表达:山峰海拔、坐标、首登日期与人员、远征时间线属事实,不受版权保护,可从任何源(含维基百科/近人著作)自由重述并复用——建议以 Wikidata(CC0)为事实主键源,商用最安全。\n2) 老文本表达:1865-1929 出版、作者已过版权期(多数英国作者 life+70,美国 pre-1930 一律公版)的图书全文可整本复用,含其中的钢版画/照片插图(同期过期)。这是档案库可安全全文入库的核心资产:Whymper、Mummery、Stephen、Tyndall、1921/1922 珠峰官方志、Alpine Journal Vol 1-42。\n3) 灰区 — Mallory 档案:文字创作本身在多数法域已公版(卒 1924),但 Magdalene College 2024 数字化的扫描图与独家转录另有网站条款,未明示开放许可。建议:引用其信件'内容/事实'安全;直接托管学院扫描图/转录前须去函申请。已在 sources 标为不可直接复用。\n4) 近人著作(如 Norton《The Fight for Everest 1924》1925)在美国境内已公版、其他法域按 life+70 逐本复核(Norton 卒 1954,英国 2025 起公版)——跨法域采集须按目标发布地法域逐本复核,不能一刀切。\n\n可整批下载/结构化优先级(建库地基推荐):\n- 结构化事实:Wikidata SPARQL(CC0,一次性导出峰/首登/人物/远征关系)为第一层。\n- 全文批量:Gutenberg(GutenDex JSON API + RDF dump 枚举 ID → 直拉 txt/epub)+ Internet Archive(metadata/scraping API + 全文 OCR)为第二层。\n- 期刊连续采集:Penn Online Books 索引导航 + IA 合集 + HathiTrust 补缺,拼齐 Alpine Journal 早期全卷。\n- 转录质量层:Wikisource API(按章节锚点抽取,校勘质量高于原始 OCR)。\n\n待补(下一轮可扩):Google Books/BHL 是否有 Alpine Journal 更早缺卷;American Alpine Journal(1929 起)版权状态;Freshfield、Conway、A. W. Moore、Guido Rey 等二线经典的 Gutenberg/IA 可用性;登山老照片(Alpine Club Photo Library / Royal Geographical Society)多为受限或需授权,默认归不可直接复用。"
+  },
+  {
+    "domain": "chinese-mountaineering（中文登山史与中文可复用来源:中国登山队珠峰 1960/1975、梅里雪山 1991 山难、玉珠峰/格聂、当代中国登山者）",
+    "sources": [
+      {
+        "name": "Wikidata",
+        "url": "https://www.wikidata.org/wiki/Q18651339",
+        "kind": "structured-db",
+        "license": "CC0",
+        "access": "free",
+        "coverage": "登山远征、山峰、人物均有条目化结构数据。可整批 SPARQL/dump 抽取:远征(时间 P585、参与者 P710、路线、海拔、国家)、人物(生卒、国籍)、山峰(海拔 P2044、坐标、首登)。中/英文标签双语,是本档案库唯一可无条件整库导入的结构化源。",
+        "formats": "SPARQL(query.wikidata.org)/JSON/RDF dump/REST API",
+        "sample_records": "Q18651339「1960 Chinese Mount Everest expedition」: 国家=PRC, 最高点=珠峰, 年份=1960, 路线=东北山脊, 参与者=王富洲/贡布; 珠峰 Q513 海拔 8848.86m; 王富洲有人物条目并链 Google Knowledge Graph ID。CC0 全字段可无条件复用。"
+      },
+      {
+        "name": "中文维基百科 (zh.wikipedia)",
+        "url": "https://zh.wikipedia.org/wiki/1991年卡瓦格博峰山难",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA",
+        "access": "free",
+        "coverage": "本领域最全中文叙事源:专条『1960年中國珠穆朗瑪峰遠征』『1991年卡瓦格博峰山難』『格聂峰』『玉珠峰』『夏伯渝』等,含人物名单、时间线、伤亡、路线。文字 CC-BY-SA(署名+SA);事实不受版权,提取后改写可摆脱 SA。",
+        "formats": "HTML/MediaWiki API(action=query)/月度 XML dump/wikitext",
+        "sample_records": "卡瓦格博山难条:1991-01-03 夜三号营地雪崩,中方6人+日方11人共17人遇难,日方领队左右田健次、中方队长宋志义;1998-07-18 明永冰川发现遗骸;2000 德钦县人大立法禁登。"
+      },
+      {
+        "name": "English Wikipedia + DBpedia",
+        "url": "https://en.wikipedia.org/wiki/1960_Chinese_Mount_Everest_expedition",
+        "kind": "encyclopedia",
+        "license": "CC-BY-SA",
+        "access": "free",
+        "coverage": "英文条目提供西方视角与争议(对 1960 北坡登顶真实性的质疑及后续采信),并有 Timeline of Mount Everest expeditions 汇总表。DBpedia 把条目转为可查询的结构化三元组(亦 CC-BY-SA)。",
+        "formats": "HTML/MediaWiki API/DBpedia SPARQL+RDF",
+        "sample_records": "『1960 expedition』条:214 人队伍约 1/3 藏族;原定 1959 因西藏事件延至 1960;王富洲/贡布/屈银华 05-25 04:20 登顶。DBpedia page 提供同条目 RDF。"
+      },
+      {
+        "name": "The Himalayan Database (Elizabeth Hawley 远征档案)",
+        "url": "https://www.himalayandatabase.com/online.html",
+        "kind": "dataset",
+        "license": "proprietary",
+        "access": "free",
+        "coverage": "尼泊尔喜马拉雅 490 峰、1905-2024、11,500+ 远征、90,800+ 队员、16,100+ 文献引用;含珠峰等边境峰两侧远征,覆盖中国北坡 1960/1975。字段:峰、年、季、国籍、登顶/遇难、氧气与否。免费下载但版权归属 HDB,非开放许可:可做事实核对,不宜整表转载。",
+        "formats": "可下载完整数据库(内含程序/DBF)+在线检索;衍生 Kaggle CSV",
+        "sample_records": "截至 2024-12 珠峰累计登顶 7,120 人、1905 以来各路线遇雞 335 人;冬季珠峰 34 次尝试仅 5 次登顶。Kaggle『Himalayan Expeditions』提供 expeditions/members/peaks 三表 CSV。"
+      },
+      {
+        "name": "中国政府/官方媒体公开史料(国家体育总局、西藏自治区政府网、中央纪委网)",
+        "url": "https://www.sport.gov.cn/n20001280/n20745751/n20767349/c21080875/content.html",
+        "kind": "public-domain-text",
+        "license": "unknown",
+        "access": "free",
+        "coverage": "1960/1975 珠峰远征官方细节:队伍编制、第二台阶人梯、觇标测高、金属梯制造与规格。中国《著作权法》第5条仅免护法律/官方文件,一般宣传文仍有版权;归为事实可复用、成段表达不可直接转载。",
+        "formats": "HTML/部分 PDF",
+        "sample_records": "1975-05-27 14:30 潘多(首位北坡登顶女性)+8 名男队员登顶;顶峰立 3.5m 觇标,测雪深 0.92m,得 8848.13m;金属梯每节 1.2m 铝合金,西安红安机械制造。"
+      },
+      {
+        "name": "中国登山协会 / 中国探险协会 (caa1993.org.cn, cmasports.cn)",
+        "url": "https://caa1993.org.cn/content/86/2836.shtml",
+        "kind": "media",
+        "license": "proprietary",
+        "access": "free",
+        "coverage": "官方行业机构。发布『跨越64年中国珠峰攀登史』时间线、当代登山者专访(夏伯渝/张梁/汝志刚)、冬季珠峰统计。专有版权,不可整篇转载;作为权威事实源核对时间/人名。",
+        "formats": "HTML 文章",
+        "sample_records": "『珠峰攀登史』梳理 1960→2024 中国节点;夏伯渝专访(1975 冻伤截肢→2018 假肢登顶);汝志刚三登珠峰持三种高度证书。"
+      },
+      {
+        "name": "Wikimedia Commons",
+        "url": "https://commons.wikimedia.org/wiki/Category:Mountaineering_in_China",
+        "kind": "media",
+        "license": "CC-BY-SA / CC0 / public-domain(逐文件不一)",
+        "access": "free",
+        "coverage": "山峰照片、地图、少量历史影像。逐文件标注许可,CC0/PD 可直用、CC-BY-SA 需署名+SA;近人拍摄的登山者肖像多为专有,不可直接复用。是档案库配图首选可复用图源(须逐张核许可)。",
+        "formats": "JPG/PNG/SVG/TIFF + Commons SPARQL(结构化)",
+        "sample_records": "珠峰北坡、卡瓦格博/梅里雪山、玉珠峰、格聂峰地形照片与位置图,多为 CC-BY-SA 4.0;部分地图 CC0。"
+      },
+      {
+        "name": "百度百科 / 8264 山峰资料库 / 商业户外站(MASHERBRUM 等)",
+        "url": "https://www.8264.com/shanfeng-2109770",
+        "kind": "other",
+        "license": "proprietary",
+        "access": "partial",
+        "coverage": "玉珠峰、格聂峰、慕士塔格等国内山峰的海拔、坐标、路线、商业攀登季与首登信息,中文最全『可攀登山峰』字段源。专有/UGC 版权,仅取事实(海拔/坐标/路线)交叉核对,严禁整段转载。",
+        "formats": "HTML",
+        "sample_records": "玉珠峰(可可赛极门峰)6178m,昆仑山东段最高,格尔木南160km;1999 王勇峰首次组队商业登山以玉珠峰为起点;南坡冰川末端约5100m。"
+      }
+    ],
+    "key_entities": [
+      {
+        "name": "1960 年中国珠峰远征(北坡首登)",
+        "type": "expedition",
+        "one_liner": "人类首次从珠峰北坡(中国一侧)登顶,王富洲、贡布、屈银华于 1960-05-25 04:20 登顶。",
+        "notable_facts": "214 人队伍约 1/3 藏族;原定 1959 因西藏局势延至 1960;第二台阶搭人梯(屈银华为此冻掉双脚);贡布为藏族;西方一度质疑真实性,后多被采信。Wikidata Q18651339。"
+      },
+      {
+        "name": "1975 年中国珠峰远征(潘多+觇标+中国梯)",
+        "type": "expedition",
+        "one_liner": "潘多成为首位从北坡登顶珠峰的女性,登山队立觇标测得 8848.13m 并在第二台阶架设『中国梯』。",
+        "notable_facts": "1975-05-27 14:30 潘多率9人登顶;觇标 3.5m,测雪深 0.92m;金属梯每节 1.2m 铝合金(西安红安机械),此后北坡传统路线几乎全经此梯过第二台阶;夏伯渝此次因让睡袋冻伤致后来截肢。"
+      },
+      {
+        "name": "1991 年卡瓦格博峰(梅里雪山)山难",
+        "type": "event",
+        "one_liner": "中日联合登山队 17 人于 1991-01-03 夜在三号营地遭雪崩全员遇难,是登山史第二大山难。",
+        "notable_facts": "中方6人+日方11人;日方领队左右田健次、学术队长井上治郎,中方领队杨必育、队长宋志义;1998-07-18 明永冰川发现遗骸遗物;2000 德钦县人大立法禁登;卡瓦格博至今无登顶记录。"
+      },
+      {
+        "name": "卡瓦格博峰 / 梅里雪山",
+        "type": "mountain",
+        "one_liner": "云南德钦藏族神山、梅里雪山主峰,海拔约 6740m,至今保持无人登顶(法律禁登)。",
+        "notable_facts": "藏传佛教神山、当地信仰核心;1991 山难后 2000 年立法永久禁登;所有重要山峰均无登顶记录,是罕见的因文化+法律而封禁的未登峰。"
+      },
+      {
+        "name": "玉珠峰",
+        "type": "mountain",
+        "one_liner": "昆仑山东段最高峰,海拔 6178m,中国最热门的入门级商业攀登雪山。",
+        "notable_facts": "又称可可赛极门峰;格尔木南 160km;1999 年王勇峰首次组织商业登山以此为起点;南坡路线技术要求低,汽车可达 5200m,成为『人生第一座 6000m 雪山』的标准选择。"
+      },
+      {
+        "name": "格聂峰",
+        "type": "mountain",
+        "one_liner": "四川甘孜理塘沙鲁里山主峰、康南第一高峰,海拔 6204m,藏传佛教二十四神山之一。",
+        "notable_facts": "藏名呷玛日巴,神山序列中第13位女神;首登普遍记为 1987 年日本登山队(任务描述中『1988 美国队』未获证实,建档时以日本队 1987 为准并标待考);四川第三高峰。"
+      },
+      {
+        "name": "夏伯渝",
+        "type": "person",
+        "one_liner": "中国首位靠双腿假肢登顶珠峰者,2018-05-14 以 69 岁登顶,历时 43 年圆梦。",
+        "notable_facts": "1949 生,1975 攀珠峰让睡袋致双脚冻伤截肢;2014-2016 四次受阻(雪崩/地震/暴风雪,2016 在 8750m 距顶 94m 撤退);2019 获劳伦斯世界体育奖『年度最佳时刻』,继姚明/刘翔/李娜后又一华人得主。"
+      },
+      {
+        "name": "张梁",
+        "type": "person",
+        "one_liner": "完成『14+7+2』(14 座 8000m+七大洲最高峰+南北极点)的中国第一人、世界第二人。",
+        "notable_facts": "深圳银行职员出身;2018-06-07 登顶北美迪纳利峰完成大满贯(全球首位为韩国朴英硕);被称『中国登山第一人』。"
+      },
+      {
+        "name": "西藏登山队(次仁多吉/边巴扎西/洛则)",
+        "type": "person",
+        "one_liner": "2007 年以集体方式完成全球 14 座 8000m 攀登的三名中国藏队主力,是中国最早完登 14 座的群体。",
+        "notable_facts": "填补中国民间当时尚无个人完登 14 座的空白;藏族登山传统的当代代表,与国家/西藏登山队体制关联。"
+      },
+      {
+        "name": "王富洲",
+        "type": "person",
+        "one_liner": "1960 年北坡首登珠峰三人组之一、突击队长,中国登山事业奠基人。",
+        "notable_facts": "登顶时约 24 岁;1960-05-25 04:20 与贡布、屈银华登顶并留下证物;中国地质大学校友;有 Wikidata 独立人物条目,是本领域最核心历史人物锚点。"
+      }
+    ],
+    "notes": "许可与复用要点(关键):\n\n1) 唯一可整库无条件导入的结构化源是 Wikidata(CC0)——建议以它做档案库骨架(远征/山峰/人物三类实体 + 时间/参与者/海拔/坐标),其余源用来填充与交叉核对。\n\n2) 事实 vs 表达要严格区分:登顶日期、人名、海拔、伤亡人数等『事实』不受版权保护,可从中文维基(CC-BY-SA)、政府文/中国登协(专有)、Himalayan Database(专有但免费)、百度百科/8264(专有)提取;但这些源的成段文字、叙事、图片受版权约束,不可整段转载——提取事实后自行改写即可摆脱 CC-BY-SA 的 SA 传染与专有限制。\n\n3) 可整批下载的结构化源:Wikidata SPARQL/dump、Himalayan Database 完整下载(+Kaggle CSV 镜像)、DBpedia RDF、Wikimedia Commons SPARQL。\n\n4) 公有领域老文本几乎为零:中国现代登山史起于 1955-1960 之后,相关书刊(如 Alpine Journal 1961、Himalayan Journal Vol.23 的中国珠峰文章)仍在版权期内,不能当公版文本用。这是本领域的结构性缺口——历史叙事只能靠『事实提取+改写』或 CC-BY-SA 署名复用,拿不到可自由整篇转载的公版原文。\n\n5) 图片红线:登山者肖像、近人拍摄的远征影像绝大多数为专有版权,归为不可直接复用;仅 Wikimedia Commons 上逐张标注为 CC0/PD/CC-BY-SA 的地形照片/地图可用(需逐文件核对)。\n\n6) 已修正/需谨慎的事实:格聂峰首登普遍记为 1987 年日本队,任务描述的『1988 美国队』未获证实,建档以日本队 1987 为准并标待考。中国民间当时尚无个人完登 14 座 8000m(罗静在被检索资料时点仅完成 3 座),最早完登为 2007 年西藏队三人集体——录入时勿把『中国第一人完登 14 座』张冠李戴。\n\n待补:罗静最新完登进度(2018 后可能已完成,需再核)、慕士塔格/珠峰南坡商业化、王石 2003 登顶等当代条目可按需扩展。"
+  }
+]

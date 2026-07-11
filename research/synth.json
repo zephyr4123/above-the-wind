@@ -1,0 +1,378 @@
+{
+  "headline_findings": "1. CC0 骨架三件套是唯一零负担地基:Wikidata(结构化事实——山峰/人物/远征/事件/首登/伤亡)+ SRTM/NASADEM(海拔真值 DEM)+ 1929 前公有领域全文(Whymper/Mummery/Stephen/Tyndall/1921-1925 珠峰官方志)。这三层可整批下载、可商用、免署名,应最先落库并以 Wikidata QID 为全库主键。\n\n2. \"事实 vs 表达\"是贯穿全库的法律主轴,决定所有 CAUTION/AVOID 源的用法:海拔/坐标/首登日期/登顶者/伤亡数/用氧标志属事实,不受版权保护,可从任何源(含 AVOID 源)提取重写;受保护的是叙述文字、精编数据表的选择编排、以及照片/插图。凡 AVOID 源一律只做\"事实核验线索\",绝不搬正文与图。\n\n3. Himalayan Database 是尼泊尔侧远征/死亡/用氧统计的绝对权威金矿,但为专有免费编纂库(Salisbury & Hawley 版权,明文禁再分发)——判 CAUTION:下载后抽事实入自研 schema、清晰致谢、商用大切片前发函申请;绝不整包镜像。其地理边界仅尼泊尔喜马拉雅,不覆盖巴基斯坦喀喇昆仑(K2/Nanga Parbat/GI/GII/Broad Peak)与西藏侧。\n\n4. 喀喇昆仑/巴基斯坦侧 8000 米峰是全库最大数据缺口:唯一系统覆盖源 8000ers.com 判 AVOID(德国法 + EU sui generis 数据库权,明文禁商用/禁抓/禁直链)。该缺口只能靠 Wikidata/Wikipedia 事实层 + AAJ/Himalayan Journal 逐案事实核验拼补,或向 Jurgalski 申请书面授权,数据密度必然偏薄。\n\n5. 高海拔生理/医学子领域现代来源几乎全 AVOID(WMS 指南、MSD Merck、ISMM、Journal of Applied Physiology 均专有 all-rights-reserved)——只能引用事实(如珠峰顶 253 mmHg、VO2max、Lake Louise 评分维度)并规范引注;可全文入库的仅 PD 老文本(Paul Bert 1878 法文原著、Mosso 1898、1922 珠峰官方志)+ PMC Open Access \"Commercial Use Allowed\" 子集(CC0/CC-BY 档,须按 license 字段过滤)。\n\n6. 图片是全库统一红区,与文本许可解耦:即便 Wikidata(CC0)/Wikipedia 的条目配图,P18 指向的 Commons 文件各自独立授权,20 世纪探险/山难名照(1953 Tenzing 峰顶照、1996/2008 现场照)与在世登山家肖像大量仍在版权期。图片必须逐文件抽 extmetadata 核验,只收 PD/CC0/CC-BY(-SA),其余走 ae-image-decopyrighter 重绘替代。\n\n7. 公有领域登山文学是最肥的\"可全文商用\"叙事资产:Gutenberg + Internet Archive + Wikisource 三家分发的 1929 前文本(含期内木刻/雕版插图)可整段收录、切片、再分发。获取要绕开被封的管道(HathiTrust=AVOID 因 Google 扫描件非商用;OLBP/官方 Alpine Club 站只当卷号索引),统一走 IA `ia` CLI 与 Gutenberg 官方 harvest。\n\n8. 中文子领域全部中文网站(国家体育总局/中国探险协会/中国登山协会/8264/百度百科)判 CAUTION 偏 AVOID——政府网站≠公有领域,原文与图片受版权。1960/1975 珠峰、1991 梅里山难等应从 Wikidata(CC0)+ 中文维基百科(CC-BY-SA,须署名+share-alike)重建事实层,中文站仅作事实线索,不灌库。",
+  "source_map": [
+    {
+      "name": "Wikidata (WikiProject Mountains)",
+      "url": "https://query.wikidata.org/",
+      "verdict": "SAFE",
+      "license": "CC0 1.0(结构化数据主命名空间);说明文本 CC-BY-SA 3.0",
+      "how_to_pull": "SPARQL 窄查询(按类/属性筛山峰/人物/远征/事件)+ 每周全量 JSON/RDF dump 建本地库;单实体走 Wikibase REST。合规 UA + gzip + 429 退避。图片不走此链,P18 指向的 Commons 文件逐个另核。",
+      "domains_covered": "全 12 域事实骨架:8000ers/iconic-peaks/expeditions/mountaineers/disasters/alpine-history/records-stats/data-apis/chinese-mountaineering;为全库主键层"
+    },
+    {
+      "name": "SRTM / NASADEM 数字高程 (NASA/USGS via Earthdata/LP DAAC)",
+      "url": "https://www.earthdata.nasa.gov/data/instruments/srtm",
+      "verdict": "SAFE",
+      "license": "CC0 1.0 等价(NASA 主导任务默认 CC0);仅取 C 波段 SRTM+NASADEM,避开 DLR/ASI 的 X 波段",
+      "how_to_pull": "earthaccess Python 库 / NASA CMR+STAC API / OpenTopography 按 bbox 云端裁切;全球 tile dump 可整包。免费 Earthdata Login。",
+      "domains_covered": "data-apis/8000ers/iconic-peaks:海拔真值校验 + 地形剖面/等高线/阴影自渲染底图"
+    },
+    {
+      "name": "GeoNames",
+      "url": "https://www.geonames.org/export/",
+      "verdict": "SAFE",
+      "license": "CC-BY 4.0(仅署名,可商用)",
+      "how_to_pull": "allCountries.zip 全库 dump 或分国家文件,按 feature class T(T.MT/T.PK)筛;动态富化走限流 REST API(10000 credits/日)。",
+      "domains_covered": "data-apis/iconic-peaks/8000ers:坐标/海拔/多语别名底表、地名消歧"
+    },
+    {
+      "name": "Project Gutenberg — 登山经典公版书",
+      "url": "https://www.gutenberg.org/ebooks/41234",
+      "verdict": "SAFE",
+      "license": "美国公有领域(底层文本);PG 商标为独立叠加层,入库前剥 boilerplate 即完全规避",
+      "how_to_pull": "官方 harvest 端点(wget -w 2 限速)或镜像;元数据走 RDF/CSV catalog dump + GutenDex JSON API 枚举 ID;剥 PG 头尾后只留正文。禁直接爬 gutenberg.org。",
+      "domains_covered": "public-domain-lit/alpine-history/expeditions/gear-technique:Whymper/Mummery/Stephen/Tyndall/1922 珠峰官方志全文+插图"
+    },
+    {
+      "name": "Internet Archive — PD 登山书刊 + Alpine Journal 早卷",
+      "url": "https://archive.org/",
+      "verdict": "SAFE(逐条核 rights;1929 前 PD,近卷 borrow-only)",
+      "license": "公有领域(pre-1929 项);近人扫描为借阅受限",
+      "how_to_pull": "`pip install internetarchive` → `ia download {id}`;批量用 Advanced Search/Scraping API 枚举 collection;单件走 /metadata + _djvu.txt 直链。2-3 并发限速。",
+      "domains_covered": "public-domain-lit/alpine-history/disasters/expeditions:Alpine Journal 1863-1929、早期珠峰志、Mummery/Whymper 原扫描、AAJ 早卷、Himalayan Journal Vol.1"
+    },
+    {
+      "name": "Library of Congress — 《Everest Reconnaissance 1921》等",
+      "url": "https://www.loc.gov/item/22013019/",
+      "verdict": "SAFE",
+      "license": "美国公有领域(1922 出版,满 95 年);LOC 不叠加版权",
+      "how_to_pull": "不直连 loc.gov(403+CAPTCHA,限速 ≤10/分)——改从 Gutenberg #39421 或 IA `mounteverestreco00howa` 拉同一 PD 全文;LOC 仅作元数据核对。",
+      "domains_covered": "public-domain-lit/expeditions:早期珠峰官方志高质量副本来源核对"
+    },
+    {
+      "name": "NASA Earth Observatory — The Eight-Thousanders",
+      "url": "https://science.nasa.gov/earth/earth-observatory/the-eight-thousanders/",
+      "verdict": "SAFE",
+      "license": "美国联邦政府作品公有领域;本页图均 NASA 自署无第三方版权",
+      "how_to_pull": "逐页脚本抓 14 张卫星影像 + ISS 航天员照,走正文内 Visible Earth / EOL 原图下载链接;礼貌限速。不得暗示 NASA 背书。",
+      "domains_covered": "8000ers/iconic-peaks:可商用卫星底图/峰位标注图(少数可复用的图片源之一)"
+    },
+    {
+      "name": "NPS — Denali 年度登山统计",
+      "url": "https://www.nps.gov/dena/planyourvisit/mountaineering-summary-reports.htm",
+      "verdict": "SAFE(数据层);内嵌第三方照片除外",
+      "license": "美国联邦政府作品公有领域(17 USC §105)",
+      "how_to_pull": "下载 Excel 统计总表(1903-当季,按路线)+ 按十年分组年度 summary PDF 批量;剥离/单独处理 PDF 内富媒体。无专用 API。",
+      "domains_covered": "iconic-peaks/records-stats:Denali 逐年远征/登顶/事故定量时间序列(联邦公版权威)"
+    },
+    {
+      "name": "英文/中文 Wikipedia + 全站 dump",
+      "url": "https://en.wikipedia.org/wiki/Eight-thousander",
+      "verdict": "CAUTION",
+      "license": "正文 CC-BY-SA 4.0(+旧版 GFDL);图片逐文件混合(含非自由/fair-use)",
+      "how_to_pull": "批量走 dumps.wikimedia.org 的 XML dump(禁爬活站);增量用 MediaWiki API。事实自由提取重写(脱 SA);逐字复用正文须署名+share-alike。图片逐文件核 extmetadata,默认排除。",
+      "domains_covered": "全 12 域叙事层 + 已整理列表(List of deaths on eight-thousanders / Everest records / all-14 完成者 / 冬季首登序列)"
+    },
+    {
+      "name": "The Himalayan Database (Hawley 档案)",
+      "url": "https://www.himalayandatabase.com/",
+      "verdict": "CAUTION",
+      "license": "专有免费,无开放许可;Salisbury & Hawley 版权,明文禁再分发",
+      "how_to_pull": "下载 v2.74 zip(Visual FoxPro DBF 表)+ SQL 版,导 Excel/CSV;抽离散事实(峰/远征/成员/用氧/存殁)入自研 schema,清晰致谢;商用大切片前发函授权。社区 CSV 镜像(Maven/Kaggle)可能是子集,建库回官方程序取全字段。",
+      "domains_covered": "8000ers(尼泊尔侧8座)/expeditions/mountaineers/disasters/records-stats:尼泊尔远征×死亡×用氧金标准事实核验层"
+    },
+    {
+      "name": "PMC (PubMed Central, NIH)",
+      "url": "https://pmc.ncbi.nlm.nih.gov/",
+      "verdict": "CAUTION",
+      "license": "混合;仅 OA Subset 的 Commercial Use Allowed 档(CC0/CC-BY/CC-BY-SA/CC-BY-ND)可商用",
+      "how_to_pull": "走 AWS Open Data S3(pmc-oa-opendata)或 PMC FTP bulk;先按 license 字段过滤 Commercial-Use-Allowed 再下 JATS XML;检索用 E-utilities。禁抓主站。",
+      "domains_covered": "science-physiology:开放获取高原生理文献(West 史学、Operation Everest II、AMREE 数据的事实锚定)"
+    },
+    {
+      "name": "OpenStreetMap (natural=peak)",
+      "url": "https://www.openstreetmap.org/copyright",
+      "verdict": "CAUTION",
+      "license": "ODbL-1.0(署名 + 数据库 share-alike);wiki 文档 CC-BY-SA 2.0",
+      "how_to_pull": "少量峰走 Overpass API([natural=peak][ele]);区域走 Geofabrik extract;全量走 Planet dump(AWS S3/BT)。展示层(Produced Work)只需署名,原始数据集再分发触发 ODbL 传染,需设计数据边界。",
+      "domains_covered": "data-apis/8000ers/iconic-peaks:坐标+海拔+峰名的独立几何交叉校验(仅地理属性,不含登山史)"
+    },
+    {
+      "name": "OpenBeta (climbing-data, CC0)",
+      "url": "https://github.com/OpenBeta/climbing-data",
+      "verdict": "CAUTION(OpenBeta 部分 SAFE;theCrag=AVOID)",
+      "license": "OpenBeta CC0/PD(文本);theCrag CC-BY-NC-SA(禁商用)——只吃 OpenBeta",
+      "how_to_pull": "clone GitHub 仓库(jsonlines/csv)或 climb-api GraphQL;raw dump 官方标暂缺。照片不采。彻底排除 theCrag 与一切照片。",
+      "domains_covered": "gear-technique:路线级多体系分级换算样本(UIAA/YDS/French/Font 对照,CC0 可商用)"
+    },
+    {
+      "name": "UIAA 官方 — 分级标准",
+      "url": "https://www.theuiaa.org/grades-standards/rock-climbing/",
+      "verdict": "CAUTION",
+      "license": "专有 all-rights-reserved,无 CC;Terms 为空壳(未授权即保留)",
+      "how_to_pull": "人工转录事实性分级数据(符号/跨体系等价映射),历史沿革散文自行重写,官方 PDF 图表不原样再发布。无 API,数据量极小。",
+      "domains_covered": "gear-technique:UIAA/法国/器械分级体系定义与谱系(Benesch→Welzenbach→UIAA)事实源"
+    },
+    {
+      "name": "DBpedia",
+      "url": "https://www.dbpedia.org/",
+      "verdict": "CAUTION",
+      "license": "CC-BY-SA 3.0 + GFDL(继承 Wikipedia,含 ShareAlike 传染)",
+      "how_to_pull": "走 Databus 批量 dump 取登山子集;定向字段用公共 SPARQL(Fair Use 限 10000 行)。作 Wikidata(CC0)之外的第二结构化交叉校验源,勿逐页抓 HTML。",
+      "domains_covered": "全域:infobox 派生字段(首登者/海拔)对 Wikidata 缺口的补漏与一致性核对"
+    },
+    {
+      "name": "Wikimedia Commons",
+      "url": "https://commons.wikimedia.org/wiki/Commons:Licensing",
+      "verdict": "CAUTION",
+      "license": "平台层纯自由(PD/CC0/CC-BY/CC-BY-SA,禁 NC/ND);逐文件混合,无统一口径",
+      "how_to_pull": "MediaWiki API(prop=imageinfo&iiprop=extmetadata)逐文件落库 License/Artist/Attribution 字段;结构化走 WCQS SPARQL。隔离 CC-BY-SA 与 CC0/PD;20 世纪名照+在世人物肖像人工复核版权+肖像权后再放行。",
+      "domains_covered": "全域配图层:历史 PD 版画/照片可用,现代照片须逐张核,基金会不担保许可正确性"
+    },
+    {
+      "name": "8000ers.com (Eberhard Jurgalski)",
+      "url": "https://www.8000ers.com/cms/en/legal-notice-mainmenu-181.html",
+      "verdict": "AVOID",
+      "license": "专有 © Jurgalski;德国法 + EU sui generis 数据库权;明文禁商用/禁再分发/禁直链/禁抓",
+      "how_to_pull": "不抓。要么发函申请书面商用授权(降级 CAUTION),要么从一手源(Himalayan Database + 官方远征记录 + 各国协会公告)独立重采同批事实并交叉核验。",
+      "domains_covered": "8000ers/records-stats/disasters:全14座统计与喀喇昆仑侧覆盖是其独有价值,但许可红线只能事实重采"
+    },
+    {
+      "name": "AAC Publications (American Alpine Journal + ANAC)",
+      "url": "https://publications.americanalpineclub.org/",
+      "verdict": "AVOID",
+      "license": "专有 © AAC All Rights Reserved;报告/照片版权归作者,图书馆政策要求逐案授权",
+      "how_to_pull": "不抓正文/图。仅作研究线索+事实交叉核对(who/when/where/what);产出只落事实层,叙述与图改用 PD 源或重写。",
+      "domains_covered": "expeditions/gear-technique/records-stats/iconic-peaks:北美+喀喇昆仑一手报告的事实核验线索(非入库源)"
+    },
+    {
+      "name": "Peakbagger.com",
+      "url": "https://www.peakbagger.com/help/TermsOfService.aspx",
+      "verdict": "AVOID",
+      "license": "专有 All Rights Reserved;ToS 明文禁 copy/mine/scrape,主数据库声明为全资资产",
+      "how_to_pull": "不抓。峰名/海拔/坐标改用 USGS GNIS(PD)/OSM/Wikidata;纪录榜单改从原始权威源自建。要用其数据须书面授权。",
+      "domains_covered": "iconic-peaks/records-stats:七大洲最高峰/雪豹奖名单等榜单——改走 PD/CC 替代源交叉补全"
+    },
+    {
+      "name": "HathiTrust Digital Library",
+      "url": "https://www.hathitrust.org/",
+      "verdict": "AVOID(商用管道);仅元数据 harvest 窄用途 CAUTION",
+      "license": "Google 扫描件合约限制:非商用/禁再托管;AUP 禁批量下载",
+      "how_to_pull": "不作商用图源/扫描源。同批 PD 文本改从 IA/Gutenberg/Wikisource 取;仅 Bibliographic API + Hathifiles 取少量元数据。",
+      "domains_covered": "alpine-history/public-domain-lit:Alpine Journal 卷列发现层,取数绕道 IA"
+    },
+    {
+      "name": "TidyTuesday Himalayan CSV / Maven Analytics 抽取",
+      "url": "https://github.com/rfordatascience/tidytuesday/",
+      "verdict": "AVOID(商用再分发)",
+      "license": "CC0 badge 仅覆盖 TidyTuesday 整理层;底层 HD EULA 禁再分发;PD 标签不实",
+      "how_to_pull": "研究/建模可拉 CSV;商用不得再分发该 HD 衍生集。窄事实(14 座海拔/坐标/首登/统计)改从 Wikidata(CC0)重采,HD/Maven 仅校验。",
+      "domains_covered": "8000ers/records-stats:便捷 CSV 起点但商用禁用,改事实重采"
+    },
+    {
+      "name": "高原医学专有源(WMS 指南 / MSD Merck / ISMM / J Appl Physiol)",
+      "url": "https://www.msdmanuals.com/professional/injuries-poisoning/altitude-illness/",
+      "verdict": "AVOID",
+      "license": "全部专有 all-rights-reserved,无 CC;免费可读≠可复用",
+      "how_to_pull": "仅引用临床事实(AMS/HACE/HAPE 分级、药物剂量、下撤原则、253 mmHg/VO2max 等测量值)并规范署名引注;原文文字/表/图一律不入库;需原文走 RightsLink 付费授权。",
+      "domains_covered": "science-physiology:权威事实核对锚点(非入库源)"
+    },
+    {
+      "name": "PeakVisor / Himalayan Journal(印度)/ Magdalene Mallory 档案",
+      "url": "https://peakvisor.com/api",
+      "verdict": "AVOID",
+      "license": "均专有 All Rights Reserved;禁抓/禁再分发;Mallory 扫描 © Max Communications",
+      "how_to_pull": "PeakVisor 只可 iframe 单点嵌入,数据改走 OSM/Wikidata;Himalayan Journal 只提事实、原文/图逐案授权;Mallory 主题改用已入 PD 的信件内容+PD 文本源,扫描件走学院申请。",
+      "domains_covered": "iconic-peaks/expeditions/public-domain-lit:均为事实核验/授权申请对象,不入库"
+    },
+    {
+      "name": "中文来源(国家体育总局/中国探险协会/中国登山协会/8264/中文维基图片)",
+      "url": "https://www.sport.gov.cn/",
+      "verdict": "CAUTION(政府媒体正文)/ AVOID(社团站+图片)",
+      "license": "专有全保留;政府网站≠公有领域;转载文含第三方(人民日报/新华社)版权;图片风险更高",
+      "how_to_pull": "仅抽不受版权的史实事实(1960/1975 珠峰、1991 梅里 17 人名单/日期/人物)自行改写并逐条溯源;正文原文与照片不入库,图片走 ae-image-decopyrighter。",
+      "domains_covered": "chinese-mountaineering:事实线索源,叙事与图另找 PD/CC 替代"
+    }
+  ],
+  "coverage_matrix": [
+    {
+      "domain": "8000ers(14 座八千米峰)",
+      "availability": "rich",
+      "best_sources": "Wikidata(CC0 事实骨架)+ Himalayan Database(尼泊尔侧8座远征/死亡/用氧金标准,CAUTION 抽事实)+ SRTM(海拔校验)+ Wikipedia 列表(署名)",
+      "gaps": "喀喇昆仑/巴基斯坦侧6座(K2/Nanga Parbat/GI/GII/Broad Peak)无 HD 等价库,唯一系统源 8000ers.com=AVOID;'真顶争议'(Shishapangma/Annapurna/Manaslu)致各库登顶数不一,需存 source+disputed-flag;海拔存在竞争值(8848.86 vs 8848),须存 source+year"
+    },
+    {
+      "domain": "iconic-peaks(非8000标志峰:马特洪/艾格/Denali/阿空加瓜/乞力马扎罗/七大洲/大岩壁)",
+      "availability": "rich",
+      "best_sources": "Wikidata(CC0)+ GeoNames(CC-BY)+ OSM(ODbL)+ NPS Denali(联邦公版统计)+ Gutenberg/IA(Whymper/Muir PD 全文)+ NASA 影像",
+      "gaps": "七大洲最高峰榜单权威源 Peakbagger=AVOID,需从 Wikidata/GNIS 重建;大岩壁路线拓扑 Mountain Project=CC-BY-NC 未纳入;swisstopo 官方测绘许可待核;现代攀登照片(Dawn Wall/free solo)受版权"
+    },
+    {
+      "domain": "expeditions(1786→今首登编年)",
+      "availability": "rich",
+      "best_sources": "Wikidata + Wikipedia list-articles(编年骨架)+ Himalayan Database(尼泊尔远征)+ Gutenberg/IA(1786-1930 一手叙事)",
+      "gaps": "Wikidata 首登属性覆盖不均(常在 P793 限定符或仅在正文),需从 Wikipedia infobox + HD 回填;非尼泊尔区域(喀喇昆仑/Alaska/Andes)一手报告在 AAJ=AVOID,只能事实核验;K2 Bonatti 事件等细节历史争议需标 flag"
+    },
+    {
+      "domain": "mountaineers(传奇登山家小传)",
+      "availability": "rich",
+      "best_sources": "Wikidata(生卒/国籍/获奖/死亡地)+ Wikipedia 多语传记(波语/意语更详)+ Himalayan Database(远征逐条)",
+      "gaps": "波兰黄金一代(Rutkiewicz/Kukuczka/Wielicki)最详资料在波兰语源需补;人物肖像可复用性逐图核 Commons,在世人物近照多专有+涉肖像权;现代登山家著作(Messner/Krakauer)全在版权期只作引用"
+    },
+    {
+      "domain": "disasters(著名山难与生还史诗)",
+      "availability": "moderate",
+      "best_sources": "Wikidata(事件/伤亡结构化)+ Wikipedia 专条+List of deaths on eight-thousanders(可解析为结构化行)+ Himalayan Database(尼泊尔侧逐人死因)+ Mummery 1895(PD,南迦灾难史起点)",
+      "gaps": "1985-2008 现代灾难奠基名著(Into Thin Air/The Climb/Touching the Void/No Way Down/Buried in the Sky)全在版权期,只能取事实;巴基斯坦侧(K2/Nanga)死亡统计权威 8000ers.com=AVOID;现场照片几乎全受版权;死因分类口径各库不一需三方对账消歧"
+    },
+    {
+      "domain": "alpine-history(19世纪黄金/白银时代)",
+      "availability": "rich",
+      "best_sources": "Wikidata(CC0)+ Gutenberg/Wikisource(Whymper《Scrambles》/Stephen/Tyndall/Saussure PD 全文+版画)+ IA(Alpine Journal 1863-1929)",
+      "gaps": "Alpine Journal 取数管道复杂(HathiTrust=AVOID,OLBP/官方站只做索引),须绕道 IA 逐卷核出版年;瑞士侧 SAC《Die Alpen》/e-periodica.ch 许可待核;Zermatt/Chamonix 地方向导档案未覆盖"
+    },
+    {
+      "domain": "science-physiology(高海拔生理医学)",
+      "availability": "moderate",
+      "best_sources": "Wikidata(疾病实体+ICD/MeSH)+ PMC OA Commercial 子集(CC0/CC-BY)+ PD 老文本(Paul Bert 1878、Mosso 1898、1922 珠峰志)",
+      "gaps": "几乎全部现代权威源 AVOID(WMS/MSD/ISMM/J Appl Physiol);Lake Louise Score 版权归 Mary Ann Liebert;供氧技术史二次文献(Windsor&Rodway)专有;藏族 EPAS1/安第斯慢性高山病子题需 PMC 补;每条事实建议双绑 Wikidata QID + 一条 PD/PMC 出处"
+    },
+    {
+      "domain": "gear-technique(装备/技术/分级演进)",
+      "availability": "moderate",
+      "best_sources": "Wikidata(概念/人物)+ Wikipedia(分级谱系正文)+ OpenBeta(CC0 分级换算样本)+ Gutenberg/Wikisource(Whymper/Mummery PD)+ UIAA 官方(事实转录)",
+      "gaps": "UIAA 文档/AAJ/厂商 blog(Grivel/Wild Country)均专有,仅提事实;theCrag=NC 排除;冰瀑 WI/M 混合分级细则、萨克森/英国 E-grade 谱系、UIAA/EN 装备认证史未覆盖;Himalayan Database style/oxygen 字段是围攻↔阿式量化金矿(CAUTION)"
+    },
+    {
+      "domain": "records-stats(纪录与统计)",
+      "availability": "moderate",
+      "best_sources": "Wikidata(CC0,获奖/首登可 SPARQL 一次拉)+ Wikipedia 列表(已整理榜单)+ Himalayan Database(尼泊尔侧死亡率/无氧金真值)",
+      "gaps": "8000ers.com(纪录仲裁权威)+Peakbagger(雪豹奖名单)均 AVOID,须事实重采;登顶真实性系统性争议(Harila/早期完成者真顶/用氧)须每条带来源+是否用氧+是否核实字段并允许多源分歧;速登须标用氧/直升机转场;年龄纪录受尼泊尔/中国许可政策约束"
+    },
+    {
+      "domain": "data-apis(结构化数据地基)",
+      "availability": "rich",
+      "best_sources": "Wikidata(CC0 主键)+ SRTM/NASADEM(PD 海拔)+ GeoNames(CC-BY)+ OSM(ODbL)+ DBpedia(交叉校验)",
+      "gaps": "封闭商业库(PeakVisor/Peakbagger)AVOID;Himalayan Database 无 CSV 直供须从 DBF 导出评估 vs 社区镜像子集完整性;OSM/GeoNames 只提供地理属性不含登山史;ODbL/CC-BY-SA share-alike 传染需设计发布形态"
+    },
+    {
+      "domain": "public-domain-lit(公有领域登山文学)",
+      "availability": "rich",
+      "best_sources": "Gutenberg(GutenDex API 枚举+txt/epub)+ IA(metadata/scraping API+OCR)+ Wikisource(校勘章节)+ Wikidata(P2034/P724 反查关联电子文本)",
+      "gaps": "取数管道要绕开被封源(HathiTrust=AVOID,OLBP/官方 AJ 站只作索引);Norton《Fight for Everest 1924》等 1925 前后书跨法域按 life+70 逐本复核;Mallory 档案文字多数法域已 PD 但学院扫描件=AVOID;Freshfield/Conway/Guido Rey 等二线经典可用性待扩"
+    },
+    {
+      "domain": "chinese-mountaineering(中文登山史)",
+      "availability": "thin",
+      "best_sources": "Wikidata(CC0,1960 珠峰远征 Q18651339 等有条目)+ 中文维基百科(CC-BY-SA,专条最全)+ 英文维基(西方视角与1960争议)",
+      "gaps": "所有中文站(体育总局/中国探险协会/登山协会/8264/百度)CAUTION-AVOID,原文与图受版权只提事实;1960北坡登顶真实性有西方质疑需并存多视角;梅里山难/玉珠峰历史照片几全受版权;深度史料需中文一手档案但可复用性差,是全库最薄领域"
+    }
+  ],
+  "harvest_plan": [
+    {
+      "target": "全库事实骨架:14座8000+标志峰+登山家+远征+事件+首登+伤亡,以 QID 为主键",
+      "method": "Wikidata SPARQL 按 WikiProject Mountains 精准筛(instance-of-mountain / eight-thousander 类 / significant-event 首登)分页导出 JSON,超大集回落每周 RDF dump 建本地库",
+      "source": "Wikidata (CC0)",
+      "est_volume": "数千实体(14峰+数百标志峰+数百人物+上千远征/事件)",
+      "priority": "P0"
+    },
+    {
+      "target": "全球山峰海拔真值 DEM + 自渲等高线/地形剖面底图",
+      "method": "earthaccess/CMR 按喜马拉雅-喀喇昆仑-阿尔卑斯-安第斯-Alaska bbox 批量下 SRTMGL1+NASADEM GeoTIFF tile",
+      "source": "SRTM/NASADEM (CC0/PD)",
+      "est_volume": "数百 tile(覆盖主要山脉)",
+      "priority": "P0"
+    },
+    {
+      "target": "山峰坐标/海拔/多语别名底表(交叉校验 Wikidata)",
+      "method": "下载 allCountries.zip 全库 dump,按 feature class T.MT/T.PK 过滤",
+      "source": "GeoNames (CC-BY)",
+      "est_volume": "数万山峰要素",
+      "priority": "P0"
+    },
+    {
+      "target": "1786-1930 一手叙事全文+期内插图(可全文商用入库)",
+      "method": "GutenDex JSON API 枚举登山 subject/author ID → 官方 harvest 拉 txt/epub 剥 PG boilerplate;IA 走 scraping API 枚举 collection → `ia download` OCR+PDF",
+      "source": "Project Gutenberg + Internet Archive (PD)",
+      "est_volume": "数十种书 + Alpine Journal 1863-1929 约40卷",
+      "priority": "P0"
+    },
+    {
+      "target": "早期珠峰官方志(1921/1922/1924)高质量全文",
+      "method": "从 Gutenberg #39421/#61083 + IA 对应 item 直拉(绕开限速的 loc.gov)",
+      "source": "Gutenberg/IA (PD)",
+      "est_volume": "3-4 部核心官方志",
+      "priority": "P0"
+    },
+    {
+      "target": "可商用山峰卫星底图/峰位标注图 + Denali 登顶时间序列",
+      "method": "NASA EO 逐页抓14张影像走 Visible Earth/EOL 原图链接;NPS 下 Excel 统计表+十年分组 PDF",
+      "source": "NASA Earth Observatory + NPS (PD)",
+      "est_volume": "约20张图 + Denali 1979-今逐年统计",
+      "priority": "P0"
+    },
+    {
+      "target": "尼泊尔侧8座8000峰远征×死亡×用氧金标准事实层",
+      "method": "下载 HD v2.74 程序,从 DBF/SQL 导表,抽离散事实字段重构入自研 schema,清晰致谢;不整包镜像",
+      "source": "The Himalayan Database (CAUTION,抽事实)",
+      "est_volume": "11500+远征 / 90800+成员记录(取8座相关切片)",
+      "priority": "P1"
+    },
+    {
+      "target": "全域叙事层 + 已整理榜单(死亡列表/纪录/all-14/冬季首登序列)",
+      "method": "dumps.wikimedia.org 拉 en/zh XML dump 解析目标条目 wikitable;事实提取重写脱 SA,逐字引用挂署名+SA",
+      "source": "Wikipedia (CC-BY-SA)",
+      "est_volume": "数百条目 + 十余张结构化列表",
+      "priority": "P1"
+    },
+    {
+      "target": "山峰坐标/海拔独立几何交叉校验",
+      "method": "Overpass API 按 [natural=peak][ele] 拉目标峰点;区域走 Geofabrik extract。设计数据边界避 ODbL 传染",
+      "source": "OpenStreetMap (ODbL)",
+      "est_volume": "14峰+数百标志峰节点",
+      "priority": "P1"
+    },
+    {
+      "target": "分级体系跨制换算样本(gear-technique)",
+      "method": "clone OpenBeta climbing-data 仓库(CC0)取分级数据;UIAA 分级符号/映射人工转录",
+      "source": "OpenBeta (CC0) + UIAA(事实转录)",
+      "est_volume": "数千路线分级对照 + 4体系谱系表",
+      "priority": "P1"
+    },
+    {
+      "target": "高原生理开放获取文献事实锚定",
+      "method": "AWS Open Data S3(pmc-oa-opendata)先按 license 字段过滤 Commercial-Use-Allowed 再下 JATS XML;PD 老文本(Bert/Mosso/1922志)从 IA/Gutenberg 全文入库",
+      "source": "PMC OA (CC0/CC-BY) + PD 老文本",
+      "est_volume": "数十篇 OA 论文 + 3部 PD 生理专著",
+      "priority": "P1"
+    },
+    {
+      "target": "喀喇昆仑/巴基斯坦侧6座8000峰事实缺口补齐",
+      "method": "不抓 8000ers.com——从 Wikidata/Wikipedia 事实层 + AAJ/Himalayan Journal 逐案事实核验重采(或发函 Jurgalski 申请授权)",
+      "source": "Wikidata + AAJ(事实核验) / 8000ers 授权申请",
+      "est_volume": "6峰的登顶/死亡编年(密度受限)",
+      "priority": "P2"
+    },
+    {
+      "target": "Wikidata 事实缺口补漏 + 一致性交叉校验",
+      "method": "DBpedia Databus dump 取登山子集比对 Wikidata infobox 派生字段",
+      "source": "DBpedia (CC-BY-SA)",
+      "est_volume": "数百实体字段核对",
+      "priority": "P2"
+    },
+    {
+      "target": "全库配图层(PD/CC0/CC-BY 可复用图)",
+      "method": "Commons MediaWiki API(imageinfo+extmetadata)逐文件落库 License/Artist 字段,隔离 CC-BY-SA 与 CC0/PD,20世纪名照+在世肖像人工复核后放行;受版权图走 ae-image-decopyrighter",
+      "source": "Wikimedia Commons(逐文件核)",
+      "est_volume": "数百张(历史 PD 版画/照片优先)",
+      "priority": "P2"
+    },
+    {
+      "target": "中文登山史事实层(1960/1975珠峰、1991梅里等)",
+      "method": "从 Wikidata(CC0)+ 中文维基(CC-BY-SA,署名+SA)重建事实;中文站仅作事实线索不灌库,图片走去版权重绘",
+      "source": "Wikidata + 中文 Wikipedia",
+      "est_volume": "数十事件/人物事实条目",
+      "priority": "P2"
+    }
+  ]
+}
