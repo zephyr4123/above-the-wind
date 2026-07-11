@@ -39,6 +39,8 @@
 | Gasherbrum II | 1956-07-07 Moravec·Larch·Willenpart / 奥地利队 / SW 脊 | HJ/20/3 Austrian Karakoram Expedition, 1956 | Wiki: Gasherbrum II |
 | Shishapangma | 1964-05-02 许竞领衔中国队(10 人登顶)/ 北侧路线 | AJ 1964「The Ascent of Shisha Pangma」PDF | Wiki: Shishapangma |
 
+> ⚠️ 更正(2026-07-12,ATW-18 集成时对抗性审查发现):**干城章嘉**那条 `HJ/75/4` 经核实是《Himalayan Journal》**第 75 卷(2020 年)**Mick Conefrey 的**回溯研究**文章,并非 1955 当年同期一手记述(其余同期源都遵循「事发次年卷」规律 Vol18–22,唯它跳到 Vol75 是异常)。已在 `web/src/data/citations.ts` 把它从 ① 同期期刊**降级**、如实标注「2020 回溯」,主源改用 Wikipedia。上表原标记保留存证。
+
 ## 集成建议
 
 - 三个「真顶争议」峰(Shishapangma / Annapurna 未争 / Manaslu)以及 K2 的 Bonatti 争议:peaks.ts 现值均取公认口径,无需改;若日后加「争议 flag」,K2 可引 Wiki「1954 Italian Karakoram expedition controversy」。

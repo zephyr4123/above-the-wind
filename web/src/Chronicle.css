@@ -1,0 +1,494 @@
+/* ══ 编年记录仪(Chronicle)· 与观测仪成对的时间视角 —— token 见 styles/archive.css ══
+   观测仪 = fixed 单屏、空间、按海拔排环;记录仪 = 可滚动长文档、时间、按日期走纸成迹线。 */
+
+.chronicle {
+  min-height: 100dvh;
+  background: var(--archive-canvas);
+  color: var(--archive-ink);
+}
+
+/* ── 顶部导航(sticky) ─────────────────────────────────────────── */
+.cnav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: var(--archive-nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--archive-space-6);
+  padding: 0 var(--archive-safe-margin);
+  background: var(--archive-canvas);
+  border-bottom: var(--archive-stroke-hairline) solid var(--archive-line);
+}
+.cnav__left,
+.cnav__center,
+.cnav__right {
+  display: flex;
+  align-items: center;
+  gap: var(--archive-space-3);
+}
+.cnav__center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.cnav__back {
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink);
+  text-decoration: none;
+}
+.cnav__back:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cnav__slash,
+.cnav__brand {
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink-muted);
+}
+.cnav__title {
+  font-size: var(--archive-fs-event);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.cnav__divider {
+  width: 1px;
+  height: var(--archive-space-4);
+  background: var(--archive-line);
+  margin: 0 var(--archive-space-2);
+}
+.cnav__sub {
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink-muted);
+}
+.cnav__right {
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink-muted);
+}
+.cnav__count {
+  color: var(--archive-ink-muted);
+}
+.cnav__cross {
+  font-size: 1rem;
+  color: var(--archive-ink);
+}
+
+/* ── Masthead 读数条(terse 统计,事实承重)────────────────────── */
+.masthead {
+  margin: 0;
+  padding: var(--archive-space-3) var(--archive-safe-margin);
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink-muted);
+  text-align: center;
+  border-bottom: var(--archive-stroke-hairline) solid var(--archive-line);
+}
+
+/* ── 舞台:左 sticky 记录仪图 + 右滚动记录 ─────────────────────── */
+.chronicle__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+  gap: var(--archive-space-12);
+  align-items: start;
+  padding: var(--archive-space-6) var(--archive-safe-margin) var(--archive-space-16);
+}
+
+.recorder {
+  position: sticky;
+  top: var(--archive-nav-h);
+  height: calc(100dvh - var(--archive-nav-h) - var(--archive-space-8));
+}
+
+/* ── 记录仪主图 ───────────────────────────────────────────────── */
+.chart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.chart__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.chart__grid {
+  stroke: var(--archive-line);
+  stroke-width: 1;
+  opacity: 0.55;
+  vector-effect: non-scaling-stroke;
+}
+.chart__baseline {
+  stroke: var(--archive-accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.chart__bracket line {
+  stroke: var(--archive-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.chart__trace {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+.chart__trace--past {
+  stroke: var(--archive-ink);
+  stroke-width: var(--archive-route-width); /* 迹线 = 路线母题,走 route token */
+}
+.chart__trace--future {
+  stroke: var(--archive-line);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+
+.chart__alt {
+  position: absolute;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
+}
+.chart__alt.is-accent {
+  color: var(--archive-ink); /* 8000 标签用 ink 保对比;橙由 baseline 线本身承载 */
+  font-weight: 500;
+}
+.chart__year {
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
+}
+.chart__silence {
+  position: absolute;
+  bottom: calc(var(--archive-space-4) * -1);
+  transform: translateX(-50%);
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
+  white-space: nowrap;
+}
+
+.chart__playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: var(--archive-accent);
+  transform: translateX(-50%);
+  pointer-events: none;
+  transition: left var(--archive-motion-base) var(--archive-ease-ui);
+}
+
+.chart-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--archive-node-hit);
+  min-height: var(--archive-node-hit);
+  color: var(--archive-ink);
+}
+.chart-node__dot {
+  width: var(--archive-node-sm);
+  height: var(--archive-node-sm);
+  border-radius: 50%;
+  border: 1.5px solid var(--archive-line);
+  background: var(--archive-canvas);
+  transition: transform var(--archive-motion-fast) var(--archive-ease-ui);
+  flex: none;
+}
+.chart-node:hover .chart-node__dot {
+  transform: scale(1.15); /* 与观测仪节点 hover 一致 */
+}
+.chart-node.is-active .chart-node__dot {
+  width: var(--archive-node-md);
+  height: var(--archive-node-md);
+  background: var(--archive-accent);
+  border-color: var(--archive-canvas);
+  box-shadow: 0 0 0 3px var(--archive-accent-soft);
+}
+.chart-node__probe {
+  position: absolute;
+  bottom: calc(50% + var(--archive-space-3));
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--archive-fs-tick);
+  white-space: nowrap;
+  color: var(--archive-ink);
+  /* 浮于画布、无背板(与观测仪标签一致),靠冰白晕在迹线上也可读 */
+  text-shadow: 0 0 4px var(--archive-canvas), 0 0 2px var(--archive-canvas);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--archive-motion-fast) var(--archive-ease-ui);
+}
+.chart-node:hover .chart-node__probe,
+.chart-node:focus-visible .chart-node__probe {
+  opacity: 1;
+}
+
+/* ── 编年记录(右栏)──────────────────────────────────────────── */
+.records {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.record {
+  border-top: var(--archive-stroke-hairline) solid var(--archive-line);
+}
+.record.is-active {
+  background: var(--archive-canvas-raised);
+}
+/* 峰名标题:结构语义(h3)但不改布局/排版 */
+.record__heading {
+  margin: 0;
+  font: inherit;
+}
+.record__head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "date seq"
+    "name elev"
+    "lede lede"
+    "meta meta";
+  align-items: baseline;
+  gap: var(--archive-space-2) var(--archive-space-4);
+  width: 100%;
+  text-align: left;
+  padding: var(--archive-space-6) var(--archive-space-2);
+}
+.record__date {
+  grid-area: date;
+  font-size: var(--archive-fs-event);
+  color: var(--archive-ink);
+}
+.record__seq {
+  grid-area: seq;
+  justify-self: end;
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
+}
+.record__name {
+  grid-area: name;
+  font-size: var(--archive-fs-name);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.record__name-en {
+  margin-left: var(--archive-space-3);
+  font-size: var(--archive-fs-tick);
+  font-weight: 400;
+  color: var(--archive-ink-muted);
+  letter-spacing: 0;
+}
+.record__elev {
+  grid-area: elev;
+  justify-self: end;
+  align-self: center;
+  font-size: var(--archive-fs-alt);
+  font-weight: 500;
+  color: var(--archive-ink);
+  line-height: 1;
+}
+.record.is-active .record__elev {
+  color: var(--archive-accent);
+}
+.record__lede {
+  grid-area: lede;
+  font-size: var(--archive-fs-event);
+  color: var(--archive-ink-muted);
+  max-width: 62ch;
+}
+.record__meta {
+  grid-area: meta;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--archive-space-4);
+  margin-top: var(--archive-space-1);
+}
+.record__fatality {
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink); /* 不占橙色红针预算(橙仅切面/路线/选中);死亡率靠位置区分 */
+}
+.record__toggle {
+  margin-left: auto;
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink-muted);
+}
+
+/* ── 展开:全叙事 + 字段 + 三层来源 ───────────────────────────── */
+.record__panel {
+  padding: 0 var(--archive-space-2) var(--archive-space-8);
+}
+.record__blurb {
+  margin: 0 0 var(--archive-space-6);
+  max-width: 68ch;
+  font-size: var(--archive-fs-body);
+  line-height: 1.7;
+  color: var(--archive-ink);
+}
+.record__fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--archive-space-4);
+  margin: 0 0 var(--archive-space-6);
+}
+.record__fields div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--archive-space-1);
+}
+.record__fields dt {
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
+  letter-spacing: var(--archive-tracking-caps);
+}
+.record__fields dd {
+  margin: 0;
+  font-size: var(--archive-fs-body);
+  color: var(--archive-ink);
+}
+
+.sources {
+  padding-top: var(--archive-space-4);
+  border-top: var(--archive-stroke-hairline) solid var(--archive-line);
+}
+.sources__label {
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
+  letter-spacing: var(--archive-tracking-caps);
+  margin-bottom: var(--archive-space-3);
+}
+.sources__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--archive-space-3);
+}
+.source {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--archive-space-2) var(--archive-space-3);
+  font-size: var(--archive-fs-label);
+}
+.source__tier {
+  color: var(--archive-ink-muted);
+  flex: none;
+}
+.source__code {
+  color: var(--archive-ink);
+}
+.source__link {
+  color: var(--archive-ink);
+  text-decoration: none;
+}
+.source__link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.source__license {
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
+}
+
+/* ── 页脚 ─────────────────────────────────────────────────────── */
+.colophon {
+  padding: var(--archive-space-12) var(--archive-safe-margin) var(--archive-space-16);
+  border-top: var(--archive-stroke-hairline) solid var(--archive-line);
+}
+.colophon__line {
+  margin: 0 0 var(--archive-space-6);
+  max-width: 60ch;
+  font-size: var(--archive-fs-event);
+  line-height: 1.7;
+  color: var(--archive-ink);
+}
+.colophon__note {
+  margin: 0 0 var(--archive-space-6);
+  max-width: 72ch;
+  font-size: var(--archive-fs-tick);
+  line-height: 1.7;
+  color: var(--archive-ink-muted);
+}
+.colophon__back {
+  font-size: var(--archive-fs-label);
+  color: var(--archive-ink);
+  text-decoration: none;
+}
+.colophon__back:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── 响应式:双栏 → sticky 顶带 + 单列 ─────────────────────────── */
+@media (max-width: 1024px) {
+  .chronicle__stage {
+    grid-template-columns: 1fr;
+    gap: var(--archive-space-6);
+    padding-top: 0;
+  }
+  .recorder {
+    top: var(--archive-nav-h);
+    height: 180px;
+    margin: 0 calc(var(--archive-safe-margin) * -1);
+    padding: var(--archive-space-4) var(--archive-safe-margin) var(--archive-space-6);
+    background: var(--archive-canvas);
+    border-bottom: var(--archive-stroke-hairline) solid var(--archive-line);
+    z-index: 5;
+  }
+  /* 顶带里节点密集,缩小热区免 1954–56 簇命中区重叠误选 */
+  .chart-node {
+    min-width: 28px;
+    min-height: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* 绝对居中的中央标题在 641–768 会撞左侧品牌,窄屏直接隐去 */
+  .cnav__center {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .cnav__brand,
+  .cnav__slash {
+    display: none;
+  }
+  .cnav__back {
+    white-space: nowrap;
+  }
+  .recorder {
+    height: 150px;
+  }
+  /* 窄屏:海拔大数单独占一行,峰名(含英文)得整行不折断 */
+  .record__head {
+    grid-template-areas:
+      "date seq"
+      "name name"
+      "elev elev"
+      "lede lede"
+      "meta meta";
+  }
+  .record__elev {
+    justify-self: start;
+    align-self: start;
+    font-size: 2rem;
+    margin-top: var(--archive-space-1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart__playhead,
+  .chart-node__dot,
+  .chart-node__probe {
+    transition: none;
+  }
+}
