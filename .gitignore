@@ -1,0 +1,7 @@
+# 本机 skill 脚手架：.claude/ 内是指向本机绝对路径的符号链接，CLAUDE.md 为项目级 Claude 配置。
+# 二者均为本机专属、不该进版本库（别的机器上缺失会被 Claude 静默跳过，无副作用）。
+.claude/
+CLAUDE.md
+
+# macOS
+.DS_Store
