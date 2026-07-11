@@ -1,0 +1,97 @@
+/* ══════════════════════════════════════════════════════════════════
+   Archive Instrument · UI Token v1  —— 项目 UI infra 单一真相源
+   核心美学：冰川白空间画布 + 黑色地形实体 + 8,000 米橙色切面 + 极少仪器标注。
+   判据：把三维山体拿掉，剩下的界面应像一台安静、精确的测量仪器。
+   所有 slice 共享这套 --archive-* token；数据不同、呈现不同，但风格对齐。
+   ══════════════════════════════════════════════════════════════════ */
+:root {
+  /* ── 1. 色彩 ───────────────────────────────────────────────────── */
+  --archive-canvas: #eef1ef; /* 页面与 WebGL 背景 */
+  --archive-canvas-raised: #f7f9f8; /* 极少量悬浮区域 */
+  --archive-rock: #111312; /* 8,000 米以下山体 */
+  --archive-rock-mid: #292d2b; /* 岩石亮面 */
+  --archive-ink: #242927; /* 主要文字 */
+  --archive-ink-muted: #5e6461; /* 次要信息 */
+  --archive-line: rgb(17 19 18 / 24%); /* 标尺、时间轴、引导线 */
+  --archive-line-inverse: rgb(238 241 239 / 72%); /* 山体暗区上的线 */
+  --archive-ice: #f5fafc; /* 8,000 米以上山体 */
+  --archive-ice-shadow: #c7d5dc; /* 冰雪阴影 */
+  --archive-accent: #ff4b19; /* 路线、切面、选中节点 */
+  --archive-accent-soft: rgb(255 75 25 / 16%); /* 切面散射 */
+  --archive-scrim: rgb(10 12 11 / 72%); /* 底部文字可读性保护 */
+
+  /* ── 2. 字体 ───────────────────────────────────────────────────── */
+  /* 全套只用无衬线 + 等宽,不用宋体/衬线/书法 */
+  --archive-font-ui: "PingFang SC", "Noto Sans SC", "Helvetica Neue", Arial,
+    sans-serif;
+  --archive-font-data: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
+    monospace;
+
+  /* 字号层级(见 DESIGN.md 类型阶梯) */
+  --archive-fs-alt: clamp(2rem, 1.6rem + 1.4vw, 2.5rem); /* 山峰高度 32–40 */
+  --archive-fs-name: clamp(1.25rem, 1.05rem + 0.7vw, 1.5rem); /* 山峰名称 20–24 */
+  --archive-fs-event: 1.0625rem; /* 关键事件 16–18 */
+  --archive-fs-body: 0.9375rem; /* 数据正文 14–16 */
+  --archive-fs-label: 0.8125rem; /* 仪器标签 12–13 */
+  --archive-fs-tick: 0.6875rem; /* 微型刻度 10–11 */
+  --archive-tracking-caps: 0.08em; /* 英文大写标签 */
+
+  /* ── 3. 间距（4px 基准网格）───────────────────────────────────── */
+  --archive-space-1: 4px;
+  --archive-space-2: 8px;
+  --archive-space-3: 12px;
+  --archive-space-4: 16px;
+  --archive-space-6: 24px;
+  --archive-space-8: 32px;
+  --archive-space-12: 48px;
+  --archive-space-16: 64px;
+
+  /* 关键布局参数 */
+  --archive-safe-margin: 32px; /* 页面安全边距 */
+  --archive-nav-h: 68px; /* 顶部导航高度 */
+  --archive-scale-width: 72px; /* 左侧高度标尺宽度 */
+  --archive-timeline-h: 104px; /* 底部时间轴高度 */
+
+  /* ── 4. 形状与线条 ─────────────────────────────────────────────── */
+  --archive-radius-none: 0;
+  --archive-radius-xs: 2px;
+  --archive-radius-sm: 4px;
+  --archive-stroke-hairline: 1px;
+  --archive-stroke-active: 2px;
+  --archive-node-sm: 8px;
+  --archive-node-md: 12px;
+  --archive-node-hit: 44px; /* 触控热区不小于 44 */
+
+  /* ── 5. 组件 token ─────────────────────────────────────────────── */
+  --archive-scale-tick: 6px;
+  --archive-scale-major-tick: 14px;
+  --archive-scale-label-gap: 12px;
+  --archive-route-width: 2px;
+  --archive-route-active-width: 3px;
+
+  /* ── 7. 动效 ───────────────────────────────────────────────────── */
+  --archive-motion-fast: 140ms; /* UI hover */
+  --archive-motion-base: 220ms; /* 标签切换 */
+  --archive-motion-scene: 800ms; /* 总览进入详情 / 相机 */
+  --archive-ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+  --archive-ease-camera: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── 8. 响应式栏距 ─────────────────────────────────────────────── */
+  --archive-gutter-desktop: 32px;
+  --archive-gutter-tablet: 20px;
+  --archive-gutter-mobile: 16px;
+
+  color-scheme: light;
+}
+
+@media (max-width: 1024px) {
+  :root {
+    --archive-safe-margin: var(--archive-gutter-tablet);
+  }
+}
+@media (max-width: 640px) {
+  :root {
+    --archive-safe-margin: var(--archive-gutter-mobile);
+    --archive-nav-h: 56px;
+  }
+}

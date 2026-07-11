@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "@fontsource-variable/archivo";
-import "@fontsource-variable/jetbrains-mono";
+import "./styles/archive.css"; // UI infra: --archive-* token 单一真相源
 import "./index.css";
 import App from "./App.tsx";
 
