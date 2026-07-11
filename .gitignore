@@ -5,3 +5,11 @@ CLAUDE.md
 
 # macOS
 .DS_Store
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# 采集的原始数据(可由 harvest/ 脚本复现,大体量不入库;curated 子集另议)
+data/
