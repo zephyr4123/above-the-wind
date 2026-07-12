@@ -1,0 +1,15 @@
+{
+  "min_m": 4987.0,
+  "max_m": 8753.0,
+  "snowline_8000m_norm": 0.8001,
+  "dim": 256,
+  "bin": "everest-height.bin (Float32 LE, normalized 0-1, row-major, DIM*DIM)",
+  "zoom": 12,
+  "center_latlon": [
+    27.9881,
+    86.925
+  ],
+  "ground_res_m_per_px": 33.7,
+  "source": "AWS Terrain Tiles (terrarium encoding, SRTM under Everest) — public domain",
+  "attribution": "SRTM data courtesy of the U.S. Geological Survey"
+}

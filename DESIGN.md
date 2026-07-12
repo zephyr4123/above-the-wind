@@ -110,37 +110,30 @@ shader 阈值」三者在屏幕同一高度对齐。安全边距 `--archive-safe
 
 ## WebGL 场景（`TerrainCanvas.tsx` + `theme/archive.ts`）
 
-程序化 3D 地形 + 高度材质 shader，用 **OGL** 渲染，**WebGL2 + GLSL `#version 300 es`**。
-当前为 PoC（程序化噪声地形），真实珠峰 DEM 为后续升级项。核实的关键数值：
+**真实珠峰 DEM 地形**（ATW-16），用 **OGL** 渲染，**WebGL2 + GLSL `#version 300 es`**。地形几何在 **CPU 侧**从真实高程场建出（精确 float + 平滑法线，规避 16-bit PNG 被浏览器解码成 8-bit 丢精度）。核实的关键数值：
 
-**几何 / 相机**（`TerrainCanvas.tsx`）
-- `Plane` 网格 `34 × 30`，细分 `260 × 230`。
-- `Camera` FOV `CAMERA_FOV = 32°`（`theme/archive.ts`），`near 0.1 / far 100`；
-  位置 `(0, 3.4, 13.5)`，`lookAt (0, 1.9, 0)`。
-- DPR 上限 `DPR_DESKTOP = 1.5`（`DPR_MOBILE = 1`），`alpha: true`（画布透出 CSS 背景），
-  `antialias: true`，`powerPreference: "high-performance"`。
+**数据源与许可**
+- 高程场 = `web/public/everest-height.bin`（256² Float32 归一化，采集脚本 `harvest/everest_dem.py`），来自 **AWS Terrain Tiles**（terrarium 编码）的珠峰区块，底数据 = **SRTM**（美国公有领域）。免登录直取。
+- 署名（轻量，见 README 数据来源段）：`SRTM data courtesy of the U.S. Geological Survey`。
 
-**Vertex shader** —— 程序化高度场，追求嶙峋高山而非平滑圆丘：
-- value noise + fbm（5 层，`p = p*2.03 + 1.7`）做大尺度起伏；
-- **ridged multifractal**（6 octave，每层 `n = (1-|2·noise-1|)²`、`s += a·n·prev`）让脊线尖锐、细节向脊线聚集；
-- `massif = exp(-d²·0.055)` 造中央高耸山块；
-- `height = (massif·1.06 + r·(0.20+0.46·massif) + base·0.17 − 0.045·(1−massif)·fbm(g·3.2)) · uAmp`，末项在侧翼刻蚀侵蚀沟槽、破整块感；`uAmp = 5.0`。
-- 法线用 `e = 0.05` 步长解析差分求出；另导出 `vSlope = 1 − N.y`（0 平坦 → 1 陡壁）供 fragment 用。
+**几何**（CPU 建于 `buildTerrain`）
+- 网格 `GRID = 384`²，世界宽度 `EXTENT = 34`；高度 = **真实 DEM 双线性宏观**（`sampleDEM`）+ **程序微观脊线**（JS ridged fbm，`MICRO_F=48 / MICRO_AMP=0.5`，由 DEM 高度调制 → 高处起脊、谷地平滑）补嶙峋感。
+- `WORLD_AMP = 14`（归一化 → 世界 Y，含垂直夸张补戏剧性）；边界顶点下沉成**裙边**（`SKIRT = -8`），相机拉远取景也不露画布。
+- 法线 = 合成高度的中央差分（微观脊线也被上色感知）；Uint32 index。
+- `Camera` FOV `32°`，位置 `(0, 9.5, 32)`，`lookAt (0, 4.6, 0)`；`.bin` 用 `fetch` 异步加载后建几何（StrictMode 用 `alive` 标志守护，避免卸载后仍建 renderer）。
 
-**Fragment shader** —— 高度 + 坡度材质：
-- 定向光 `dir (0.35, 0.86, 0.30)`，岩色在 `uRock↔uRockMid` 间按 `light²` 混合，冰色在 `uIceShadow↔uIce` 间按 `light` 混合并叠细颗粒（hash）破整块。
-- **雪线 = 高度阈值 + 坡度**：`uThreshold = 3.05`（对应 8,000 米切面），`snowLine = smoothstep(thr−0.05, thr+0.10, h)`；陡壁挂不住雪 `steepShed = smoothstep(0.70, 0.40, vSlope)`，`snow = snowLine·(0.42 + 0.58·steepShed)` —— 雪为主、陡处露黑岩肋，打破"冰白整块墙"。
-- **等高线母题**：`contour = smoothstep(0.05, 0, |fract(h·3.0) − 0.5|)·0.06`，一圈圈极淡测绘等高线裹住三维体。
-- **橙色切面**：`band = 1 − smoothstep(0, 0.05, abs(h − thr))`，以 `band·0.42` 混入 `uAccent` —— 收紧成一条精确散射线（橙色被 shader 严格约束在这条窄带里）。
-- 远处大气：`haze = smoothstep(7, 16, -vPos.z)`，以 `haze·0.42` 淡入 `uCanvas` 冰川白。
+**Vertex shader** —— 几何已带真实 Y 与法线，只做投影 + 透传 `vH / vPos / vNormal / vSlope`。
 
-**风雪粒子层**（`SnowField.tsx`，Canvas 2D 覆盖层，非 WebGL）—— 冰白 spindrift 短 streak 被高空风吹过场景，`PARTICLE_OPACITY = 0.28` 为不透明度上限；压在亮雪上自然隐没、显现于暗岩与岩肋，给暗色下半部一点死亡地带的风动。`prefers-reduced-motion` 下退化为静态单帧。
+**Fragment shader** —— 高度 + 坡度材质（沿用 ATW-15 观测仪，只有阈值随 DEM 尺度改）：
+- 定向光 `dir (0.35, 0.86, 0.30)`，岩色 `uRock↔uRockMid` 按 `light²`、冰色 `uIceShadow↔uIce` 按 `light` + 细颗粒（hash）破整块。
+- **雪线与死亡地带解耦**：`uSnow`（真实雪线，归一化 `SNOWLINE_NORM=0.4` ≈ 6500m）驱动 `snowLine`；`uBand`（8000m 死亡地带，归一化 `DEATHZONE_NORM=0.8`）驱动橙色切面。陡壁挂不住雪 `steepShed`、雪为主 + 陡处露黑岩肋。
+- **等高线母题** + **8000m 橙色切面**（`band` 落在真实峰顶上，精确标出哪些峰破 8000m）+ 远处 `haze` 淡入 `uCanvas` 冰川白。
 
-**高度阈值常量**（`theme/archive.ts`）：`DEATH_ZONE_ALTITUDE = 8000`、
-`SUMMIT_ALTITUDE = 8849`、`TERRAIN_EXAGGERATION = 1.04`、`PARTICLE_OPACITY = 0.28`。
+**风雪粒子层**（`SnowField.tsx`，Canvas 2D 覆盖层，非 WebGL）—— 冰白 spindrift 压亮雪隐没、显于暗岩，`PARTICLE_OPACITY = 0.28`；`prefers-reduced-motion` 退化为静态单帧。
 
-> 注：StrictMode 下 mount→unmount→mount 会毒化重挂载的 WebGL context，
-> `TerrainCanvas` 卸载时**故意不调 `loseContext`**，让 GC 随 canvas 回收（见源码注释）。
+**高度阈值常量**（`theme/archive.ts`）：`DEATH_ZONE_ALTITUDE = 8000`、`SUMMIT_ALTITUDE = 8849`、`PARTICLE_OPACITY = 0.28`。
+
+> 注：StrictMode 下 mount→unmount→mount 会毒化重挂载的 WebGL context，`TerrainCanvas` 卸载时**故意不调 `loseContext`**（见源码注释）。
 
 ## Motion
 
