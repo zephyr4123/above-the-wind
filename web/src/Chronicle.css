@@ -225,6 +225,19 @@
   transition: left var(--archive-motion-base) var(--archive-ease-ui);
 }
 
+/* 橙引线:active 点 → 暗区右边缘(分界线),指向右侧当前记录 */
+.chart__leader {
+  position: absolute;
+  right: calc(var(--archive-space-6) * -1);
+  height: 1px;
+  background: var(--archive-accent);
+  transform: translateY(-50%);
+  pointer-events: none;
+  box-shadow: 0 0 6px var(--archive-accent);
+  transition: top var(--archive-motion-base) var(--archive-ease-ui),
+    left var(--archive-motion-base) var(--archive-ease-ui);
+}
+
 .chart-node {
   position: absolute;
   transform: translate(-50%, -50%);

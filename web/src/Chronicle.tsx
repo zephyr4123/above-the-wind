@@ -270,6 +270,16 @@ function RecorderChart({
       {/* playhead:当下正在记录的时刻 */}
       <span className="chart__playhead" style={{ left: `${coords[activeIndex].x}%` }} aria-hidden="true" />
 
+      {/* 橙引线:从 active 点水平延伸到暗区右边缘,指向右侧当前记录 */}
+      <span
+        className="chart__leader"
+        style={{
+          top: `${coords[activeIndex].y}%`,
+          left: `${coords[activeIndex].x}%`,
+        }}
+        aria-hidden="true"
+      />
+
       {/* active 点坐标读数(橙),贴在当前峰节点旁 */}
       <span
         className="chart__readout mono"
