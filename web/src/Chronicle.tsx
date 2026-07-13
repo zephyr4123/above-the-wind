@@ -405,8 +405,8 @@ function ChronicleColophon({ from, to }: { from: number; to: number }) {
       <p className="colophon__note mono">
         引用可点击溯源。同期期刊(Himalayan Journal / American Alpine Journal / Alpine
         Journal)版权归各俱乐部所有、官方公开可读，此处仅标来源不转载正文；Wikipedia 条目为
-        CC-BY-SA 4.0;纪录方(Guinness World Records 等)为专有,仅作 who/when 佐证。观测仪地形取自
-        SRTM 高程(经 AWS Terrain Tiles,公有领域):SRTM data courtesy of the U.S. Geological Survey。
+        CC-BY-SA 4.0;纪录方(Guinness World Records 等)为专有,仅作 who/when 佐证。观测仪背景为
+        生成式群山影像(AI 生成,无第三方版权)。
       </p>
       <a className="colophon__back" href="#observatory">
         ← 返回观测仪

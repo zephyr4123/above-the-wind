@@ -1,6 +1,11 @@
 /* ══ Archive Instrument · 观测仪总览布局（token 见 styles/archive.css）══ */
 :root {
-  --horizon: 42%; /* 8,000 米切面在屏幕上的高度：橙线 + 标尺 8000 + shader 阈值对齐 */
+  /* 8,000 米切面高度 = 左侧标尺 8000 档的同一公式（标尺区间 = nav 与 timeline 之间,主刻度在其 30%）,
+     两者必然严格对齐;RULER 里 8000 档的 top:30 改动时须同步这里的 0.30 */
+  --horizon: calc(
+    var(--archive-nav-h) +
+      (100vh - var(--archive-nav-h) - var(--archive-timeline-h)) * 0.3
+  );
 }
 
 .instrument {
@@ -10,37 +15,55 @@
   background: var(--archive-canvas);
 }
 
-/* WebGL 地形铺满，山体渲染在下半、上方透明露出画布白 */
-.instrument__terrain {
+/* 群山照片背景：铺满视口，山体锚定底部，上方浅天融入画布白 */
+.instrument__photo {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
+  background-size: cover;
+  background-position: center bottom;
+  background-repeat: no-repeat;
 }
 
-/* 风雪粒子层：地形之上、切面/UI 之下 */
-.instrument__snow {
+/* 顶部柔化层：把照片浅天渐隐进画布白，保证顶栏文字可读 */
+.instrument__sky {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0 0 auto 0;
+  height: 34%;
   z-index: 1;
   pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--archive-canvas) 0%,
+    rgb(238 241 239 / 55%) 30%,
+    transparent 100%
+  );
 }
 
-/* 8,000 米橙色切面：细线 + 柔和散射 */
+/* 8,000 米橙色切面：1px 发丝线画在 --horizon 处；
+   两层照片亮度遮罩 intersect（透明度相乘 = 亮度平方）——天空清晰、亮雪若隐若现、暗岩全隐,
+   峰体自然遮挡切面（峰尖捅破 8000m 面）,朦胧感与设计稿一致。 */
 .instrument__plane {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: var(--horizon);
-  height: 0;
+  inset: 0;
   z-index: 2;
-  border-top: 1.5px solid var(--archive-accent);
-  box-shadow:
-    0 0 12px 1px var(--archive-accent-soft),
-    0 0 30px 3px var(--archive-accent-soft);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent calc(var(--horizon) - 0.5px),
+    rgb(255 75 25 / 80%) calc(var(--horizon) - 0.5px),
+    rgb(255 75 25 / 80%) calc(var(--horizon) + 0.5px),
+    transparent calc(var(--horizon) + 0.5px)
+  );
+  /* 第三层水平渐变:线在进入右侧读数面板区前淡出,不与橙色大数字相撞 */
+  mask-image:
+    var(--massif),
+    var(--massif),
+    linear-gradient(to right, white 66%, black 76%);
+  mask-size: cover, cover, 100% 100%;
+  mask-position: center bottom, center bottom, center;
+  mask-mode: luminance;
+  mask-composite: intersect;
 }
 
 /* ── 顶部导航 ─────────────────────────────────────────────────── */
@@ -176,10 +199,11 @@
 }
 
 /* ── 舞台（环 + 标注）────────────────────────────────────────── */
+/* 满宽舞台：环节点 % 坐标直接对齐满视口的群山照片 */
 .stage {
   position: absolute;
-  left: calc(var(--archive-safe-margin) + var(--archive-scale-width));
-  right: var(--archive-safe-margin);
+  left: 0;
+  right: 0;
   top: var(--archive-nav-h);
   bottom: var(--archive-timeline-h);
   z-index: 10;
@@ -196,17 +220,13 @@
   height: 100%;
   overflow: visible;
 }
-.ring__ellipse {
+/* 贴山巅的不规则环线：亮描边 + 暗晕，跨亮天与暗岩都可读 */
+.ring__orbit {
   fill: none;
-  stroke: var(--archive-line);
-  stroke-width: 1;
+  stroke: rgb(245 250 252 / 62%);
+  stroke-width: 1.25;
   vector-effect: non-scaling-stroke;
-}
-.ring__leader {
-  fill: none;
-  stroke: var(--archive-line-inverse);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 1px rgb(17 19 18 / 45%));
 }
 
 .node {
@@ -256,37 +276,68 @@
     0 1px 3px rgb(17 19 18 / 55%);
 }
 
-/* ── 峰名标注（右上）─────────────────────────────────────────── */
+/* ── 峰名信息面板（右上）──────────────────────────────────────── */
 .callout {
   position: absolute;
-  right: 0;
-  top: 12%;
+  right: var(--archive-safe-margin);
+  top: 13%;
   display: flex;
   gap: var(--archive-space-3);
   align-items: flex-start;
 }
+/* 面板直接浮在照片上,全部文字加冰白晕:照片右上通常是浅天,
+   但超宽视口 cover 裁切可能露出暗部,与 topnav 同一保护策略 */
 .callout__rank {
   font-size: var(--archive-fs-label);
-  color: var(--archive-accent);
-  padding-top: 4px;
+  color: var(--archive-accent-text);
+  padding-top: 6px;
+  text-shadow: 0 0 8px var(--archive-canvas), 0 0 3px var(--archive-canvas);
+}
+.callout__body {
+  text-align: right;
+  min-width: 210px;
+  text-shadow: 0 0 8px var(--archive-canvas), 0 0 3px var(--archive-canvas);
 }
 .callout__name {
   font-size: var(--archive-fs-name);
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   color: var(--archive-ink);
 }
+.callout__roman {
+  font-size: var(--archive-fs-tick);
+  letter-spacing: var(--archive-tracking-caps);
+  color: var(--archive-ink-muted);
+  margin-top: 5px;
+}
 .callout__elev {
-  font-size: var(--archive-fs-alt);
+  font-size: clamp(2.5rem, 1.9rem + 2.6vw, 3.5rem);
   font-weight: 500;
-  color: var(--archive-accent);
-  line-height: 1.05;
-  margin-top: 2px;
+  color: var(--archive-accent-text);
+  line-height: 1;
+  margin-top: var(--archive-space-3);
+}
+.callout__rule {
+  height: 1px;
+  background: var(--archive-line);
+  margin: var(--archive-space-3) 0 var(--archive-space-2);
+}
+.callout__coord {
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-ink-muted);
 }
 .callout__fa {
   font-size: var(--archive-fs-label);
   color: var(--archive-ink-muted);
   margin-top: var(--archive-space-2);
+}
+.callout__source {
+  writing-mode: vertical-rl;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--archive-ink-muted);
+  opacity: 0.55;
+  white-space: nowrap;
 }
 
 /* ── 底部时间轴 ───────────────────────────────────────────────── */
@@ -387,18 +438,25 @@
   .topnav__center {
     display: none;
   }
+  /* 窄屏：面板精简为 名称 + 海拔 + 首登，避让标尺与环线 */
   .callout {
-    top: 8%;
+    top: 7%;
+  }
+  .callout__body {
+    min-width: 0;
+  }
+  .callout__roman,
+  .callout__coord,
+  .callout__rule,
+  .callout__source {
+    display: none;
   }
   .callout__elev {
-    font-size: 1.75rem;
+    font-size: 2rem;
+    margin-top: var(--archive-space-2);
   }
-  .ruler__mark:not(.is-accent):nth-child(3),
-  .ruler__mark:not(.is-accent):nth-child(5) {
-    display: none; /* 移动端只留 8000 与 8849 */
-  }
-  /* 窄屏 stage 拥挤,引线会撞上右上角标注 → 隐去装饰性引线 */
-  .ring__leader {
+  /* 窄屏标尺只留刻度线，藏文字标签防重叠 */
+  .ruler__mark:not(.is-accent) .ruler__label {
     display: none;
   }
 }

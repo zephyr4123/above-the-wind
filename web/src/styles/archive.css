@@ -1,24 +1,21 @@
 /* ══════════════════════════════════════════════════════════════════
    Archive Instrument · UI Token v1  —— 项目 UI infra 单一真相源
-   核心美学：冰川白空间画布 + 黑色地形实体 + 8,000 米橙色切面 + 极少仪器标注。
-   判据：把三维山体拿掉，剩下的界面应像一台安静、精确的测量仪器。
+   核心美学：冰川白空间画布 + 群山影像实体 + 8,000 米橙色切面 + 极少仪器标注。
+   判据：把群山影像拿掉，剩下的界面应像一台安静、精确的测量仪器。
    所有 slice 共享这套 --archive-* token；数据不同、呈现不同，但风格对齐。
    ══════════════════════════════════════════════════════════════════ */
 :root {
   /* ── 1. 色彩 ───────────────────────────────────────────────────── */
-  --archive-canvas: #eef1ef; /* 页面与 WebGL 背景 */
+  --archive-canvas: #eef1ef; /* 页面底色 · 照片浅天向上渐隐的融接色 */
   --archive-canvas-raised: #f7f9f8; /* 极少量悬浮区域 */
-  --archive-rock: #111312; /* 8,000 米以下山体 */
-  --archive-rock-mid: #292d2b; /* 岩石亮面 */
+  --archive-rock: #111312; /* 深色仪器构件(时间轴节点等) */
   --archive-ink: #242927; /* 主要文字 */
   --archive-ink-muted: #5e6461; /* 次要信息 */
   --archive-line: rgb(17 19 18 / 24%); /* 标尺、时间轴、引导线 */
-  --archive-line-inverse: rgb(238 241 239 / 72%); /* 山体暗区上的线 */
-  --archive-ice: #f5fafc; /* 8,000 米以上山体 */
-  --archive-ice-shadow: #c7d5dc; /* 冰雪阴影 */
+  --archive-line-inverse: rgb(238 241 239 / 72%); /* 影像暗区上的线 */
   --archive-accent: #ff4b19; /* 路线、切面、选中节点 */
+  --archive-accent-text: #f04000; /* 文字用深一档橙:对 canvas ≥3:1(大字 AA) */
   --archive-accent-soft: rgb(255 75 25 / 16%); /* 切面散射 */
-  --archive-scrim: rgb(10 12 11 / 72%); /* 底部文字可读性保护 */
 
   /* ── 2. 字体 ───────────────────────────────────────────────────── */
   /* 全套只用无衬线 + 等宽,不用宋体/衬线/书法 */
@@ -53,9 +50,7 @@
   --archive-timeline-h: 104px; /* 底部时间轴高度 */
 
   /* ── 4. 形状与线条 ─────────────────────────────────────────────── */
-  --archive-radius-none: 0;
-  --archive-radius-xs: 2px;
-  --archive-radius-sm: 4px;
+  --archive-radius-sm: 4px; /* 全站圆角上限(规范值) */
   --archive-stroke-hairline: 1px;
   --archive-stroke-active: 2px;
   --archive-node-sm: 8px;
@@ -67,14 +62,12 @@
   --archive-scale-major-tick: 14px;
   --archive-scale-label-gap: 12px;
   --archive-route-width: 2px;
-  --archive-route-active-width: 3px;
 
   /* ── 7. 动效 ───────────────────────────────────────────────────── */
   --archive-motion-fast: 140ms; /* UI hover */
   --archive-motion-base: 220ms; /* 标签切换 */
-  --archive-motion-scene: 800ms; /* 总览进入详情 / 相机 */
+  --archive-motion-scene: 800ms; /* 总览进入详情 / 场景切换 */
   --archive-ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
-  --archive-ease-camera: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* ── 8. 响应式栏距 ─────────────────────────────────────────────── */
   --archive-gutter-desktop: 32px;
@@ -89,9 +82,10 @@
     --archive-safe-margin: var(--archive-gutter-tablet);
   }
 }
+/* 注:nav-h 刻意不随断点变——观测仪环线位点(NODE_POS)与 8000m 切面都锚在
+   「nav 与 timeline 之间」的 stage 几何上,nav 高度跳变会让它们相对背景照片整体漂移 */
 @media (max-width: 640px) {
   :root {
     --archive-safe-margin: var(--archive-gutter-mobile);
-    --archive-nav-h: 56px;
   }
 }

@@ -11,7 +11,6 @@
 ![React](https://img.shields.io/badge/React-19-20232a?logo=react&logoColor=61dafb)
 ![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6-3178c6?logo=typescript&logoColor=white)
-![WebGL2](https://img.shields.io/badge/WebGL2-OGL-990000)
 ![Data](https://img.shields.io/badge/data-CC0%20·%20CC--BY%20·%20Public%20Domain-2ea44f)
 ![License](https://img.shields.io/badge/code-MIT-informational)
 
@@ -45,8 +44,8 @@
 
 ## 项目亮点
 
-- **Archive Instrument「高海拔观测仪」视觉体系** — 自研的仪器化界面：冰川白空间画布 + 黑岩地形 + 8000 米橙色切面 + 极简测绘标注，克制而敬畏。刻意避开"雪山=冰蓝渐变"的品类反射与 AI 默认的米色编辑风。
-- **真实 DEM 地形，零版权照片** — 观测仪地形取自**真实珠峰 SRTM 高程**（AWS Terrain Tiles，公有领域），叠程序化微观脊线补嶙峋；材质与风雪粒子亦为程序化生成。**不用任何许可照片**——图片是版权红区，视觉之美全部来自真实数据 + 生成式渲染。
+- **Archive Instrument「高海拔观测仪」视觉体系** — 自研的仪器化界面：冰川白空间画布 + 生成式群山影像 + 8000 米橙色切面 + 极简测绘标注，克制而敬畏。刻意避开"雪山=冰蓝渐变"的品类反射与 AI 默认的米色编辑风。
+- **生成式群山影像 + 数据驱动仪器层** — 观测仪以一张**生成式群山影像**（`gpt-image-2` 文生图，AI 自生成、无第三方版权）为背景，叠 SVG 仪器叠加：**贴照片山巅的 01–14 峰环**、海拔标尺、8000 米橙色切面。**不用任何受版权的第三方照片**——图片是版权红区，AI 自生成图无此风险。
 - **海拔即秩序** — 用真实海拔数据当组织脊柱（从珠峰 8849 m 到希夏邦马 8027 m），而非任意网格。数据驱动结构，而非套模板。
 - **事实与许可分离的采集纪律** — 海拔、日期、登顶者、伤亡数等**事实**不受版权，可从任何源提取重写；叙述文字、精编表格、图片受保护，逐条核许可。全库数据的源—许可判定沉淀在 [`research/`](research/)。
 - **可追溯到公版源** — 每条内容都能指回一个免费、无版权的一手事实源。
@@ -61,8 +60,8 @@
 |---|---|
 | 框架 | React 19 + TypeScript 6 |
 | 构建 | Vite 8 |
-| 地形渲染 | OGL（WebGL2 程序化地形） |
-| 动效 | 原生 Canvas（风雪粒子）+ CSS transition |
+| 背景 | 生成式群山影像（`gpt-image-2`）+ SVG 仪器叠加 |
+| 动效 | CSS transition（节点缩放 / 峰切换） |
 | 字体 | 系统字栈（PingFang SC / SF Mono）——刻意用系统字反 AI 默认审美 |
 | Lint | oxlint |
 
@@ -74,12 +73,12 @@
 
 ```
 above-the-wind/
-├── web/            前端应用（React + Vite + TS + OGL）
+├── web/            前端应用（React + Vite + TS）
 │   ├── src/
-│   │   ├── components/   TerrainCanvas（WebGL2 地形）· PeakRing 等
+│   │   ├── components/   PeakRing —— 贴山巅的 01–14 峰环
 │   │   ├── data/         peaks.ts —— 14 座峰的策展数据
-│   │   ├── theme/        Archive Instrument 设计 token
-│   │   └── styles/       archive.css
+│   │   ├── assets/       massif.jpg —— 生成式群山背景影像
+│   │   └── styles/       archive.css —— Archive Instrument 设计 token
 │   └── package.json
 ├── harvest/        数据采集脚本（Python，各自独立可跑）
 │   ├── wikidata_backbone.py    事实骨架（CC0）
@@ -141,11 +140,10 @@ python3 -m venv .venv && .venv/bin/pip install requests   # 一次性
 | **Wikidata** | CC0 1.0 | 八千米峰 / 知名山峰 / 登山家的事实骨架（全库以 QID 为主键） | 无（公有领域，免署名） |
 | **GeoNames** | CC-BY 4.0 | 坐标 / 海拔 / 多语别名底表 | **必须署名「GeoNames」** |
 | **Project Gutenberg** | 美国公有领域 | 公版登山文学全文（Whymper、Mummery、1922 珠峰官方志等） | 剥离 PG boilerplate 后使用 |
-| **AWS Terrain Tiles**（terrarium · SRTM） | 美国公有领域 | 观测仪的真实珠峰 DEM 地形（`harvest/everest_dem.py`，免登录采集） | **署名「U.S. Geological Survey」** |
 
-> **署名声明**：本项目地理数据部分来自 [GeoNames](https://www.geonames.org/)（CC-BY 4.0）。观测仪的珠峰地形高程来自 SRTM（经 AWS Terrain Tiles 分发）：*SRTM data courtesy of the U.S. Geological Survey*。
+> **署名声明**：本项目地理数据部分来自 [GeoNames](https://www.geonames.org/)（CC-BY 4.0）。
 >
-> 配图策略：**不使用许可照片**。所有视觉均为**数据驱动 / 程序化**生成（真实 DEM 地形 + 程序化材质与粒子）。Wikidata 指向的 Commons 图片字段仅作日后逐文件核验的线索，不直接引用。
+> 配图策略：**不使用受版权的第三方照片**。观测仪背景为**生成式群山影像**（`gpt-image-2` 文生图，AI 自生成、无第三方版权），叠数据驱动的 SVG 仪器层。Wikidata 指向的 Commons 图片字段仅作日后逐文件核验的线索，不直接引用。
 
 完整的源—许可地图（含 CAUTION / AVOID 判定、每域覆盖矩阵）见 [`research/SOURCES.md`](research/SOURCES.md) 与 [`research/coverage.md`](research/coverage.md)。
 
@@ -164,7 +162,7 @@ python3 -m venv .venv && .venv/bin/pip install requests   # 一次性
 
 - **代码**：MIT。
 - **数据**：各源许可如上表，以各自条款为准；使用地理数据须署名 GeoNames。
-- **致谢**：感谢 Wikidata、GeoNames、Project Gutenberg、U.S. Geological Survey（SRTM 地形高程）及无数将登山史料带入公共领域的整理者与档案工作者。
+- **致谢**：感谢 Wikidata、GeoNames、Project Gutenberg 及无数将登山史料带入公共领域的整理者与档案工作者。
 
 <div align="center">
 <br>

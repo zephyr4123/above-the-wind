@@ -18,5 +18,5 @@ __pycache__/
 # 浏览器验证的临时产物(Playwright MCP 截图/快照/控制台日志)
 .playwright-mcp/
 /atw-*.png
+/atw33-*.png
 /chron-*.png
-/dem-*.png
