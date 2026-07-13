@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./Chronicle.css";
+import nightMassifUrl from "./assets/night-massif.jpg";
 import { PEAKS, type Peak } from "./data/peaks";
 import { CITATIONS, TIER_LABEL, type Citation } from "./data/citations";
 
@@ -45,41 +46,14 @@ export default function Chronicle() {
   // 手风琴:同一时刻至多一条展开(openId=null 表示全折叠),避免多条同开的混乱
   const [openId, setOpenId] = useState<string | null>(null);
   const recordRefs = useRef<(HTMLLIElement | null)[]>([]);
-  // 用户是否已主动滚动:首屏未滚动前锁定第一条(阅读线在中线会误落到第二条上)
-  const hasScrolled = useRef(false);
-  // 稳定的 ref setter:避免每次滚动重渲染都重挂 14 个 li 的 ref
+  // 稳定的 ref setter:避免重渲染重挂 14 个 li 的 ref(点击图节点滚动定位用)
   const register = useCallback((i: number, el: HTMLLIElement | null) => {
     recordRefs.current[i] = el;
   }, []);
 
-  // 记录纸的「笔尖读出线」在视口中线:滚动耦合,过线者置为 active
-  useEffect(() => {
-    const onFirstScroll = () => {
-      hasScrolled.current = true;
-    };
-    window.addEventListener("scroll", onFirstScroll, { passive: true });
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            // 首屏用户未滚动前,阅读线(视口中线)会压在第二条上——锁定第一条
-            if (!hasScrolled.current) {
-              setActiveIndex(0);
-              continue;
-            }
-            const i = Number((e.target as HTMLElement).dataset.index);
-            if (!Number.isNaN(i)) setActiveIndex(i);
-          }
-        }
-      },
-      { rootMargin: "-50% 0px -50% 0px", threshold: 0 }, // 阅读线在视口中线,与 scrollIntoView(center) 对齐
-    );
-    recordRefs.current.forEach((el) => el && io.observe(el));
-    return () => {
-      io.disconnect();
-      window.removeEventListener("scroll", onFirstScroll);
-    };
-  }, [peaks]);
+  // active 同步做减法:鼠标悬停哪条记录,左图就高亮哪条(hover 驱动)。
+  // 不再用「滚动位置 + 视口高度」判断——那套会因展开改变布局而漂移,复杂且不稳。
+  // hover / 点击图节点 / 展开都直接 setActive,焦点永远跟着用户实际指向的那一条。
 
   // 切到编年史:让 body 可滚动(观测仪那边 body 是 overflow:hidden)
   useEffect(() => {
@@ -105,14 +79,21 @@ export default function Chronicle() {
   const active = peaks[activeIndex];
   const activeYear = active.firstAscent.slice(0, 4);
 
+  // 点击图上节点:高亮并把对应记录滚到读出线处
   const focusRecord = (i: number) => {
-    hasScrolled.current = true; // 点击节点即视为主动交互
-    setActiveIndex(i); // 立即高亮,不等滚动后的 IO 回调
+    setActiveIndex(i);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     recordRefs.current[i]?.scrollIntoView({
       behavior: reduce ? "auto" : "smooth",
-      block: "center",
+      block: "start",
     });
+  };
+
+  // 展开:手风琴 + 同步高亮(鼠标已悬停在这条上,active 本就是它,这里保证移动端点击也一致)
+  const toggleRecord = (id: string, i: number) => {
+    const willOpen = openId !== id;
+    setOpenId(willOpen ? id : null);
+    if (willOpen) setActiveIndex(i);
   };
 
   return (
@@ -120,39 +101,58 @@ export default function Chronicle() {
       <h1 className="sr-only">
         首登编年 · 黄金年代记录仪 —— {stats.minY} 至 {stats.maxY} 十四座八千米峰首登
       </h1>
-      <ChronicleNav rank={activeIndex + 1} total={peaks.length} year={activeYear} />
+      <ChronicleNav
+        rank={activeIndex + 1}
+        total={peaks.length}
+        year={activeYear}
+        from={stats.minY}
+        to={stats.maxY}
+      />
 
-      {/* recorder 与 records 不共用 grid row:recorder float+sticky,包含块是整个
-          .chronicle(含页脚),滚到记录列表末尾/展开末条时左图都不再被拖动(bug 修复) */}
-      <div className="recorder">
-        <RecorderChart
-          peaks={peaks}
-          coords={coords}
-          activeIndex={activeIndex}
-          onPick={focusRecord}
-        />
+      <p className="masthead mono">
+        {peaks.length} 座首登 · {stats.minY} → {stats.maxY} · {stats.withAscent} 年有登顶 ·{" "}
+        {stats.empty} 年空档 · 峰值 {stats.peakYear} 一年{CN_NUM[stats.peakCount] ?? stats.peakCount}登
+      </p>
+
+      {/* 分屏:左暗色记录仪图(sticky 到 stage 底,不含页脚——页脚全宽接管、不盖图)
+          + 右浅色记录列表(滚动)。展开记录使 stage 变高,左图 sticky 空间随之增加,
+          不会触底跳动 */}
+      <div className="chronicle__stage">
+        <div className="recorder">
+          {/* 暗色群山影像作底(AI 生成、无第三方版权),山脊锚底、暗天在上,迹线叠加其上 */}
+          <div
+            className="recorder__massif"
+            style={{ backgroundImage: `url(${nightMassifUrl})` }}
+            aria-hidden="true"
+          />
+          <RecorderChart
+            peaks={peaks}
+            coords={coords}
+            activeIndex={activeIndex}
+            onPick={focusRecord}
+          />
+        </div>
+
+        <main className="chronicle__main">
+          <ol className="records">
+            {peaks.map((p, i) => (
+              <ChronicleRecord
+                key={p.id}
+                peak={p}
+                index={i}
+                rank={i + 1}
+                total={peaks.length}
+                active={i === activeIndex}
+                open={openId === p.id}
+                onToggle={() => toggleRecord(p.id, i)}
+                onActivate={() => setActiveIndex(i)}
+                citations={CITATIONS[p.id] ?? []}
+                register={register}
+              />
+            ))}
+          </ol>
+        </main>
       </div>
-
-      <main className="chronicle__main">
-        <ol className="records">
-          {peaks.map((p, i) => (
-            <ChronicleRecord
-              key={p.id}
-              peak={p}
-              index={i}
-              rank={i + 1}
-              total={peaks.length}
-              active={i === activeIndex}
-              open={openId === p.id}
-              onToggle={() =>
-                setOpenId((cur) => (cur === p.id ? null : p.id))
-              }
-              citations={CITATIONS[p.id] ?? []}
-              register={register}
-            />
-          ))}
-        </ol>
-      </main>
 
       <ChronicleColophon from={stats.minY} to={stats.maxY} total={peaks.length} />
     </div>
@@ -206,6 +206,7 @@ function RecorderChart({
       role="group"
       aria-label={`${peaks[0].firstAscent.slice(0, 4)} 至 ${peaks[peaks.length - 1].firstAscent.slice(0, 4)} ${peaks.length} 座八千米峰首登的时间-海拔迹线图,含 ${peaks.length} 个可选峰节点`}
     >
+      {/* 山峰背景图待用户提供资源后置入(占位:纯暗场) */}
       <svg className="chart__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         {/* 年份竖网格 */}
         {years.map((y) => (
@@ -269,6 +270,23 @@ function RecorderChart({
       {/* playhead:当下正在记录的时刻 */}
       <span className="chart__playhead" style={{ left: `${coords[activeIndex].x}%` }} aria-hidden="true" />
 
+      {/* active 点坐标读数(橙),贴在当前峰节点旁 */}
+      <span
+        className="chart__readout mono"
+        style={{
+          left: `${coords[activeIndex].x}%`,
+          top: `${coords[activeIndex].y}%`,
+        }}
+        aria-hidden="true"
+      >
+        <span className="chart__readout-year">
+          {peaks[activeIndex].firstAscent.slice(0, 4)}
+        </span>
+        <span className="chart__readout-alt">
+          {peaks[activeIndex].elevation.toLocaleString("en-US")} m
+        </span>
+      </span>
+
       {/* 14 个节点(HTML button,保持正圆 + 可交互) */}
       {peaks.map((p, i) => {
         const c = coords[i];
@@ -289,6 +307,14 @@ function RecorderChart({
           </button>
         );
       })}
+
+      {/* 竖排轴名 + 滚动提示(暗区装饰,呼应设计稿的仪器语言) */}
+      <span className="chart__vaxis caps" aria-hidden="true">
+        Altitude / First Ascent · 海拔 · 首次登顶
+      </span>
+      <span className="chart__scroll caps mono" aria-hidden="true">
+        Scroll ↓
+      </span>
     </div>
   );
 }
@@ -302,6 +328,7 @@ function ChronicleRecord({
   active,
   open,
   onToggle,
+  onActivate,
   citations,
   register,
 }: {
@@ -312,6 +339,7 @@ function ChronicleRecord({
   active: boolean;
   open: boolean;
   onToggle: () => void;
+  onActivate: () => void;
   citations: Citation[];
   register: (i: number, el: HTMLLIElement | null) => void;
 }) {
@@ -326,7 +354,13 @@ function ChronicleRecord({
     `。展开查看全文与 ${citations.length} 条来源`;
 
   return (
-    <li ref={liRef} data-index={index} className={`record${active ? " is-active" : ""}`}>
+    // 悬停即聚焦:鼠标移到哪条,左图就高亮哪条(键盘 Tab 聚焦同理,见 button onFocus)
+    <li
+      ref={liRef}
+      data-index={index}
+      className={`record${active ? " is-active" : ""}`}
+      onMouseEnter={onActivate}
+    >
       <h2 className="record__heading">
         <button
           type="button"
@@ -335,6 +369,7 @@ function ChronicleRecord({
           aria-controls={panelId}
           aria-label={label}
           onClick={onToggle}
+          onFocus={onActivate}
         >
           <span className="record__date mono">{peak.firstAscent}</span>
         <span className="record__seq mono">
@@ -342,13 +377,21 @@ function ChronicleRecord({
         </span>
         <span className="record__name">
           {peak.nameZh}
-          <span className="record__name-en mono">{peak.nameEn}</span>
+          <span className="record__name-en caps mono">{peak.nameEn}</span>
         </span>
         <span className="record__elev mono">{peak.elevation.toLocaleString("en-US")} M</span>
         <span className="record__lede">{firstSentence(peak.blurb)}</span>
         <span className="record__meta">
+          <span className="record__team">
+            {peak.expedition.split(/[（(]/)[0].trim()}
+          </span>
           {peak.fatalityRate !== undefined && (
-            <span className="record__fatality mono">死亡率 {peak.fatalityRate}%</span>
+            <>
+              <span className="record__meta-sep" aria-hidden="true">
+                ·
+              </span>
+              <span className="record__fatality mono">死亡率 {peak.fatalityRate}%</span>
+            </>
           )}
           <span className="record__toggle mono" aria-hidden="true">
             溯源 {open ? "▾" : "▸"} {citations.length} 源
@@ -400,8 +443,20 @@ function ChronicleRecord({
   );
 }
 
-/* ── 导航 ─────────────────────────────────────────────────────────── */
-function ChronicleNav({ rank, total, year }: { rank: number; total: number; year: string }) {
+/* ── 导航:铭牌 · 双行图名 · 计数窗(与观测仪同语系,含年代副题)───────── */
+function ChronicleNav({
+  rank,
+  total,
+  year,
+  from,
+  to,
+}: {
+  rank: number;
+  total: number;
+  year: string;
+  from: number;
+  to: number;
+}) {
   return (
     <header className="cnav">
       <div className="cnav__left">
@@ -410,20 +465,26 @@ function ChronicleNav({ rank, total, year }: { rank: number; total: number; year
         </a>
         <span className="cnav__slash">/</span>
         <span className="cnav__brand caps">ABOVE THE WIND</span>
+        <span className="cnav__brand-zh">长风之上</span>
       </div>
       <div className="cnav__center">
         <span className="cnav__title">首登编年</span>
-        <span className="cnav__divider" aria-hidden="true" />
-        <span className="cnav__sub">黄金年代记录仪</span>
+        <span className="cnav__title-en caps mono">
+          First Ascent Chronicle · {from}—{to}
+        </span>
       </div>
       {/* 计数窗是随滚动刷新的视觉读数,不加 aria-live——否则读屏会被 14 次进度轰炸 */}
-      <div className="cnav__right">
-        <span className="mono">{year}</span>
-        <span className="cnav__count mono">
+      <div className="cnav__right mono">
+        <span className="cnav__year">{year}</span>
+        <span className="cnav__count">
           {String(rank).padStart(2, "0")} / {total} 已记录
         </span>
-        <span className="cnav__cross" aria-hidden="true">
-          ✛
+        <span className="cnav__reticle" aria-hidden="true">
+          <svg viewBox="0 0 20 20">
+            <circle cx="10" cy="10" r="7" />
+            <line x1="10" y1="1.5" x2="10" y2="18.5" />
+            <line x1="1.5" y1="10" x2="18.5" y2="10" />
+          </svg>
         </span>
       </div>
     </header>
