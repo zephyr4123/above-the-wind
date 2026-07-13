@@ -12,7 +12,8 @@ const TIME_MIN = 1950;
 const TIME_MAX = 1965;
 const ALT_MIN = 8000;
 const ALT_MAX = 8849;
-const PAD = { l: 12, r: 6, t: 8, b: 12 };
+// t=14:顶部留出左上/右上角文字(OBSERVATORY / 14 FIRST ASCENTS)的空间
+const PAD = { l: 12, r: 6, t: 14, b: 12 };
 
 function fracYear(iso: string): number {
   const [y, m, d] = iso.split("-").map(Number);
@@ -117,7 +118,8 @@ export default function Chronicle() {
       {/* 分屏:左暗色记录仪图(sticky 到 stage 底,不含页脚——页脚全宽接管、不盖图)
           + 右浅色记录列表(滚动)。展开记录使 stage 变高,左图 sticky 空间随之增加,
           不会触底跳动 */}
-      <div className="chronicle__stage">
+      {/* main 包住整个分屏舞台:图表(可交互节点)与记录列表同属主内容地标 */}
+      <main className="chronicle__stage">
         <div className="recorder">
           {/* 暗色群山影像作底(AI 生成、无第三方版权),山脊锚底、暗天在上,迹线叠加其上 */}
           <div
@@ -133,7 +135,7 @@ export default function Chronicle() {
           />
         </div>
 
-        <main className="chronicle__main">
+        <div className="chronicle__main">
           <ol className="records">
             {peaks.map((p, i) => (
               <ChronicleRecord
@@ -151,8 +153,8 @@ export default function Chronicle() {
               />
             ))}
           </ol>
-        </main>
-      </div>
+        </div>
+      </main>
 
       <ChronicleColophon from={stats.minY} to={stats.maxY} total={peaks.length} />
     </div>
@@ -195,7 +197,8 @@ function RecorderChart({
       {
         from: p,
         to: peaks[i + 1],
-        label: `${y1 + 1}–${String(y2 - 1).slice(2)} · ${cn}年无首登`,
+        period: `${y1 + 1}–${String(y2 - 1).slice(2)}`,
+        desc: `${cn}年无首登`,
       },
     ];
   });
@@ -206,7 +209,21 @@ function RecorderChart({
       role="group"
       aria-label={`${peaks[0].firstAscent.slice(0, 4)} 至 ${peaks[peaks.length - 1].firstAscent.slice(0, 4)} ${peaks.length} 座八千米峰首登的时间-海拔迹线图,含 ${peaks.length} 个可选峰节点`}
     >
-      {/* 山峰背景图待用户提供资源后置入(占位:纯暗场) */}
+      {/* 左上/右上角文字:图幅眉注(设计稿的仪器图版语言),数字由数据插值 */}
+      <div className="chart__corner chart__corner--l" aria-hidden="true">
+        <span className="chart__corner-en caps mono">
+          Observatory · {peaks[0].firstAscent.slice(0, 4)}—
+          {peaks[peaks.length - 1].firstAscent.slice(0, 4)}
+        </span>
+        <span className="chart__corner-zh">观测仪 · 海拔 — 时间记录</span>
+      </div>
+      <div className="chart__corner chart__corner--r" aria-hidden="true">
+        <span className="chart__corner-en caps mono">
+          {peaks.length} First Ascents
+        </span>
+        <span className="chart__corner-zh">{peaks.length} 座首登</span>
+      </div>
+
       <svg className="chart__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         {/* 年份竖网格 */}
         {years.map((y) => (
@@ -257,12 +274,13 @@ function RecorderChart({
           {`'${String(y).slice(2)}`}
         </span>
       ))}
-      {/* 沉默括弧标签 */}
+      {/* 沉默括弧标签:两行(年份区间 + N年无首登) */}
       {silence.map((s, i) => {
         const x = (xPct(s.from.firstAscent) + xPct(s.to.firstAscent)) / 2;
         return (
           <span key={i} className="chart__silence mono" style={{ left: `${x}%` }}>
-            {s.label}
+            <span className="chart__silence-period">{s.period}</span>
+            <span className="chart__silence-desc">{s.desc}</span>
           </span>
         );
       })}
@@ -318,10 +336,11 @@ function RecorderChart({
         );
       })}
 
-      {/* 竖排轴名 + 滚动提示(暗区装饰,呼应设计稿的仪器语言) */}
-      <span className="chart__vaxis caps" aria-hidden="true">
-        Altitude / First Ascent · 海拔 · 首次登顶
-      </span>
+      {/* 竖排轴名:英文大号(从下往上)+ 中文小号(正立)两列分层,呼应设计稿 */}
+      <div className="chart__vaxis" aria-hidden="true">
+        <span className="chart__vaxis-en caps">Altitude / First Ascent</span>
+        <span className="chart__vaxis-zh">海拔（米） / 首次登顶</span>
+      </div>
       <span className="chart__scroll caps mono" aria-hidden="true">
         Scroll ↓
       </span>

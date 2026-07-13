@@ -122,10 +122,12 @@
 .recorder {
   position: sticky;
   top: var(--archive-nav-h);
-  height: calc(100dvh - var(--archive-nav-h));
-  /* 左内边距更大:容纳最左的竖排轴名 + 其右的 y 刻度 */
-  padding: var(--archive-space-8) var(--archive-space-6) var(--archive-space-10)
-    var(--archive-space-12);
+  /* 再减去 masthead 高度(~44px):首屏暗区底部也落在视口内,沉默两行标签不被裁 */
+  height: calc(100dvh - var(--archive-nav-h) - 44px);
+  /* 左内边距 = 竖排轴名专属沟槽(64px,与 y 刻度数字干净分离,不重叠);
+     底部内边距容纳 x 轴刻度 + 括弧 + 沉默两行标签 */
+  padding: var(--archive-space-8) var(--archive-space-6) var(--archive-space-16)
+    var(--archive-space-16);
   background: var(--archive-rock); /* 群山影像加载前 / 透明区的兜底暗底 */
   overflow: hidden;
 }
@@ -205,13 +207,25 @@
   font-size: var(--archive-fs-tick);
   color: var(--archive-line-inverse);
 }
+/* 沉默括弧标签:两行——年份区间(亮)+ N年无首登(淡),在 x 轴/括弧下方 */
 .chart__silence {
   position: absolute;
-  bottom: calc(var(--archive-space-4) * -1);
+  bottom: calc(var(--archive-space-8) * -1);
   transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.chart__silence-period {
   font-size: var(--archive-fs-tick);
   color: var(--archive-line-inverse);
-  white-space: nowrap;
+}
+.chart__silence-desc {
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-line-inverse-faint);
 }
 
 .chart__playhead {
@@ -317,23 +331,66 @@
 }
 
 /* 竖排轴名(最左)+ 滚动提示(左下),暗区仪器语言装饰 */
-/* 竖排轴名:vertical-rl 让中文正立、拉丁字母顺时针躺,整体自上而下读(不加
-   rotate(180)——那会把方块中文字转成头朝下) */
+/* 图幅眉注:左上(仪器名·量程)/ 右上(记录数),两行——英文疏排 + 中文退淡 */
+.chart__corner {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.3;
+  pointer-events: none;
+}
+.chart__corner--l {
+  left: 0;
+}
+.chart__corner--r {
+  right: 0;
+  align-items: flex-end;
+  text-align: right;
+}
+.chart__corner-en {
+  font-size: var(--archive-fs-tick);
+  letter-spacing: 0.14em;
+  color: var(--archive-line-inverse);
+}
+.chart__corner-zh {
+  font-size: var(--archive-fs-tick);
+  color: var(--archive-line-inverse-faint);
+}
+
+/* 竖排轴名:两列分层——英文大号(从下往上)+ 中文小号(正立)。
+   英文是拉丁字母,rotate(180) 只改方向不倒字;中文方块字不 rotate 才正立。 */
 .chart__vaxis {
   position: absolute;
-  left: calc(var(--archive-space-10) * -1);
-  top: 50%;
-  transform: translateY(-50%);
+  /* 落在 recorder 左沟槽(64px padding)内,与图内 y 刻度数字分离不重叠 */
+  left: calc(var(--archive-space-16) * -1);
+  top: var(--archive-space-2);
+  bottom: var(--archive-space-12);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--archive-space-2);
+  pointer-events: none;
+}
+.chart__vaxis-en {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: var(--archive-fs-event);
+  letter-spacing: 0.16em;
+  color: var(--archive-line-inverse);
+  white-space: nowrap;
+}
+.chart__vaxis-zh {
   writing-mode: vertical-rl;
   font-size: var(--archive-fs-tick);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: var(--archive-line-inverse-faint);
-  pointer-events: none;
   white-space: nowrap;
 }
 .chart__scroll {
   position: absolute;
-  left: calc(var(--archive-space-10) * -1);
+  left: calc(var(--archive-space-16) * -1);
   bottom: 0;
   writing-mode: vertical-rl;
   font-size: var(--archive-fs-tick);
@@ -353,6 +410,9 @@
 .record {
   position: relative;
   border-top: var(--archive-stroke-hairline) solid var(--archive-line);
+  /* 点击图节点 scrollIntoView(block:start) 的锚点偏移:避开吸顶 nav,
+     否则目标记录顶部会被吸顶栏盖住(≤1024 还要再避开 recorder 顶带,见媒体查询) */
+  scroll-margin-top: var(--archive-nav-h);
 }
 /* active 记录:浅色抬起 + 橙左内边框 + 左侧橙三角指示 */
 .record.is-active {
@@ -539,7 +599,6 @@
    浅色记录区 → 锯齿山脊分界 → 暗场落款。暗场里颜色对调:底=rock、字=canvas、
    线=line-inverse(-faint),橙 accent 只留给完成态的印章数与罗盘心。 */
 .colophon {
-  clear: both; /* 收尾 float 的 recorder,页脚全宽 */
   position: relative;
   margin-top: 56px; /* 给锯齿山脊留出向上咬合的空间 */
   background: var(--archive-rock);
@@ -773,6 +832,10 @@
   .records {
     padding: var(--archive-space-2) var(--archive-safe-margin) var(--archive-space-16);
   }
+  /* 顶带吸顶在 nav 之下,滚动锚点要一并避开 */
+  .record {
+    scroll-margin-top: calc(var(--archive-nav-h) + 200px);
+  }
   /* 顶带里节点密集,缩小热区免 1954–56 簇命中区重叠误选 */
   .chart-node {
     min-width: 28px;
@@ -826,6 +889,9 @@
   }
   .recorder {
     height: 150px;
+  }
+  .record {
+    scroll-margin-top: calc(var(--archive-nav-h) + 150px);
   }
   /* 窄屏:海拔大数单独占一行,峰名(含英文)得整行不折断 */
   .record__head {
