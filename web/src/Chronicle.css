@@ -317,11 +317,13 @@
 }
 
 /* 竖排轴名(最左)+ 滚动提示(左下),暗区仪器语言装饰 */
+/* 竖排轴名:vertical-rl 让中文正立、拉丁字母顺时针躺,整体自上而下读(不加
+   rotate(180)——那会把方块中文字转成头朝下) */
 .chart__vaxis {
   position: absolute;
   left: calc(var(--archive-space-10) * -1);
   top: 50%;
-  transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%);
   writing-mode: vertical-rl;
   font-size: var(--archive-fs-tick);
   letter-spacing: 0.12em;
@@ -334,7 +336,6 @@
   left: calc(var(--archive-space-10) * -1);
   bottom: 0;
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
   font-size: var(--archive-fs-tick);
   letter-spacing: 0.12em;
   color: var(--archive-line-inverse-faint);
