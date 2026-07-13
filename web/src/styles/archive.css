@@ -66,10 +66,14 @@
   --archive-route-width: 2px;
 
   /* ── 7. 动效 ───────────────────────────────────────────────────── */
-  --archive-motion-fast: 140ms; /* UI hover */
-  --archive-motion-base: 220ms; /* 标签切换 */
-  --archive-motion-scene: 800ms; /* 总览进入详情 / 场景切换 */
+  --archive-motion-press: 130ms; /* 按压反馈(:active scale) */
+  --archive-motion-fast: 140ms; /* UI hover / 进入 */
+  --archive-motion-base: 220ms; /* 标签切换 / 屏上移动 */
+  --archive-motion-scene: 380ms; /* 视图切换淡入(观测仪 ↔ 编年史) */
+  /* 强 ease-out:进入/hover/按压——起手快、立即响应(内置 ease-out 太软) */
   --archive-ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+  /* ease-in-out:屏上移动/形变(playhead / 引线 / 选中菱形滑动)——自然加减速 */
+  --archive-ease-move: cubic-bezier(0.65, 0, 0.35, 1);
 
   /* ── 8. 响应式栏距 ─────────────────────────────────────────────── */
   --archive-gutter-desktop: 32px;

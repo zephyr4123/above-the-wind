@@ -8,6 +8,14 @@
   /* 节点 hover 探针标签(opacity:0 但占位)在最左/右节点会伸出视口撑宽文档;
      clip 掉横向溢出(不创建滚动容器,不影响 sticky recorder) */
   overflow-x: clip;
+  /* 视图切换淡入,与观测仪对称 */
+  opacity: 1;
+  transition: opacity var(--archive-motion-scene) var(--archive-ease-ui);
+}
+@starting-style {
+  .chronicle {
+    opacity: 0;
+  }
 }
 
 /* ── 顶部导航(sticky) ─────────────────────────────────────────── */
@@ -40,10 +48,14 @@
   font-size: var(--archive-fs-label);
   color: var(--archive-ink);
   text-decoration: none;
+  transition: transform var(--archive-motion-press) var(--archive-ease-ui);
 }
 .cnav__back:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.cnav__back:active {
+  transform: scale(0.97);
 }
 .cnav__slash {
   font-size: var(--archive-fs-label);
@@ -236,7 +248,8 @@
   background: var(--archive-accent);
   transform: translateX(-50%);
   pointer-events: none;
-  transition: left var(--archive-motion-base) var(--archive-ease-ui);
+  /* 选峰时竖线在屏上滑动 = on-screen movement,用 ease-in-out */
+  transition: left var(--archive-motion-base) var(--archive-ease-move);
 }
 
 /* 橙引线:active 点 → 暗区右边缘(分界线),指向右侧当前记录 */
@@ -248,8 +261,8 @@
   transform: translateY(-50%);
   pointer-events: none;
   box-shadow: 0 0 6px var(--archive-accent);
-  transition: top var(--archive-motion-base) var(--archive-ease-ui),
-    left var(--archive-motion-base) var(--archive-ease-ui);
+  transition: top var(--archive-motion-base) var(--archive-ease-move),
+    left var(--archive-motion-base) var(--archive-ease-move);
 }
 
 .chart-node {
@@ -322,6 +335,9 @@
   pointer-events: none;
   white-space: nowrap;
   text-shadow: 0 0 4px var(--archive-rock);
+  /* 随选峰与 playhead / 引线同步滑动到新峰,不瞬移 */
+  transition: top var(--archive-motion-base) var(--archive-ease-move),
+    left var(--archive-motion-base) var(--archive-ease-move);
 }
 .chart__readout-year {
   font-weight: 500;
@@ -413,13 +429,17 @@
   /* 点击图节点 scrollIntoView(block:start) 的锚点偏移:避开吸顶 nav,
      否则目标记录顶部会被吸顶栏盖住(≤1024 还要再避开 recorder 顶带,见媒体查询) */
   scroll-margin-top: var(--archive-nav-h);
+  /* hover 切 active 时底色 + 橙边框平滑淡入(只动 color/shadow,不位移) */
+  transition: background var(--archive-motion-fast) var(--archive-ease-ui),
+    box-shadow var(--archive-motion-fast) var(--archive-ease-ui);
 }
 /* active 记录:浅色抬起 + 橙左内边框 + 左侧橙三角指示 */
 .record.is-active {
   background: var(--archive-canvas-raised);
   box-shadow: inset var(--archive-stroke-active) 0 0 var(--archive-accent);
 }
-.record.is-active::before {
+/* 三角常驻但透明,active 时淡入——避免 hover 切换时突兀弹出 */
+.record::before {
   content: "";
   position: absolute;
   left: calc(var(--archive-space-6) * -1);
@@ -428,6 +448,11 @@
   height: 0;
   border: 6px solid transparent;
   border-left-color: var(--archive-accent);
+  opacity: 0;
+  transition: opacity var(--archive-motion-fast) var(--archive-ease-ui);
+}
+.record.is-active::before {
+  opacity: 1;
 }
 /* 峰名标题:结构语义(h3)但不改布局/排版 */
 .record__heading {
@@ -584,11 +609,15 @@
 .source__link {
   color: var(--archive-ink);
   text-decoration: none;
+  transition: transform var(--archive-motion-press) var(--archive-ease-ui);
 }
 .source__link:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
+}
+.source__link:active {
+  transform: scale(0.98);
 }
 .source__license {
   font-size: var(--archive-fs-tick);
@@ -699,14 +728,19 @@
 }
 .colophon__link {
   display: block;
+  width: fit-content;
   margin-top: var(--archive-space-2);
   font-size: var(--archive-fs-label);
   color: var(--archive-canvas);
   text-decoration: none;
+  transition: transform var(--archive-motion-press) var(--archive-ease-ui);
 }
 .colophon__link:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+.colophon__link:active {
+  transform: scale(0.97);
 }
 /* 「回到顶部」是按钮(hash 链接会误触发路由切回观测仪),重置成链接外观 */
 .colophon__totop {
@@ -910,10 +944,27 @@
   }
 }
 
+/* 减弱动效:去掉滑动/缩放,瞬切代替;opacity/color 类保留(帮助理解、不致眩) */
 @media (prefers-reduced-motion: reduce) {
+  .chronicle,
   .chart__playhead,
+  .chart__leader,
+  .chart__readout,
   .chart-node__dot,
-  .chart-node__probe {
+  .chart-node__probe,
+  .record,
+  .record::before,
+  .cnav__back,
+  .source__link,
+  .colophon__link {
     transition: none;
+  }
+  .chart-node:hover .chart-node__dot {
+    transform: none;
+  }
+  .cnav__back:active,
+  .source__link:active,
+  .colophon__link:active {
+    transform: none;
   }
 }

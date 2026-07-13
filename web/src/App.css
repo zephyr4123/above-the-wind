@@ -13,6 +13,14 @@
   inset: 0;
   overflow: hidden;
   background: var(--archive-canvas);
+  /* 视图切换(编年史 ↔ 观测仪)淡入,防瞬切跳变;@starting-style 无 JS,不支持则直接显示 */
+  opacity: 1;
+  transition: opacity var(--archive-motion-scene) var(--archive-ease-ui);
+}
+@starting-style {
+  .instrument {
+    opacity: 0;
+  }
 }
 
 /* 群山照片背景：铺满视口，山体锚定底部，上方浅天融入画布白 */
@@ -355,6 +363,11 @@
   font-size: 1.1rem;
   color: var(--archive-canvas);
   flex: none;
+  /* 按压反馈:界面「听得到」用户 */
+  transition: transform var(--archive-motion-press) var(--archive-ease-ui);
+}
+.timeline__play:active {
+  transform: scale(0.97);
 }
 .timeline__track {
   position: relative;
@@ -482,6 +495,22 @@
   font-size: var(--archive-fs-label);
   color: var(--archive-accent);
   text-decoration: none;
+  /* 箭头随 hover 前移一点(空间暗示「进入」)+ 按压反馈 */
+  transition: opacity var(--archive-motion-fast) var(--archive-ease-ui),
+    transform var(--archive-motion-press) var(--archive-ease-ui);
+}
+@media (hover: hover) and (pointer: fine) {
+  .timeline__enter:hover {
+    opacity: 0.7;
+  }
+}
+.timeline__enter:active {
+  transform: scale(0.97);
+}
+
+/* 选中菱形随选峰平滑滑动(空间连续性),而非瞬移到新位置 */
+.timeline__marker {
+  transition: left var(--archive-motion-base) var(--archive-ease-move);
 }
 
 /* ── 响应式 ───────────────────────────────────────────────────── */
@@ -509,5 +538,27 @@
   /* 窄屏标尺只留刻度线，藏文字标签防重叠 */
   .ruler__mark:not(.is-accent) .ruler__label {
     display: none;
+  }
+}
+
+/* ── 减弱动效:去掉位移/缩放,保留定位;瞬切代替滑动 ──────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .instrument,
+  .node__dot,
+  .timeline__node,
+  .timeline__marker,
+  .timeline__play,
+  .timeline__enter {
+    transition: none;
+  }
+  .node:hover .node__dot {
+    transform: none;
+  }
+  .timeline__node:hover {
+    transform: translate(-50%, -50%);
+  }
+  .timeline__play:active,
+  .timeline__enter:active {
+    transform: none;
   }
 }
