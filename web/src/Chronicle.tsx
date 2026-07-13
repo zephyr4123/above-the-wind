@@ -42,18 +42,31 @@ export default function Chronicle() {
   );
 
   const [activeIndex, setActiveIndex] = useState(0);
+  // 手风琴:同一时刻至多一条展开(openId=null 表示全折叠),避免多条同开的混乱
+  const [openId, setOpenId] = useState<string | null>(null);
   const recordRefs = useRef<(HTMLLIElement | null)[]>([]);
+  // 用户是否已主动滚动:首屏未滚动前锁定第一条(阅读线在中线会误落到第二条上)
+  const hasScrolled = useRef(false);
   // 稳定的 ref setter:避免每次滚动重渲染都重挂 14 个 li 的 ref
   const register = useCallback((i: number, el: HTMLLIElement | null) => {
     recordRefs.current[i] = el;
   }, []);
 
-  // 记录纸的「笔尖读出线」在视口约 40vh 处:滚动耦合,过线者置为 active
+  // 记录纸的「笔尖读出线」在视口中线:滚动耦合,过线者置为 active
   useEffect(() => {
+    const onFirstScroll = () => {
+      hasScrolled.current = true;
+    };
+    window.addEventListener("scroll", onFirstScroll, { passive: true });
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
+            // 首屏用户未滚动前,阅读线(视口中线)会压在第二条上——锁定第一条
+            if (!hasScrolled.current) {
+              setActiveIndex(0);
+              continue;
+            }
             const i = Number((e.target as HTMLElement).dataset.index);
             if (!Number.isNaN(i)) setActiveIndex(i);
           }
@@ -62,7 +75,10 @@ export default function Chronicle() {
       { rootMargin: "-50% 0px -50% 0px", threshold: 0 }, // 阅读线在视口中线,与 scrollIntoView(center) 对齐
     );
     recordRefs.current.forEach((el) => el && io.observe(el));
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      window.removeEventListener("scroll", onFirstScroll);
+    };
   }, [peaks]);
 
   // 切到编年史:让 body 可滚动(观测仪那边 body 是 overflow:hidden)
@@ -90,6 +106,8 @@ export default function Chronicle() {
   const activeYear = active.firstAscent.slice(0, 4);
 
   const focusRecord = (i: number) => {
+    hasScrolled.current = true; // 点击节点即视为主动交互
+    setActiveIndex(i); // 立即高亮,不等滚动后的 IO 回调
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     recordRefs.current[i]?.scrollIntoView({
       behavior: reduce ? "auto" : "smooth",
@@ -104,21 +122,18 @@ export default function Chronicle() {
       </h1>
       <ChronicleNav rank={activeIndex + 1} total={peaks.length} year={activeYear} />
 
-      <p className="masthead mono">
-        {peaks.length} 座首登 · {stats.minY} → {stats.maxY} · {stats.withAscent} 年有登顶 ·{" "}
-        {stats.empty} 年空档 · 峰值 {stats.peakYear} 一年{CN_NUM[stats.peakCount] ?? stats.peakCount}登
-      </p>
+      {/* recorder 与 records 不共用 grid row:recorder float+sticky,包含块是整个
+          .chronicle(含页脚),滚到记录列表末尾/展开末条时左图都不再被拖动(bug 修复) */}
+      <div className="recorder">
+        <RecorderChart
+          peaks={peaks}
+          coords={coords}
+          activeIndex={activeIndex}
+          onPick={focusRecord}
+        />
+      </div>
 
-      <div className="chronicle__stage">
-        <div className="recorder">
-          <RecorderChart
-            peaks={peaks}
-            coords={coords}
-            activeIndex={activeIndex}
-            onPick={focusRecord}
-          />
-        </div>
-
+      <main className="chronicle__main">
         <ol className="records">
           {peaks.map((p, i) => (
             <ChronicleRecord
@@ -128,14 +143,18 @@ export default function Chronicle() {
               rank={i + 1}
               total={peaks.length}
               active={i === activeIndex}
+              open={openId === p.id}
+              onToggle={() =>
+                setOpenId((cur) => (cur === p.id ? null : p.id))
+              }
               citations={CITATIONS[p.id] ?? []}
               register={register}
             />
           ))}
         </ol>
-      </div>
+      </main>
 
-      <ChronicleColophon from={stats.minY} to={stats.maxY} />
+      <ChronicleColophon from={stats.minY} to={stats.maxY} total={peaks.length} />
     </div>
   );
 }
@@ -164,18 +183,29 @@ function RecorderChart({
   const past = coords.slice(0, activeIndex + 1);
   const future = coords.slice(activeIndex); // 从 active 起,首尾相接
 
-  // 两段最长沉默,做成尺寸标注括弧(把「缺席」变成被测量的量)
-  const silence = [
-    { from: peaks[0], to: peaks.find((p) => p.firstAscent >= "1953") ?? peaks[0], label: "1951–52 · 两年无首登" },
-    {
-      from: peaks.find((p) => p.firstAscent.startsWith("1960")) ?? peaks[0],
-      to: peaks[peaks.length - 1],
-      label: "1961–63 · 三年无首登",
-    },
-  ];
+  // 从数据真正检测多年沉默(相邻两峰首登年份差 ≥3 = 中间空 ≥2 年),把「缺席」
+  // 变成被测量的量。不再硬编码 ">=1953"/"1960" 魔法字符串——数据一改自动跟随。
+  const silence = peaks.slice(0, -1).flatMap((p, i) => {
+    const y1 = +p.firstAscent.slice(0, 4);
+    const y2 = +peaks[i + 1].firstAscent.slice(0, 4);
+    const empty = y2 - y1 - 1;
+    if (empty < 2) return [];
+    const cn = empty === 2 ? "两" : CN_NUM[empty] ?? String(empty);
+    return [
+      {
+        from: p,
+        to: peaks[i + 1],
+        label: `${y1 + 1}–${String(y2 - 1).slice(2)} · ${cn}年无首登`,
+      },
+    ];
+  });
 
   return (
-    <div className="chart" role="group" aria-label="1950 至 1964 十四座八千米峰首登的时间-海拔迹线图,含 14 个可选峰节点">
+    <div
+      className="chart"
+      role="group"
+      aria-label={`${peaks[0].firstAscent.slice(0, 4)} 至 ${peaks[peaks.length - 1].firstAscent.slice(0, 4)} ${peaks.length} 座八千米峰首登的时间-海拔迹线图,含 ${peaks.length} 个可选峰节点`}
+    >
       <svg className="chart__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         {/* 年份竖网格 */}
         {years.map((y) => (
@@ -270,6 +300,8 @@ function ChronicleRecord({
   rank,
   total,
   active,
+  open,
+  onToggle,
   citations,
   register,
 }: {
@@ -278,10 +310,11 @@ function ChronicleRecord({
   rank: number;
   total: number;
   active: boolean;
+  open: boolean;
+  onToggle: () => void;
   citations: Citation[];
   register: (i: number, el: HTMLLIElement | null) => void;
 }) {
-  const [open, setOpen] = useState(false);
   const panelId = `rec-${peak.id}`;
   const liRef = useCallback(
     (el: HTMLLIElement | null) => register(index, el),
@@ -294,14 +327,14 @@ function ChronicleRecord({
 
   return (
     <li ref={liRef} data-index={index} className={`record${active ? " is-active" : ""}`}>
-      <h3 className="record__heading">
+      <h2 className="record__heading">
         <button
           type="button"
           className="record__head"
           aria-expanded={open}
           aria-controls={panelId}
           aria-label={label}
-          onClick={() => setOpen((v) => !v)}
+          onClick={onToggle}
         >
           <span className="record__date mono">{peak.firstAscent}</span>
         <span className="record__seq mono">
@@ -322,7 +355,7 @@ function ChronicleRecord({
           </span>
         </span>
         </button>
-      </h3>
+      </h2>
 
       <div id={panelId} className="record__panel" hidden={!open}>
         <p className="record__blurb">{peak.blurb}</p>
@@ -383,7 +416,8 @@ function ChronicleNav({ rank, total, year }: { rank: number; total: number; year
         <span className="cnav__divider" aria-hidden="true" />
         <span className="cnav__sub">黄金年代记录仪</span>
       </div>
-      <div className="cnav__right" aria-live="polite">
+      {/* 计数窗是随滚动刷新的视觉读数,不加 aria-live——否则读屏会被 14 次进度轰炸 */}
+      <div className="cnav__right">
         <span className="mono">{year}</span>
         <span className="cnav__count mono">
           {String(rank).padStart(2, "0")} / {total} 已记录
@@ -396,21 +430,114 @@ function ChronicleNav({ rank, total, year }: { rank: number; total: number; year
   );
 }
 
-function ChronicleColophon({ from, to }: { from: number; to: number }) {
+// 锯齿山脊分界:多频正弦叠加(确定性、无随机)模拟撕裂的山脊剖面,
+// path 底边贴页脚上缘、锯齿峰向上咬进浅色记录区
+function ridgePath() {
+  const pts = Array.from({ length: 121 }, (_, i) => {
+    const x = i / 120;
+    const y =
+      34 +
+      9 * Math.sin(x * 7.3 + 1.2) +
+      5 * Math.sin(x * 17.1 + 0.5) +
+      3 * Math.sin(x * 39.7) +
+      2.2 * Math.sin(x * 83.1 + 2.1);
+    return `${(x * 1440).toFixed(1)},${y.toFixed(1)}`;
+  });
+  return `M0,80 L${pts.join(" L")} L1440,80 Z`;
+}
+
+function ChronicleColophon({
+  from,
+  to,
+  total,
+}: {
+  from: number;
+  to: number;
+  total: number;
+}) {
+  const toTop = () => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  };
+
   return (
     <footer className="colophon">
-      <p className="colophon__line">
-        {from} 年安纳普尔纳落笔，{to} 年希夏邦马收束——十四座八千米峰的首登，一台记录仪走完了黄金年代的整卷纸。
-      </p>
-      <p className="colophon__note mono">
-        引用可点击溯源。同期期刊(Himalayan Journal / American Alpine Journal / Alpine
-        Journal)版权归各俱乐部所有、官方公开可读，此处仅标来源不转载正文；Wikipedia 条目为
-        CC-BY-SA 4.0;纪录方(Guinness World Records 等)为专有,仅作 who/when 佐证。观测仪背景为
-        生成式群山影像(AI 生成,无第三方版权)。
-      </p>
-      <a className="colophon__back" href="#observatory">
-        ← 返回观测仪
-      </a>
+      <div className="colophon__ridge" aria-hidden="true">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+          <path d={ridgePath()} />
+        </svg>
+      </div>
+
+      <div className="colophon__inner">
+        <span className="colophon__corner is-tl" aria-hidden="true" />
+        <span className="colophon__corner is-tr" aria-hidden="true" />
+        <span className="colophon__corner is-bl" aria-hidden="true" />
+        <span className="colophon__corner is-br" aria-hidden="true" />
+
+        <p className="colophon__eyebrow mono">
+          FIRST ASCENT CHRONICLE / RECORD {total} OF {total}
+        </p>
+
+        <h2 className="colophon__years mono">
+          {from} — {to}
+        </h2>
+        <p className="colophon__statement">
+          十四座八千米峰的首登，至此全部记录。
+        </p>
+
+        <div className="colophon__cols">
+          <section className="colophon__col">
+            <h3 className="colophon__col-title mono">档案来源</h3>
+            <p className="colophon__col-body mono">
+              Himalayan Journal /<br />
+              American Alpine Journal /<br />
+              Alpine Journal
+            </p>
+          </section>
+          <section className="colophon__col">
+            <h3 className="colophon__col-title mono">使用与许可</h3>
+            <p className="colophon__col-body">
+              资料版权归原作者及出版方所有。本文公开可读，此处仅标来源不转载正文；地形影像由
+              AI 生成，无第三方版权。
+            </p>
+            <span className="colophon__cc mono">CC · BY-SA 4.0</span>
+          </section>
+          <nav className="colophon__col" aria-label="继续探索">
+            <h3 className="colophon__col-title mono">继续探索</h3>
+            <a className="colophon__link" href="#observatory">
+              ← 返回高海拔观测仪
+            </a>
+            <button type="button" className="colophon__link colophon__totop" onClick={toTop}>
+              回到顶部 ↑
+            </button>
+          </nav>
+        </div>
+
+        <div className="colophon__seal">
+          <div className="colophon__seal-count mono">
+            {total} / {total}
+          </div>
+          <div className="colophon__seal-label caps">
+            Archive
+            <br />
+            Complete
+          </div>
+          <div className="colophon__compass" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" />
+              <circle cx="60" cy="60" r="32" />
+              <line x1="60" y1="4" x2="60" y2="116" />
+              <line x1="4" y1="60" x2="116" y2="60" />
+              <circle className="colophon__compass-core" cx="60" cy="60" r="4.5" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div className="colophon__bar mono">
+        <span>ABOVE THE WIND / 风之上</span>
+        <span>© 2026 · HIGH ALTITUDE ARCHIVE</span>
+      </div>
     </footer>
   );
 }

@@ -16,6 +16,8 @@ __pycache__/
 /data/
 
 # 浏览器验证的临时产物(Playwright MCP 截图/快照/控制台日志)
-# 根目录一律不放 png:合法图片资产走 web/src/assets/,根 png 只会是判断用的临时截图
+# 根目录不放图片:合法图片资产走 web/src/assets/,根目录图片只会是判断用的临时截图
 .playwright-mcp/
 /*.png
+/*.jpg
+/*.jpeg

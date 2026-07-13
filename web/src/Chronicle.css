@@ -5,6 +5,9 @@
   min-height: 100dvh;
   background: var(--archive-canvas);
   color: var(--archive-ink);
+  /* 节点 hover 探针标签(opacity:0 但占位)在最左/右节点会伸出视口撑宽文档;
+     clip 掉横向溢出(不创建滚动容器,不影响 sticky recorder) */
+  overflow-x: clip;
 }
 
 /* ── 顶部导航(sticky) ─────────────────────────────────────────── */
@@ -74,26 +77,19 @@
   color: var(--archive-ink);
 }
 
-/* ── Masthead 读数条(terse 统计,事实承重)────────────────────── */
-.masthead {
-  margin: 0;
-  padding: var(--archive-space-3) var(--archive-safe-margin);
-  font-size: var(--archive-fs-label);
-  color: var(--archive-ink-muted);
-  text-align: center;
-  border-bottom: var(--archive-stroke-hairline) solid var(--archive-line);
+/* ── 舞台:左 float+sticky 记录仪图 + 右滚动记录 ────────────────────
+   关键:recorder 用 float(而非 grid 列),sticky 的包含块因此是整个 .chronicle
+   (含页脚),而不是「被右栏撑高的 grid cell」。滚到记录列表末尾、或展开最后
+   一条时,左图下方仍有页脚高度垫着,不会触底跟随——修掉「左图被右栏拖动」的 bug。 */
+.chronicle {
+  --rec-w: 42%;
+  --rec-gap: var(--archive-space-12);
 }
-
-/* ── 舞台:左 sticky 记录仪图 + 右滚动记录 ─────────────────────── */
-.chronicle__stage {
-  display: grid;
-  grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
-  gap: var(--archive-space-12);
-  align-items: start;
-  padding: var(--archive-space-6) var(--archive-safe-margin) var(--archive-space-16);
-}
-
 .recorder {
+  float: left;
+  width: var(--rec-w);
+  margin-top: var(--archive-space-6);
+  margin-left: var(--archive-safe-margin);
   position: sticky;
   top: var(--archive-nav-h);
   height: calc(100dvh - var(--archive-nav-h) - var(--archive-space-8));
@@ -190,6 +186,15 @@
   min-height: var(--archive-node-hit);
   color: var(--archive-ink);
 }
+/* 密集簇(1954–56 近日期峰)热区重叠:hover/active 提 z-index,让当前关注的
+   节点浮到最上层可点(节点连着迹线顶点,不宜像观测仪那样横向散开破坏对齐) */
+.chart-node:hover,
+.chart-node:focus-visible {
+  z-index: 3;
+}
+.chart-node.is-active {
+  z-index: 2;
+}
 .chart-node__dot {
   width: var(--archive-node-sm);
   height: var(--archive-node-sm);
@@ -231,8 +236,10 @@
 /* ── 编年记录(右栏)──────────────────────────────────────────── */
 .records {
   list-style: none;
-  margin: 0;
   padding: 0;
+  /* 让位给左侧 float 的 recorder;右/下用安全边距与 stage 底距 */
+  margin: var(--archive-space-6) var(--archive-safe-margin) var(--archive-space-16)
+    calc(var(--archive-safe-margin) + var(--rec-w) + var(--rec-gap));
 }
 .record {
   border-top: var(--archive-stroke-hairline) solid var(--archive-line);
@@ -398,50 +405,245 @@
   color: var(--archive-ink-muted);
 }
 
-/* ── 页脚 ─────────────────────────────────────────────────────── */
+/* ── 页脚:黑色「档案完成」区块 ───────────────────────────────────
+   浅色记录区 → 锯齿山脊分界 → 暗场落款。暗场里颜色对调:底=rock、字=canvas、
+   线=line-inverse(-faint),橙 accent 只留给完成态的印章数与罗盘心。 */
 .colophon {
-  padding: var(--archive-space-12) var(--archive-safe-margin) var(--archive-space-16);
-  border-top: var(--archive-stroke-hairline) solid var(--archive-line);
+  clear: both; /* 收尾 float 的 recorder,页脚全宽 */
+  position: relative;
+  margin-top: 56px; /* 给锯齿山脊留出向上咬合的空间 */
+  background: var(--archive-rock);
+  color: var(--archive-canvas);
 }
-.colophon__line {
-  margin: 0 0 var(--archive-space-6);
-  max-width: 60ch;
-  font-size: var(--archive-fs-event);
-  line-height: 1.7;
-  color: var(--archive-ink);
+/* 锯齿山脊:path 底边贴页脚上缘,黑色锯齿峰向上咬进浅色记录区 */
+.colophon__ridge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 56px;
+  line-height: 0;
+  pointer-events: none;
 }
-.colophon__note {
-  margin: 0 0 var(--archive-space-6);
-  max-width: 72ch;
-  font-size: var(--archive-fs-tick);
-  line-height: 1.7;
-  color: var(--archive-ink-muted);
+.colophon__ridge svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
-.colophon__back {
+.colophon__ridge path {
+  fill: var(--archive-rock);
+}
+
+.colophon__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "eyebrow   seal"
+    "years     seal"
+    "statement seal"
+    "cols      seal";
+  column-gap: var(--archive-space-16);
+  align-items: start;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: var(--archive-space-16) var(--archive-safe-margin) var(--archive-space-12);
+}
+
+.colophon__eyebrow {
+  grid-area: eyebrow;
+  margin: 0 0 var(--archive-space-8);
   font-size: var(--archive-fs-label);
-  color: var(--archive-ink);
+  letter-spacing: 0.14em;
+  color: var(--archive-line-inverse);
+}
+.colophon__years {
+  grid-area: years;
+  margin: 0;
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--archive-canvas);
+}
+.colophon__statement {
+  grid-area: statement;
+  margin: var(--archive-space-6) 0 0;
+  font-size: var(--archive-fs-name);
+  font-weight: 500;
+  color: var(--archive-canvas);
+}
+
+.colophon__cols {
+  grid-area: cols;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--archive-space-8);
+  margin-top: var(--archive-space-16);
+  padding-top: var(--archive-space-6);
+  border-top: var(--archive-stroke-hairline) solid var(--archive-line-inverse-faint);
+}
+.colophon__col {
+  min-width: 0;
+}
+.colophon__col-title {
+  margin: 0 0 var(--archive-space-3);
+  font-size: var(--archive-fs-tick);
+  letter-spacing: 0.14em;
+  font-weight: 400;
+  color: var(--archive-line-inverse);
+}
+.colophon__col-body {
+  margin: 0;
+  font-size: var(--archive-fs-label);
+  line-height: 1.65;
+  color: var(--archive-line-inverse);
+}
+.colophon__cc {
+  display: inline-block;
+  margin-top: var(--archive-space-4);
+  padding: 2px var(--archive-space-2);
+  border: var(--archive-stroke-hairline) solid var(--archive-line-inverse-faint);
+  font-size: var(--archive-fs-tick);
+  letter-spacing: 0.08em;
+  color: var(--archive-canvas);
+}
+.colophon__link {
+  display: block;
+  margin-top: var(--archive-space-2);
+  font-size: var(--archive-fs-label);
+  color: var(--archive-canvas);
   text-decoration: none;
 }
-.colophon__back:hover {
+.colophon__link:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+/* 「回到顶部」是按钮(hash 链接会误触发路由切回观测仪),重置成链接外观 */
+.colophon__totop {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* 右侧完成印章:count + ARCHIVE COMPLETE 居上,罗盘沉底 */
+.colophon__seal {
+  grid-area: seal;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+  height: 100%;
+}
+.colophon__seal-count {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 500;
+  color: var(--archive-accent);
+}
+.colophon__seal-label {
+  margin-top: var(--archive-space-2);
+  font-size: clamp(1.4rem, 2.7vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  color: var(--archive-canvas);
+}
+.colophon__compass {
+  margin-top: auto;
+  padding-top: var(--archive-space-12);
+  width: clamp(96px, 12vw, 148px);
+}
+.colophon__compass svg {
+  display: block;
+  width: 100%;
+}
+.colophon__compass circle,
+.colophon__compass line {
+  fill: none;
+  stroke: var(--archive-line-inverse-faint);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.colophon__compass-core {
+  fill: var(--archive-accent);
+  stroke: none;
+  filter: drop-shadow(0 0 4px var(--archive-accent))
+    drop-shadow(0 0 10px var(--archive-accent));
+}
+
+/* 四角定位十字(registration marks) */
+.colophon__corner {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+}
+.colophon__corner::before,
+.colophon__corner::after {
+  content: "";
+  position: absolute;
+  background: var(--archive-line-inverse-faint);
+}
+.colophon__corner::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  transform: translateX(-50%);
+}
+.colophon__corner::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  transform: translateY(-50%);
+}
+.colophon__corner.is-tl {
+  top: var(--archive-space-6);
+  left: var(--archive-safe-margin);
+}
+.colophon__corner.is-tr {
+  top: var(--archive-space-6);
+  right: var(--archive-safe-margin);
+}
+.colophon__corner.is-bl {
+  bottom: var(--archive-space-6);
+  left: var(--archive-safe-margin);
+}
+.colophon__corner.is-br {
+  bottom: var(--archive-space-6);
+  right: var(--archive-safe-margin);
+}
+
+/* 落款条 */
+.colophon__bar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--archive-space-4);
+  padding: var(--archive-space-4) var(--archive-safe-margin);
+  border-top: var(--archive-stroke-hairline) solid var(--archive-line-inverse-faint);
+  font-size: var(--archive-fs-tick);
+  letter-spacing: 0.04em;
+  color: var(--archive-line-inverse);
 }
 
 /* ── 响应式:双栏 → sticky 顶带 + 单列 ─────────────────────────── */
 @media (max-width: 1024px) {
-  .chronicle__stage {
-    grid-template-columns: 1fr;
-    gap: var(--archive-space-6);
-    padding-top: 0;
-  }
+  /* 单列:recorder 从 float 回到常规流,做成全宽 sticky 顶带 */
   .recorder {
+    float: none;
+    width: auto;
     top: var(--archive-nav-h);
     height: 180px;
-    margin: 0 calc(var(--archive-safe-margin) * -1);
+    margin: 0;
     padding: var(--archive-space-4) var(--archive-safe-margin) var(--archive-space-6);
     background: var(--archive-canvas);
     border-bottom: var(--archive-stroke-hairline) solid var(--archive-line);
     z-index: 5;
+  }
+  .records {
+    margin: var(--archive-space-6) var(--archive-safe-margin) var(--archive-space-16);
   }
   /* 顶带里节点密集,缩小热区免 1954–56 簇命中区重叠误选 */
   .chart-node {
@@ -454,6 +656,35 @@
   /* 绝对居中的中央标题在 641–768 会撞左侧品牌,窄屏直接隐去 */
   .cnav__center {
     display: none;
+  }
+  /* 页脚单列:印章移到底部横排,罗盘缩小 */
+  .colophon__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "eyebrow"
+      "years"
+      "statement"
+      "cols"
+      "seal";
+    row-gap: var(--archive-space-6);
+  }
+  .colophon__seal {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    margin-top: var(--archive-space-8);
+    padding-top: var(--archive-space-6);
+    border-top: var(--archive-stroke-hairline) solid var(--archive-line-inverse-faint);
+  }
+  .colophon__compass {
+    margin-top: 0;
+    padding-top: 0;
+    width: 84px;
+  }
+  .colophon__cols {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
