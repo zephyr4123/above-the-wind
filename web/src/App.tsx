@@ -87,29 +87,27 @@ export default function App() {
   );
 }
 
+// 页眉 = 铭牌 · 型号 · 计数窗:层级只靠字重/墨色/字距,无图标无分隔符
+// (汉堡菜单/斜杠/✛ 均为无功能装饰,已删——仪器上不能有拨不动的旋钮)
 function TopNav({ rank, total }: { rank: number; total: number }) {
   return (
     <header className="topnav">
       <div className="topnav__left">
-        <span className="topnav__menu" aria-hidden="true">
-          <i /> <i /> <i />
-        </span>
         <span className="topnav__brand caps">ABOVE THE WIND</span>
-        <span className="topnav__slash">/</span>
-        <span className="topnav__brand-zh">风之上</span>
+        {/* 题签「长风之上」(李白《关山月》"长风几万里"——古典汉语的高空急流)
+            逐字 span = flex 两端对齐,与英文正名严格等宽,如测绘仪铭牌双语蚀刻 */}
+        <span className="topnav__brand-zh" lang="zh-Hans">
+          {["长", "风", "之", "上"].map((c) => (
+            <span key={c}>{c}</span>
+          ))}
+        </span>
       </div>
       <div className="topnav__center">
         <span className="topnav__title">十四座八千米</span>
-        <span className="topnav__divider" aria-hidden="true" />
-        <span className="topnav__sub">高海拔观测仪</span>
       </div>
-      <div className="topnav__right">
-        <span className="mono">
-          {String(rank).padStart(2, "0")} / {total}
-        </span>
-        <span className="topnav__cross" aria-hidden="true">
-          ✛
-        </span>
+      <div className="topnav__right mono">
+        <span className="topnav__count">{String(rank).padStart(2, "0")}</span>
+        <span className="topnav__count-total"> / {total}</span>
       </div>
     </header>
   );
@@ -200,19 +198,20 @@ function Timeline({
   const selected = peaks.find((p) => p.id === selectedId)!;
 
   // 同年多峰按当年日期序横向微散开,避免节点完全重叠导致只有最上层可点
-  // (1953/1954/1955 各 2 峰,1956 有 3 峰)
+  // (1953/1954/1955 各 2 峰,1956 有 3 峰)。散开量用固定像素(≈节点视觉直径):
+  // 百分比会随视口漂移——宽屏散成假刻度、窄屏又叠回一团
   const posOf = useMemo(() => {
     const byYear = new Map<number, Peak[]>();
     for (const p of peaks) {
       const y = yearOf(p);
       byYear.set(y, [...(byYear.get(y) ?? []), p]);
     }
-    const pos = new Map<string, number>();
+    const pos = new Map<string, string>();
     for (const [y, group] of byYear) {
       group.sort((a, b) => a.firstAscent.localeCompare(b.firstAscent));
       group.forEach((p, i) => {
-        const offset = (i - (group.length - 1) / 2) * 1.1;
-        pos.set(p.id, ((y - FA_FROM) / span) * 100 + offset);
+        const offset = (i - (group.length - 1) / 2) * 11;
+        pos.set(p.id, `calc(${((y - FA_FROM) / span) * 100}% + ${offset}px)`);
       });
     }
     return pos;
@@ -232,14 +231,25 @@ function Timeline({
 
       <div className="timeline__track">
         <span className="timeline__baseline" aria-hidden="true" />
-        {Array.from({ length: span + 1 }).map((_, i) => (
-          <span
-            key={i}
-            className="timeline__tick"
-            style={{ left: `${(i / span) * 100}%` }}
-            aria-hidden="true"
-          />
-        ))}
+        {/* 量程标尺:每年细刻度下挂,每 5 年主刻度加长并带年标(层级靠长度不靠加粗);
+            节点悬浮于基线上方,刻度与数据不再互相遮盖 */}
+        {Array.from({ length: span + 1 }).map((_, i) => {
+          const major = i % 5 === 0 || i === span;
+          const edge =
+            i === 0 ? " is-first" : i === span ? " is-last" : "";
+          return (
+            <span
+              key={i}
+              className={`timeline__tick${major ? " is-major" : ""}${edge}`}
+              style={{ left: `${(i / span) * 100}%` }}
+              aria-hidden="true"
+            >
+              {major && (
+                <span className="timeline__year mono">{FA_FROM + i}</span>
+              )}
+            </span>
+          );
+        })}
         {peaks.map((p) => {
           const active = p.id === selectedId;
           return (
@@ -247,23 +257,18 @@ function Timeline({
               key={p.id}
               type="button"
               className={`timeline__node${active ? " is-active" : ""}`}
-              style={{ left: `${posOf.get(p.id)}%` }}
+              style={{ left: posOf.get(p.id) }}
               aria-label={`${p.nameZh} 首登 ${yearOf(p)}`}
               aria-pressed={active}
               onClick={() => onSelect(p.id)}
             />
           );
         })}
-        <span className="timeline__caption mono">
-          {FA_FROM} — {FA_TO}
-        </span>
         <span
           className="timeline__marker"
-          style={{ left: `${posOf.get(selected.id)}%` }}
+          style={{ left: posOf.get(selected.id) }}
           aria-hidden="true"
         />
-        <span className="timeline__end timeline__end--l mono">{FA_FROM}</span>
-        <span className="timeline__end timeline__end--r mono">{FA_TO}</span>
       </div>
 
       <a className="timeline__enter" href="#chronicle">

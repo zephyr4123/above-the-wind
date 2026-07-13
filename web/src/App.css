@@ -79,33 +79,34 @@
   padding: 0 var(--archive-safe-margin);
   color: var(--archive-ink);
 }
-.topnav__left,
 .topnav__center,
 .topnav__right {
   display: flex;
   align-items: center;
   gap: var(--archive-space-3);
 }
-.topnav__menu {
-  display: inline-flex;
+/* 左侧 = 双层铭牌 lockup:英文正名 + 中文题签,总宽由英文行锁定 */
+.topnav__left {
+  display: flex;
   flex-direction: column;
-  gap: 3px;
-  width: 22px;
-}
-.topnav__menu i {
-  height: 1.5px;
-  background: var(--archive-ink);
-}
-.topnav__menu i:nth-child(2) {
-  width: 70%;
+  align-items: stretch;
+  gap: var(--archive-space-1);
+  width: fit-content;
 }
 .topnav__brand {
   font-size: var(--archive-fs-label);
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  /* 抵掉末字符的字距,lockup 宽度收敛到真实字宽 */
+  margin-right: -0.18em;
+  color: var(--archive-ink);
 }
-.topnav__slash,
+/* 题签逐字两端对齐,与英文行严格等宽(JSX 里每字一个 span) */
 .topnav__brand-zh {
-  font-size: var(--archive-fs-label);
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--archive-fs-tick);
+  font-weight: 400;
   color: var(--archive-ink-muted);
 }
 .topnav__center {
@@ -113,31 +114,28 @@
   left: 50%;
   transform: translateX(-50%);
 }
+/* 标题降为型号铭文:字号让位给右侧海拔大读数,存在感靠 0.32em 疏排 */
 .topnav__title {
-  font-size: var(--archive-fs-event);
+  font-size: var(--archive-fs-label);
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.32em;
+  /* 抵掉末字字距保证真居中 */
+  margin-right: -0.32em;
   /* 标题压在雪峰上,加冰白晕保证在嶙峋亮部也读得清 */
   text-shadow: 0 0 10px var(--archive-canvas), 0 0 4px var(--archive-canvas);
 }
-.topnav__divider {
-  width: 1px;
-  height: 16px;
-  background: var(--archive-line);
-  margin: 0 var(--archive-space-2);
-}
-.topnav__sub {
-  font-size: var(--archive-fs-label);
-  color: var(--archive-ink-muted);
-  text-shadow: 0 0 8px var(--archive-canvas), 0 0 3px var(--archive-canvas);
-}
+/* 右侧 = 计数窗:当前序号实色,量程退灰;间隔由 mono 空格承担,不用 flex gap */
 .topnav__right {
+  gap: 0;
   font-size: var(--archive-fs-label);
-  color: var(--archive-ink-muted);
 }
-.topnav__cross {
-  font-size: 1rem;
+.topnav__count {
+  font-weight: 500;
   color: var(--archive-ink);
+}
+.topnav__count-total {
+  color: var(--archive-ink-muted);
+  white-space: pre;
 }
 
 /* ── 左侧高度标尺 ─────────────────────────────────────────────── */
@@ -360,35 +358,73 @@
 .timeline__track {
   position: relative;
   flex: 1;
-  height: 40px;
+  height: 48px;
 }
+/* 基线降为退后的量程线:42% 白压暗岩,与亮底上 24% 黑的标尺脊线视觉重量对等
+   (72% 的 line-inverse 曾是全页对比最高的长横线,读作 2px 粗) */
 .timeline__baseline {
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
   height: 1px;
-  background: var(--archive-line-inverse);
+  background: var(--archive-line-inverse-faint);
 }
+/* 年刻度从跨线毛刺改为向下悬挂,主刻度靠加长分级(不加粗) */
 .timeline__tick {
   position: absolute;
   top: 50%;
   width: 1px;
-  height: 5px;
+  height: 4px;
   background: var(--archive-line-inverse);
-  opacity: 0.6;
-  transform: translateY(-50%);
+  opacity: 0.5;
 }
+.timeline__tick.is-major {
+  height: 8px;
+  opacity: 0.9;
+}
+.timeline__year {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--archive-fs-tick);
+  letter-spacing: 0.04em;
+  color: var(--archive-line-inverse);
+  /* 年标是比例尺的一部分,退到与主刻度同级、让位给数据 */
+  opacity: 0.75;
+}
+/* 首尾年标向内对齐,防溢出轨道 */
+.timeline__tick.is-first .timeline__year {
+  left: 0;
+  transform: none;
+}
+.timeline__tick.is-last .timeline__year {
+  left: auto;
+  right: 0;
+  transform: none;
+}
+/* 节点悬浮于基线上方(圆心 -10px),年刻度不再被数据盖死;垂茎连回时刻 */
 .timeline__node {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 10px);
   width: var(--archive-node-sm);
   height: var(--archive-node-sm);
   border-radius: 50%;
-  border: 1.5px solid var(--archive-line-inverse);
+  /* 数据点用实色画布白,与退后的半透明量程线拉开层级 */
+  border: 1px solid var(--archive-canvas);
   background: var(--archive-rock);
   transform: translate(-50%, -50%);
   transition: transform var(--archive-motion-fast) var(--archive-ease-ui);
+}
+.timeline__node::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: 5px;
+  background: var(--archive-line-inverse-faint);
 }
 .timeline__node:hover {
   transform: translate(-50%, -50%) scale(1.2);
@@ -396,35 +432,32 @@
 .timeline__node.is-active {
   border: none;
 }
+/* 选中指示 = 菱形 + 橙色读数针:菱形用 ::before 旋转,读数针 ::after 保持垂直,
+   从菱底穿过基线压进刻度区——指针读数语义 */
 .timeline__marker {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 10px);
   width: var(--archive-node-md);
   height: var(--archive-node-md);
-  background: var(--archive-accent);
-  transform: translate(-50%, -50%) rotate(45deg);
+  transform: translate(-50%, -50%);
   pointer-events: none;
 }
-.timeline__caption {
+.timeline__marker::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--archive-accent);
+  transform: rotate(45deg);
+}
+.timeline__marker::after {
+  content: "";
   position: absolute;
   left: 50%;
-  top: calc(50% + 16px);
+  top: 100%;
   transform: translateX(-50%);
-  font-size: var(--archive-fs-tick);
-  color: var(--archive-canvas);
-  white-space: nowrap;
-}
-.timeline__end {
-  position: absolute;
-  top: calc(50% - 26px);
-  font-size: var(--archive-fs-tick);
-  color: var(--archive-line-inverse);
-}
-.timeline__end--l {
-  left: 0;
-}
-.timeline__end--r {
-  right: 0;
+  width: 1px;
+  height: 9px;
+  background: var(--archive-accent);
 }
 .timeline__enter {
   flex: none;
