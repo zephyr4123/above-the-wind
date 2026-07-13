@@ -69,12 +69,14 @@ export default function App() {
       <div className="instrument__plane" aria-hidden="true" />
 
       <TopNav rank={rank} total={peaks.length} />
+      {/* 视觉标题在 nav 里是铭牌碎片,给读屏一个完整的页面标题 */}
+      <h1 className="sr-only">十四座八千米 · 高海拔观测仪</h1>
       <AltitudeRuler />
 
-      <div className="stage">
+      <main className="stage">
         <PeakRing peaks={peaks} selectedId={selectedId} onSelect={setSelectedId} />
         <PeakCallout peak={selected} rank={rank} />
-      </div>
+      </main>
 
       <Timeline
         peaks={peaks}
@@ -95,11 +97,10 @@ function TopNav({ rank, total }: { rank: number; total: number }) {
       <div className="topnav__left">
         <span className="topnav__brand caps">ABOVE THE WIND</span>
         {/* 题签「长风之上」(李白《关山月》"长风几万里"——古典汉语的高空急流)
-            逐字 span = flex 两端对齐,与英文正名严格等宽,如测绘仪铭牌双语蚀刻 */}
+            两端对齐撑满英文正名行宽,如测绘仪铭牌双语蚀刻;
+            用 text-align-last 而非逐字 span:整词保住读屏/查找/复制语义 */}
         <span className="topnav__brand-zh" lang="zh-Hans">
-          {["长", "风", "之", "上"].map((c) => (
-            <span key={c}>{c}</span>
-          ))}
+          长风之上
         </span>
       </div>
       <div className="topnav__center">
@@ -198,8 +199,9 @@ function Timeline({
   const selected = peaks.find((p) => p.id === selectedId)!;
 
   // 同年多峰按当年日期序横向微散开,避免节点完全重叠导致只有最上层可点
-  // (1953/1954/1955 各 2 峰,1956 有 3 峰)。散开量用固定像素(≈节点视觉直径):
-  // 百分比会随视口漂移——宽屏散成假刻度、窄屏又叠回一团
+  // (1953/1954/1955 各 2 峰,1956 有 3 峰)。散开步长 = min(11px, 2.2%):
+  // 宽屏取 11px(≈节点视觉直径,不随视口漂移),窄屏被 2.2%(<年距 7.14% 的 1/3)
+  // 封顶——纯固定像素会在手机上把 1956 的节点画到 1955 左边,时序倒挂
   const posOf = useMemo(() => {
     const byYear = new Map<number, Peak[]>();
     for (const p of peaks) {
@@ -210,12 +212,19 @@ function Timeline({
     for (const [y, group] of byYear) {
       group.sort((a, b) => a.firstAscent.localeCompare(b.firstAscent));
       group.forEach((p, i) => {
-        const offset = (i - (group.length - 1) / 2) * 11;
-        pos.set(p.id, `calc(${((y - FA_FROM) / span) * 100}% + ${offset}px)`);
+        const k = i - (group.length - 1) / 2;
+        const base = ((y - FA_FROM) / span) * 100;
+        pos.set(p.id, `calc(${base}% + ${k} * min(11px, 2.2%))`);
       });
     }
     return pos;
   }, [peaks, span]);
+
+  // 时间轴内按首登时间序渲染:Tab/读屏顺序与视觉左→右一致(环上仍是海拔序)
+  const inAscent = useMemo(
+    () => [...peaks].sort((a, b) => a.firstAscent.localeCompare(b.firstAscent)),
+    [peaks],
+  );
 
   return (
     <footer className="timeline">
@@ -229,7 +238,12 @@ function Timeline({
         {playing ? "⏸" : "▶"}
       </button>
 
-      <div className="timeline__track">
+      {/* role=group + label:年刻度是 aria-hidden 的视觉量程,给读屏补回时间语境 */}
+      <div
+        className="timeline__track"
+        role="group"
+        aria-label={`首登时间轴 ${FA_FROM}–${FA_TO}`}
+      >
         <span className="timeline__baseline" aria-hidden="true" />
         {/* 量程标尺:每年细刻度下挂,每 5 年主刻度加长并带年标(层级靠长度不靠加粗);
             节点悬浮于基线上方,刻度与数据不再互相遮盖 */}
@@ -250,7 +264,7 @@ function Timeline({
             </span>
           );
         })}
-        {peaks.map((p) => {
+        {inAscent.map((p) => {
           const active = p.id === selectedId;
           return (
             <button

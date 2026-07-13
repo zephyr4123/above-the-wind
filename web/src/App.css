@@ -101,10 +101,12 @@
   margin-right: -0.18em;
   color: var(--archive-ink);
 }
-/* 题签逐字两端对齐,与英文行严格等宽(JSX 里每字一个 span) */
+/* 题签两端对齐撑满英文行宽:text-align-last 让 CJK 逐字分配对齐空间,
+   保住整词文本节点(读屏/查找/复制不被拆散) */
 .topnav__brand-zh {
-  display: flex;
-  justify-content: space-between;
+  display: block;
+  text-align: justify;
+  text-align-last: justify;
   font-size: var(--archive-fs-tick);
   font-weight: 400;
   color: var(--archive-ink-muted);
@@ -348,7 +350,6 @@
   align-items: center;
   gap: var(--archive-space-6);
   padding: 0 var(--archive-safe-margin);
-  color: var(--archive-line-inverse);
 }
 .timeline__play {
   font-size: 1.1rem;
@@ -370,19 +371,21 @@
   height: 1px;
   background: var(--archive-line-inverse-faint);
 }
-/* 年刻度从跨线毛刺改为向下悬挂,主刻度靠加长分级(不加粗) */
+/* 年刻度从跨线毛刺改为向下悬挂,主刻度靠加长分级(不加粗)。
+   明暗差走 token alpha 而非 opacity——年标嵌在刻度里,opacity 会连带压暗文字 */
 .timeline__tick {
   position: absolute;
   top: 50%;
   width: 1px;
   height: 4px;
-  background: var(--archive-line-inverse);
-  opacity: 0.5;
+  background: var(--archive-line-inverse-faint);
 }
 .timeline__tick.is-major {
   height: 8px;
-  opacity: 0.9;
+  background: var(--archive-line-inverse);
 }
+/* 年标沿用左侧标尺 .ruler__label 的方案:足色 + 暗晕,
+   「退后感」靠暗晕而非透明度,任何照片亮度下都过 AA */
 .timeline__year {
   position: absolute;
   top: 12px;
@@ -390,9 +393,10 @@
   transform: translateX(-50%);
   font-size: var(--archive-fs-tick);
   letter-spacing: 0.04em;
-  color: var(--archive-line-inverse);
-  /* 年标是比例尺的一部分,退到与主刻度同级、让位给数据 */
-  opacity: 0.75;
+  color: var(--archive-canvas);
+  text-shadow:
+    0 0 2px rgb(17 19 18 / 85%),
+    0 1px 2px rgb(17 19 18 / 50%);
 }
 /* 首尾年标向内对齐,防溢出轨道 */
 .timeline__tick.is-first .timeline__year {
@@ -422,15 +426,29 @@
   position: absolute;
   left: 50%;
   top: 100%;
+  /* top:100% 按 padding box 解析(全局 border-box,盒 8px−2×1px 描边=6px):
+     茎起于基线上方 7px,7px 高恰好接到基线,不悬空 */
+  transform: translateX(-50%);
   width: 1px;
-  height: 5px;
+  height: 7px;
   background: var(--archive-line-inverse-faint);
+}
+/* 8px 视觉点太小,透明扩区补触控热区:纵向拉满 44px 规范,
+   横向只留 ±2px——同年簇间距最窄仅 ~5px,横向扩大反而互相抢命中 */
+.timeline__node::before {
+  content: "";
+  position: absolute;
+  inset: -18px -2px;
 }
 .timeline__node:hover {
   transform: translate(-50%, -50%) scale(1.2);
 }
 .timeline__node.is-active {
   border: none;
+}
+/* 选中节点获焦时,橙色焦点环会与橙色菱形融成一团——换画布白保双向可辨 */
+.timeline__node.is-active:focus-visible {
+  outline-color: var(--archive-canvas);
 }
 /* 选中指示 = 菱形 + 橙色读数针:菱形用 ::before 旋转,读数针 ::after 保持垂直,
    从菱底穿过基线压进刻度区——指针读数语义 */

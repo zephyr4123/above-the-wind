@@ -36,6 +36,7 @@
 | `--archive-ink-muted` | `#5e6461` | 次要信息 |
 | `--archive-line` | `rgb(17 19 18 / 24%)` | 标尺、时间轴、引导线 |
 | `--archive-line-inverse` | `rgb(238 241 239 / 72%)` | 影像暗区上的线 |
+| `--archive-line-inverse-faint` | `rgb(238 241 239 / 42%)` | 影像暗区上退后的量程线（时间轴基线/垂茎/年刻度），与亮底 24% 黑视觉对等 |
 | `--archive-accent` | `#ff4b19` | 路线、切面、选中节点（橙，2–4% 面积上限） |
 | `--archive-accent-text` | `#f04000` | 文字用深一档橙：对 canvas ≥3:1（大字 AA） |
 | `--archive-accent-soft` | `rgb(255 75 25 / 16%)` | 切面散射 |
@@ -60,19 +61,25 @@
 | `--archive-fs-label` | `0.8125rem` | 仪器标签（12–13px） |
 | `--archive-fs-tick` | `0.6875rem` | 微型刻度（10–11px） |
 
-英文大写标签字距 `--archive-tracking-caps: 0.08em`（`.caps`，如品牌 `ABOVE THE WIND`）。
+英文大写标签字距 `--archive-tracking-caps: 0.08em`（`.caps`，如来源标 `SOURCE · WIKIDATA CC0`）；
+页眉铭牌是唯一的特调疏排：品牌 `ABOVE THE WIND` 0.18em、居中型号铭文 0.32em（末字字距用负 margin 抵掉）。
 
 ## Layout
 
 全屏定位式仪器（`.instrument`，`position: fixed; inset: 0`），四个仪器构件围合一个舞台：
 
-- **顶部导航** `--archive-nav-h: 68px`（移动端 56px）——左：汉堡三划 + 品牌
-  `ABOVE THE WIND / 风之上`；中：`十四座八千米 · 高海拔观测仪`；右：`NN / 14` 当前排名 + 准星 `✛`。
+- **顶部导航** `--archive-nav-h: 68px`——页眉读作「铭牌 · 型号 · 计数窗」，无图标无分隔符：
+  左 = 双层铭牌 lockup（`ABOVE THE WIND` 0.18em 疏排 600 + 中文题签**长风之上**两端对齐撑满英文行宽，
+  `text-align-last: justify`）；中 = `十四座八千米` 0.32em 疏排型号铭文（fs-label）；
+  右 = mono 计数窗（当前序号 ink 实色、`/ 14` 退灰）。层级只靠字重/墨色/字距——
+  无功能的汉堡菜单、斜杠、`✛` 字符均已删除（仪器上不能有拨不动的旋钮）。
 - **左侧高度标尺** `--archive-scale-width: 72px`——竖脊 + 41 根等距细刻度，
   主刻度 `9,000 / 8,500 / 8,000 / 7,500 … / 0 M`（死亡带 8000–9000 刻意放大占更多屏幕）；
   其中 **8,000 M 一档为 accent 橙**，刻度更长、标签变橙，与屏幕上的橙色切面对齐。
-- **底部时间轴** `--archive-timeline-h: 104px`——首登黄金年代 `1950 — 1964`，
-  逐年细刻度 + 14 个峰节点 + 一个 45° 旋转的橙色菱形 marker 指当前选中峰。
+- **底部时间轴** `--archive-timeline-h: 104px`——首登黄金年代量程标尺：基线用
+  `line-inverse-faint`（42%，与亮底 24% 黑对等），逐年细刻度下挂、每 5 年主刻度加长带年标
+  （1950/1955/1960/1964，足色 + 暗晕过 AA）；14 个峰节点**悬浮于基线上方**（垂茎连回时刻，
+  刻度与数据不再互相遮盖）+ 橙菱形 marker 垂下读数针穿过基线。
 - **中央舞台** `.stage`——环 + 峰名标注。
 
 关键对齐常量：`App.css` 的 `--horizon` 用与标尺同一公式推导（`nav-h + 30% ×（视口 − nav − timeline）`，
@@ -101,8 +108,11 @@
 - **`PeakCallout`** —— 右上峰名信息面板（右对齐，**无卡片背板**，直接浮在影像上）：橙色等宽
   rank + 峰名（中文）+ 大写罗马名（`nameEn`）+ 橙色大号等宽海拔数 + 发丝分隔线 + 等宽经纬度
   （度分秒 `dms()`）+ 首登全日期（`29 MAY 1953`）+ 竖排来源标（`writing-mode: vertical-rl`）。
-- **`Timeline`** —— 播放键（走带巡演：按首登时间序每 1.6s 自动切峰，再点暂停）+ 逐年刻度轨 +
-  峰节点（**同年多峰横向微散开**，避免节点重叠不可点）+ 橙菱形 marker + `进入编年史 →` 入口。
+- **`Timeline`** —— 播放键（走带巡演：按首登时间序每 1.6s 自动切峰，再点暂停）+ 量程标尺轨
+  （逐年细刻度 + 每 5 年主刻度带年标）+ 峰节点（按首登时间序渲染保 Tab 序 = 视觉序；悬浮基线上方，
+  **同年多峰横向微散开**，步长 `min(11px, 2.2%)`——宽屏定像素不漂移、窄屏按年距 1/3 封顶防时序倒挂；
+  纵向透明扩区补 44px 触控热区）+ 橙菱形 marker（`::before` 旋转菱形 + `::after` 垂直读数针）+
+  `进入编年史 →` 入口。轨道带 `role="group"` 年代量程标签，读屏可感知时间语境。
 
 形状 token：圆角只到 `--archive-radius-sm: 4px`，发丝线 `--archive-stroke-hairline: 1px`、
 激活线 `--archive-stroke-active: 2px`。
@@ -133,7 +143,6 @@
 | `--archive-motion-base` | `220ms` | 标签切换 |
 | `--archive-motion-scene` | `800ms` | 总览进入详情 / 场景切换 |
 | `--archive-ease-ui` | `cubic-bezier(0.22, 1, 0.36, 1)` | UI 缓动 |
-| `--archive-ease-camera` | `cubic-bezier(0.16, 1, 0.3, 1)` | 相机缓动 |
 
 ## Token 作为项目基建
 
