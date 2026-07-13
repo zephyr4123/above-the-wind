@@ -6,8 +6,12 @@
 
 地球上仅有十四座逾 8000 米的山峰。这个项目把它们的尺度、首登史与探险故事，做成一份严肃的高山测绘档案——每条内容都可追溯到免费、无版权的公版事实源。
 
+**[在线访问 →](https://zephyr4123.github.io/above-the-wind/)**
+
 <br>
 
+[![CI](https://github.com/zephyr4123/above-the-wind/actions/workflows/ci.yml/badge.svg)](https://github.com/zephyr4123/above-the-wind/actions/workflows/ci.yml)
+[![Deploy](https://github.com/zephyr4123/above-the-wind/actions/workflows/deploy.yml/badge.svg)](https://github.com/zephyr4123/above-the-wind/actions/workflows/deploy.yml)
 ![React](https://img.shields.io/badge/React-19-20232a?logo=react&logoColor=61dafb)
 ![Vite](https://img.shields.io/badge/Vite-8-646cff?logo=vite&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6-3178c6?logo=typescript&logoColor=white)
