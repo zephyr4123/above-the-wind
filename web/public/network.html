@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="长风之上 / Above the Wind —— 登山编年档案库项目的 Multica issue 网络全图:34 条 issue、表(档案库)/里(方法论)双线、12 条方法论,项目留痕的完整可回放地图。">
+<meta name="robots" content="noindex">
+<link rel="icon" href="./favicon.svg">
+<title>长风之上 · 项目留痕网络图 · Above the Wind</title>
+</head>
+<body>
+<style>
+  :root{
+    --paper:#e9e9e4; --panel:#f4f4f1; --panel-2:#eeeeea; --sink:#e2e2dc;
+    --ink:#1b1d1c; --ink-2:#585c59; --ink-3:#8a8e8a;
+    --line:rgba(27,29,28,.14); --line-2:rgba(27,29,28,.065);
+    --accent:#f04000; --accent-ink:#c23600; --accent-soft:rgba(240,64,0,.10);
+    --good:#3f7d4e;
+    --font-sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+    --font-mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --font-serif:"Songti SC","STSong","Source Han Serif SC",Georgia,"Times New Roman",serif;
+    --maxw:1080px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#141618; --panel:#1c1f21; --panel-2:#202426; --sink:#101214;
+      --ink:#e9ece9; --ink-2:#9ba09c; --ink-3:#6c716d;
+      --line:rgba(233,236,233,.15); --line-2:rgba(233,236,233,.07);
+      --accent:#ff5a2a; --accent-ink:#ff835c; --accent-soft:rgba(255,90,42,.13);
+      --good:#66b07a;
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#e9e9e4; --panel:#f4f4f1; --panel-2:#eeeeea; --sink:#e2e2dc;
+    --ink:#1b1d1c; --ink-2:#585c59; --ink-3:#8a8e8a;
+    --line:rgba(27,29,28,.14); --line-2:rgba(27,29,28,.065);
+    --accent:#f04000; --accent-ink:#c23600; --accent-soft:rgba(240,64,0,.10); --good:#3f7d4e; --sink:#e2e2dc;
+  }
+  :root[data-theme="dark"]{
+    --paper:#141618; --panel:#1c1f21; --panel-2:#202426; --sink:#101214;
+    --ink:#e9ece9; --ink-2:#9ba09c; --ink-3:#6c716d;
+    --line:rgba(233,236,233,.15); --line-2:rgba(233,236,233,.07);
+    --accent:#ff5a2a; --accent-ink:#ff835c; --accent-soft:rgba(255,90,42,.13); --good:#66b07a;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-sans); line-height:1.6;
+    font-size:16px; letter-spacing:.005em;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+  a{color:inherit}
+  ::selection{background:var(--accent-soft)}
+
+  .mono{font-family:var(--font-mono)}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--ink-3);
+  }
+
+  /* ---- masthead ---- */
+  header{
+    border-bottom:1px solid var(--line);
+    padding:clamp(40px,7vw,78px) 0 30px;
+    position:relative; overflow:hidden;
+  }
+  .plate-tag{display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; margin-bottom:clamp(30px,6vw,60px)}
+  .plate-tag .r{color:var(--accent-ink)}
+  .lockup{display:flex; flex-direction:column; gap:6px}
+  .brand-en{
+    font-family:var(--font-mono); font-weight:600;
+    font-size:clamp(13px,2.4vw,16px); letter-spacing:.34em; text-transform:uppercase;
+    color:var(--ink-2);
+  }
+  .brand-zh{
+    font-family:var(--font-serif); font-weight:600;
+    font-size:clamp(52px,12vw,104px); line-height:.94; letter-spacing:.06em;
+    margin:2px 0 0; text-wrap:balance;
+  }
+  .brand-zh .dot{color:var(--accent)}
+  .sub{
+    margin-top:clamp(20px,3vw,26px); max-width:52ch;
+    font-size:clamp(15px,2.2vw,17.5px); color:var(--ink-2);
+  }
+  .sub b{color:var(--ink); font-weight:600}
+
+  /* survey scale motif */
+  .scale{margin-top:32px; height:34px; position:relative}
+  .scale .base{position:absolute; left:0; right:0; top:16px; height:1px; background:var(--line)}
+  .scale .tk{position:absolute; top:16px; width:1px; background:var(--ink-3)}
+  .scale .yr{position:absolute; top:22px; font-family:var(--font-mono); font-size:10px; letter-spacing:.1em; color:var(--ink-3); transform:translateX(-50%)}
+  .scale .marker{position:absolute; top:6px; width:7px; height:7px; background:var(--accent); transform:translateX(-50%) rotate(45deg)}
+
+  /* ---- readout strip ---- */
+  .readout{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+    border-radius:3px; overflow:hidden; margin:clamp(30px,5vw,44px) 0;
+  }
+  .readout .cell{background:var(--panel); padding:16px 18px}
+  .readout .num{font-family:var(--font-mono); font-size:clamp(24px,4.4vw,32px); font-weight:600; letter-spacing:-.01em; font-variant-numeric:tabular-nums; line-height:1}
+  .readout .num .u{font-size:.5em; color:var(--ink-3); font-weight:500; margin-left:3px}
+  .readout .cell.hot .num{color:var(--accent-ink)}
+  .readout .lbl{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin-top:8px}
+  @media (max-width:640px){ .readout{grid-template-columns:repeat(2,1fr)} }
+
+  .links{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:clamp(40px,6vw,60px)}
+  .links a{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.04em;
+    text-decoration:none; color:var(--ink-2);
+    border:1px solid var(--line); border-radius:2px; padding:7px 13px;
+    display:inline-flex; align-items:center; gap:8px; transition:.16s;
+  }
+  .links a:hover{color:var(--accent-ink); border-color:var(--accent); background:var(--accent-soft)}
+  .links a .ar{color:var(--accent)}
+
+  /* ---- section frame ---- */
+  section{padding:clamp(48px,8vw,86px) 0; border-top:1px solid var(--line)}
+  .shead{display:flex; align-items:baseline; gap:16px; margin-bottom:8px}
+  .shead .idx{font-family:var(--font-mono); font-size:12px; color:var(--accent); letter-spacing:.1em}
+  h2{font-size:clamp(24px,4vw,34px); font-weight:600; letter-spacing:-.01em; margin:0; text-wrap:balance}
+  .sdesc{color:var(--ink-2); max-width:60ch; margin:14px 0 clamp(34px,5vw,48px); font-size:15.5px}
+
+  /* ================= NETWORK PLATE ================= */
+  .net{position:relative}
+  .trunk{
+    max-width:560px; margin:0 auto clamp(8px,2vw,14px); position:relative; z-index:2;
+    background:var(--panel); border:1.5px solid var(--accent);
+    border-radius:4px; padding:16px 20px;
+    box-shadow:0 1px 0 var(--line);
+  }
+  .trunk .top{display:flex; align-items:center; gap:12px; margin-bottom:5px}
+  .trunk .id{font-family:var(--font-mono); font-weight:600; font-size:14px; color:var(--accent-ink)}
+  .trunk .chip-role{font-family:var(--font-mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--paper); background:var(--accent); padding:2px 8px; border-radius:2px}
+  .trunk h3{margin:0; font-size:17px; font-weight:600}
+  .trunk p{margin:4px 0 0; font-size:13px; color:var(--ink-2)}
+
+  .rail{width:1.5px; height:34px; background:var(--accent); margin:0 auto; position:relative; z-index:1}
+  .rail::after{content:""; position:absolute; left:50%; bottom:0; width:7px; height:7px; background:var(--accent); border-radius:50%; transform:translate(-50%,40%)}
+
+  .cols{display:grid; grid-template-columns:1fr 1fr; gap:clamp(18px,3vw,30px); margin-top:26px; position:relative}
+  .cols::before{ /* the cross-bar hint */
+    content:""; position:absolute; top:-26px; left:25%; right:25%; height:1.5px; background:var(--line);
+  }
+  @media (max-width:760px){ .cols{grid-template-columns:1fr} .cols::before{display:none} }
+
+  .col{background:var(--panel); border:1px solid var(--line); border-radius:4px; overflow:hidden}
+  .col-h{padding:15px 18px; border-bottom:1px solid var(--line); background:var(--panel-2); display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .col-h .l{display:flex; flex-direction:column; gap:3px}
+  .col-h .k{font-family:var(--font-serif); font-size:20px; font-weight:600}
+  .col-h .k .en{font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin-left:9px; font-weight:500}
+  .col-h .idline{font-family:var(--font-mono); font-size:11px; color:var(--ink-3)}
+  .col-h .cnt{font-family:var(--font-mono); font-size:12px; color:var(--accent-ink); white-space:nowrap; font-variant-numeric:tabular-nums}
+  .col-b{padding:12px}
+  .grp-lbl{font-family:var(--font-mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3); margin:12px 6px 8px; display:flex; align-items:center; gap:8px}
+  .grp-lbl:first-child{margin-top:4px}
+  .grp-lbl::after{content:""; flex:1; height:1px; background:var(--line-2)}
+
+  .node{
+    display:flex; align-items:center; gap:11px; padding:9px 11px;
+    border-radius:3px; transition:background .15s;
+  }
+  .node:hover{background:var(--panel-2)}
+  .node .dot{width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none; box-shadow:0 0 0 3px var(--accent-soft)}
+  .node .badge{font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--accent-ink); background:var(--accent-soft); border-radius:2px; padding:2px 6px; flex:none; min-width:34px; text-align:center; letter-spacing:.02em}
+  .node .id{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-3); flex:none; width:52px; font-variant-numeric:tabular-nums}
+  .node .t{font-size:13.5px; color:var(--ink); line-height:1.35}
+  .node.star .t{font-weight:600}
+  .node.star .t::after{content:"★"; color:var(--accent); font-size:10px; margin-left:6px; vertical-align:2px}
+
+  .subfan{margin:2px 0 8px 30px; padding-left:14px; border-left:1px solid var(--line); display:flex; flex-direction:column}
+  .subfan .node{padding:6px 9px}
+  .subfan .node .id{width:52px}
+  .subfan .node .t{font-size:12.5px; color:var(--ink-2)}
+  .subfan .node .dot{width:5px; height:5px; box-shadow:0 0 0 2px var(--accent-soft)}
+
+  .bridge{
+    max-width:560px; margin:clamp(20px,3vw,30px) auto 0; position:relative;
+    background:linear-gradient(var(--panel),var(--panel)); border:1px dashed var(--accent);
+    border-radius:4px; padding:13px 18px; display:flex; align-items:center; gap:13px;
+  }
+  .bridge::before{content:""; position:absolute; top:-24px; left:50%; width:1px; height:24px; background:var(--line); transform:translateX(-50%)}
+  .bridge .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none;box-shadow:0 0 0 3px var(--accent-soft)}
+  .bridge .id{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-3);flex:none}
+  .bridge .t{font-size:13.5px}
+  .bridge .t b{color:var(--accent-ink); font-weight:600}
+
+  .legend{display:flex; gap:22px; flex-wrap:wrap; margin-top:30px; font-family:var(--font-mono); font-size:11px; color:var(--ink-3); letter-spacing:.03em}
+  .legend span{display:inline-flex; align-items:center; gap:7px}
+  .legend .sw{width:9px;height:9px;border-radius:50%}
+
+  /* ================= METHODOLOGY GALLERY ================= */
+  .layers{display:flex; flex-direction:column; gap:clamp(26px,4vw,38px)}
+  .layer-h{display:flex; align-items:baseline; gap:14px; margin-bottom:16px; flex-wrap:wrap}
+  .layer-h .tag{font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--paper); background:var(--ink); padding:3px 9px; border-radius:2px}
+  .layer-h .tag.meta{background:var(--accent)}
+  .layer-h .tag.anchor{background:var(--good)}
+  .layer-h .ttl{font-size:16px; font-weight:600}
+  .layer-h .note{font-size:13px; color:var(--ink-3)}
+
+  .mgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(268px,1fr)); gap:12px}
+  .mcard{
+    background:var(--panel); border:1px solid var(--line); border-radius:4px;
+    padding:16px 17px 15px; position:relative; transition:.16s; overflow:hidden;
+  }
+  .mcard:hover{border-color:var(--accent); transform:translateY(-2px)}
+  .mcard .n{font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--accent-ink); letter-spacing:.05em}
+  .mcard .mid{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-3); float:right}
+  .mcard .mt{font-size:15px; font-weight:600; margin:8px 0 0; line-height:1.4; letter-spacing:-.005em}
+  .mcard.wide{grid-column:1/-1; border-color:var(--accent); background:linear-gradient(180deg,var(--accent-soft),transparent 60%),var(--panel)}
+  .mcard.wide .subs{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:8px; margin-top:14px; padding-top:14px; border-top:1px solid var(--line)}
+  .mcard.wide .s{display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-2)}
+  .mcard.wide .s .sid{font-family:var(--font-mono); font-size:10px; color:var(--ink-3); flex:none}
+  .mcard.wide .s .sd{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+
+  /* leverage callout */
+  .lever{margin-top:clamp(30px,4vw,42px); border:1px solid var(--line); border-left:2px solid var(--accent); border-radius:4px; background:var(--panel); padding:20px 22px}
+  .lever .h{font-family:var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-ink); margin-bottom:10px}
+  .lever p{margin:0; font-size:14.5px; color:var(--ink-2)}
+  .lever b{color:var(--ink)}
+
+  /* ---- footer ---- */
+  footer{border-top:1px solid var(--line); padding:clamp(44px,7vw,72px) 0 54px}
+  .poem{font-family:var(--font-serif); font-size:clamp(17px,2.6vw,20px); color:var(--ink-2); letter-spacing:.08em; line-height:2; max-width:30ch}
+  .poem .src{display:block; font-family:var(--font-mono); font-size:11px; letter-spacing:.12em; color:var(--ink-3); margin-top:12px; text-transform:uppercase}
+  .fmeta{margin-top:34px; display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:flex-end; border-top:1px solid var(--line-2); padding-top:22px}
+  .fmeta .note{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-3); line-height:1.9; max-width:56ch}
+  .fmeta .note b{color:var(--ink-2)}
+  .compass{width:52px;height:52px;flex:none}
+  .compass line,.compass circle{stroke:var(--ink-3); stroke-width:1; fill:none}
+  .compass .n{stroke:var(--accent); stroke-width:1.5}
+
+  /* reveal */
+  .rv{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease}
+  .rv.in{opacity:1; transform:none}
+  @media (prefers-reduced-motion:reduce){ .rv{opacity:1; transform:none; transition:none} .mcard:hover,.trunk,.col{transform:none} *{scroll-behavior:auto} }
+</style>
+
+<header>
+  <div class="wrap">
+    <div class="plate-tag mono">
+      <span>PLATE · MULTICA ISSUE NETWORK</span>
+      <span class="r">SEALED 2026·07·14</span>
+    </div>
+    <div class="lockup">
+      <span class="brand-en">Above&nbsp;the&nbsp;Wind — 项目留痕全图</span>
+      <h1 class="brand-zh">长风之上<span class="dot">.</span></h1>
+    </div>
+    <p class="sub">一个登山编年档案库,在 <b>Multica</b> 上一边建、一边把「AI 时代怎么用 Multica」的方法论沉淀成一张 issue 网络。<b>表</b>是产品,<b>里</b>是方法论——这张图把整张网络原样画出来:34 条 issue、如何组织成主干与枝叶、每一条都可回放。</p>
+    <div class="scale" id="scale" aria-hidden="true"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="readout rv">
+    <div class="cell"><div class="num">34</div><div class="lbl">Issues 总数</div></div>
+    <div class="cell hot"><div class="num">12<span class="u">条</span></div><div class="lbl">方法论 #1–#12</div></div>
+    <div class="cell"><div class="num">100<span class="u">%</span></div><div class="lbl">Done 全收口</div></div>
+    <div class="cell"><div class="num">v1.0<span class="u">.0</span></div><div class="lbl">站点已上线</div></div>
+  </div>
+  <div class="links rv">
+    <a href="https://zephyr4123.github.io/above-the-wind/" target="_blank" rel="noopener"><span class="ar">↗</span> 档案库站点 · GitHub Pages</a>
+    <a href="https://github.com/zephyr4123/above-the-wind" target="_blank" rel="noopener"><span class="ar">↗</span> 源码仓库 · zephyr4123/above-the-wind</a>
+  </div>
+</div>
+
+<!-- ============ NETWORK ============ -->
+<section id="network">
+  <div class="wrap">
+    <div class="shead rv"><span class="idx">01</span><h2>网络全图</h2></div>
+    <p class="sdesc rv">主干 <span class="mono">ATW-5</span> 是单一真相源,向下分出<b>「表 · 档案库」</b>与<b>「里 · 方法论」</b>两条线,<span class="mono">ATW-35</span> 复盘横跨两者。全部 34 个节点均已 <span style="color:var(--accent-ink)">done</span>。</p>
+
+    <div class="net rv">
+      <div class="trunk">
+        <div class="top">
+          <span class="id">ATW-5</span>
+          <span class="chip-role">Trunk · 主干</span>
+        </div>
+        <h3>登山编年档案库 · 项目主线</h3>
+        <p>总索引 · 所有支线关联回来 · 秒级留痕(方法论 #5/#6)</p>
+      </div>
+      <div class="rail" aria-hidden="true"></div>
+
+      <div class="cols">
+        <!-- 里 · 方法论 -->
+        <div class="col">
+          <div class="col-h">
+            <div class="l">
+              <div class="k">里<span class="en">Methodology</span></div>
+              <div class="idline">ATW-8 · 方法论知识库索引</div>
+            </div>
+            <div class="cnt">18 节点</div>
+          </div>
+          <div class="col-b" id="col-method"></div>
+        </div>
+
+        <!-- 表 · 档案库 -->
+        <div class="col">
+          <div class="col-h">
+            <div class="l">
+              <div class="k">表<span class="en">The Archive</span></div>
+              <div class="idline">产品交付 · 数据 / 前端 / 工程化</div>
+            </div>
+            <div class="cnt">14 节点</div>
+          </div>
+          <div class="col-b" id="col-archive"></div>
+        </div>
+      </div>
+
+      <div class="bridge">
+        <span class="dot"></span>
+        <span class="id">ATW-35</span>
+        <span class="t"><b>复盘</b> · UI 从「AI 味」到艺术级(三代观测仪 + 编年记录仪,图文两卷)—— 横跨表里的桥,提炼升格为方法论 #10/#11/#12</span>
+      </div>
+
+      <div class="legend" aria-hidden="true">
+        <span><span class="sw" style="background:var(--accent)"></span>已完成 done</span>
+        <span><span class="sw" style="background:var(--accent);border-radius:2px"></span>索引 / 主干节点</span>
+        <span>★ 承重支线</span>
+        <span class="mono">ATW-NN = issue 编号</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHODOLOGY ============ -->
+<section id="methodology">
+  <div class="wrap">
+    <div class="shead rv"><span class="idx">02</span><h2>十二条方法论 · 里</h2></div>
+    <p class="sdesc rv">这才是项目真正的交付物。分三层:<b>实践层</b>(基础纪律 + 打磨杠杆)、<b>元实践层</b>(#8 Workflow 编排,作用在所有实践之上)、<b>配合锚</b>(#9 闭环校验)。每一条都有独立 issue、实证 commit,可跨项目复用。</p>
+
+    <div class="layers">
+      <div class="layer rv">
+        <div class="layer-h"><span class="tag">实践层</span><span class="ttl">基础纪律 #1–#7 · 打磨杠杆 #10–#12</span><span class="note">10 条 · 直接可上手的工作纪律</span></div>
+        <div class="mgrid" id="m-practice"></div>
+      </div>
+      <div class="layer rv">
+        <div class="layer-h"><span class="tag meta">元实践层</span><span class="ttl">#8 · Workflow 多 agent 编排 = 工程核心锚点</span><span class="note">1 hub + 5 子分支 · 放大全部实践</span></div>
+        <div class="mgrid" id="m-meta"></div>
+      </div>
+      <div class="layer rv">
+        <div class="layer-h"><span class="tag anchor">配合锚</span><span class="ttl">#9 · 闭环校验 real-env-in-the-loop</span><span class="note">与 Workflow 在流水线里组合</span></div>
+        <div class="mgrid" id="m-anchor"></div>
+      </div>
+    </div>
+
+    <div class="lever rv">
+      <div class="h">元观察 · 杠杆三维</div>
+      <p><b>#10 换裁决者</b>(人的品味把关)、<b>#11 换执行者</b>(模型选型:Opus 4.8 → Fable 5 立竿见影)、<b>#12 换方法框架</b>(用对专家 skill,写与审各用一个)。质量拐点从不来自苦力堆积——先选对裁决者、执行者、方法,再谈努力。而 <b>#8 Workflow</b> 是唯一一条作用在其它方法论之上的元方法论:它改的是每份产出的认识论地位(单点估计 → 集成消误差)。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="poem rv">
+      明月出天山,<br>苍茫云海间。<br>长风几万里,<br>吹度玉门关。
+      <span class="src">李白《关山月》· 项目题签之源</span>
+    </div>
+    <div class="fmeta">
+      <p class="note rv">
+        <b>这张图怎么来的:</b>直接从 above-the-wind 的 Multica workspace 用 <span class="mono">multica</span> CLI 读取实时 issue 网络(34 条,秒级留痕),按项目自身的「高海拔观测仪」视觉语言绘制。<br>
+        <b>状态:</b>项目封板 2026·07·14 · 全网 done · 表(档案库 v1.0.0 上线)+ 里(12 条方法论)双线交付。
+      </p>
+      <svg class="compass" viewBox="0 0 52 52" aria-hidden="true">
+        <circle cx="26" cy="26" r="22"/><circle cx="26" cy="26" r="2" fill="var(--ink-3)" stroke="none"/>
+        <line class="n" x1="26" y1="26" x2="26" y2="7"/>
+        <line x1="26" y1="26" x2="41" y2="41"/><line x1="26" y1="26" x2="12" y2="34"/>
+        <line x1="26" y1="4" x2="26" y2="9"/><line x1="48" y1="26" x2="43" y2="26"/><line x1="26" y1="48" x2="26" y2="43"/><line x1="4" y1="26" x2="9" y2="26"/>
+      </svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---- survey scale motif (1950–1964 golden age of first ascents) ----
+  (function(){
+    const el=document.getElementById('scale'); if(!el) return;
+    const y0=1950,y1=1964, base=document.createElement('div'); base.className='base'; el.appendChild(base);
+    for(let y=y0;y<=y1;y++){
+      const x=((y-y0)/(y1-y0))*100;
+      const t=document.createElement('div'); t.className='tk';
+      const major=(y%5===0)||y===y1;
+      t.style.left=x+'%'; t.style.height=major?'11px':'6px'; el.appendChild(t);
+      if(major){ const l=document.createElement('div'); l.className='yr'; l.style.left=x+'%'; l.textContent=(y===1950||y===1964)?y:("'"+String(y).slice(2)); el.appendChild(l); }
+    }
+    // first-ascent markers (Annapurna 1950 … Shishapangma 1964) — the two book-ends
+    [1950,1964].forEach(y=>{ const x=((y-y0)/(y1-y0))*100; const m=document.createElement('div'); m.className='marker'; m.style.left=x+'%'; el.appendChild(m); });
+  })();
+
+  // ---- network data (verbatim from Multica) ----
+  const METHOD=[
+    {n:'#1', id:'ATW-10', t:'重认知留 Claude Code,Multica 做持久化与协同', layer:'p'},
+    {n:'#2', id:'ATW-11', t:'issue ↔ commit 双向绑定', layer:'p'},
+    {n:'#3', id:'ATW-12', t:'issue 元数据 = 责任归属·边界·意识', layer:'p'},
+    {n:'#4', id:'ATW-13', t:'读源码 + 逐步取证调试破疑难 bug', layer:'p'},
+    {n:'#5', id:'ATW-23', t:'issue 网络要有主线 trunk 总索引', layer:'p'},
+    {n:'#6', id:'ATW-24', t:'时间精确到秒,全链可溯源', layer:'p'},
+    {n:'#7', id:'ATW-25', t:'需求 distill 成个人 skill 回流脚手架', layer:'p'},
+    {n:'#8', id:'ATW-26', t:'Workflow 多 agent 编排 = 工程核心锚点', layer:'m', sub:[
+      {id:'ATW-28', t:'大规模网络调研 + 交叉验证 → 脚本落地'},
+      {id:'ATW-29', t:'判官团(发散生成 → 合成)'},
+      {id:'ATW-30', t:'对抗审查(收敛证伪 → 主控 verify)'},
+      {id:'ATW-31', t:'并行子任务吞吐(并行 ≠ 真独立)'},
+      {id:'ATW-32', t:'大切片流水线(SEQUENCING + 交接契约)'},
+    ]},
+    {n:'#9', id:'ATW-27', t:'闭环校验 / real-env-in-the-loop', layer:'a'},
+    {n:'#10', id:'ATW-36', t:'人机共同打磨 UI:品味归人、工程归 AI', layer:'p'},
+    {n:'#11', id:'ATW-37', t:'模型选型即杠杆:换最强模型立竿见影', layer:'p'},
+    {n:'#12', id:'ATW-38', t:'动效打磨:写与审用不同专家 skill', layer:'p'},
+  ];
+  const FOUNDATION=[
+    {id:'ATW-6',  t:'数据地基:免费·无版权登山数据采集'},
+    {id:'ATW-7',  t:'前端首切片:十四座八千米峰浏览器'},
+    {id:'ATW-14', t:'前端 UI 体系:高海拔观测仪 0→1'},
+  ];
+  const BACKLOG=[
+    {id:'ATW-15', t:'观测仪打磨:地形调形 + 仪器细节'},
+    {id:'ATW-16', t:'真实珠峰 DEM 地形'},
+    {id:'ATW-17', t:'DESIGN.md 改写为 Archive Instrument'},
+    {id:'ATW-18', t:'编年时间线 / 6461 峰 / 名录切片'},
+    {id:'ATW-19', t:'首登史加引用源(可追溯)'},
+    {id:'ATW-20', t:'图片红区处理策略'},
+    {id:'ATW-21', t:'喀喇昆仑缺口补齐(K2 等 6 座)'},
+    {id:'ATW-22', t:'仓库门面 README'},
+    {id:'ATW-33', t:'深度打磨一轮 UI(文生图概念 · 四阶段)', star:true},
+    {id:'ATW-34', t:'GitHub 工程化:CI/CD + Release v1.0.0'},
+  ];
+
+  const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const nodeHTML=(o,opts={})=>{
+    const badge=o.n?`<span class="badge">${o.n}</span>`:'';
+    const star=o.star?' star':'';
+    return `<div class="node${star}"><span class="dot"></span>${badge}<span class="id">${o.id}</span><span class="t">${esc(o.t)}</span></div>`;
+  };
+
+  // 里 column
+  (function(){
+    const box=document.getElementById('col-method'); let h='<div class="grp-lbl">方法论 #1–#12</div>';
+    METHOD.forEach(m=>{
+      h+=nodeHTML(m);
+      if(m.sub){ h+='<div class="subfan">'+m.sub.map(s=>nodeHTML(s)).join('')+'</div>'; }
+    });
+    box.innerHTML=h;
+  })();
+  // 表 column
+  (function(){
+    const box=document.getElementById('col-archive');
+    let h='<div class="grp-lbl">产品地基 · 直属主干</div>'+FOUNDATION.map(o=>nodeHTML(o)).join('');
+    h+='<div class="grp-lbl">待办 backlog · ATW-9 索引</div>'+BACKLOG.map(o=>nodeHTML(o)).join('');
+    box.innerHTML=h;
+  })();
+
+  // methodology gallery
+  const mcard=m=>{
+    if(m.sub){
+      const subs=m.sub.map(s=>`<div class="s"><span class="sd"></span><span class="sid">${s.id}</span>${esc(s.t)}</div>`).join('');
+      return `<div class="mcard wide"><span class="mid">${m.id} · hub</span><div class="n">${m.n}</div><div class="mt">${esc(m.t)}</div><div class="subs">${subs}</div></div>`;
+    }
+    return `<div class="mcard"><span class="mid">${m.id}</span><div class="n">${m.n}</div><div class="mt">${esc(m.t)}</div></div>`;
+  };
+  document.getElementById('m-practice').innerHTML=METHOD.filter(m=>m.layer==='p').map(mcard).join('');
+  document.getElementById('m-meta').innerHTML=METHOD.filter(m=>m.layer==='m').map(mcard).join('');
+  document.getElementById('m-anchor').innerHTML=METHOD.filter(m=>m.layer==='a').map(mcard).join('');
+
+  // reveal on scroll — with a fail-safe so content can never stay hidden
+  const revAll=()=>document.querySelectorAll('.rv:not(.in)').forEach(e=>e.classList.add('in'));
+  if('IntersectionObserver'in window){
+    const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -6% 0px'});
+    document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+    // safety net: if anything is still hidden shortly after load, just show it
+    window.addEventListener('load',()=>setTimeout(revAll,1400));
+  } else { revAll(); }
+</script>
+
+</body>
+</html>
