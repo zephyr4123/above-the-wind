@@ -597,6 +597,14 @@ function ChronicleColophon({
             <a className="colophon__link" href="#observatory">
               ← 返回高海拔观测仪
             </a>
+            <a
+              className="colophon__link"
+              href={`${import.meta.env.BASE_URL}network.html`}
+              target="_blank"
+              rel="noopener"
+            >
+              项目留痕网络 ↗
+            </a>
             <button type="button" className="colophon__link colophon__totop" onClick={toTop}>
               回到顶部 ↑
             </button>
